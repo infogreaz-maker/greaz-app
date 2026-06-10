@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greaz — Rejoindre comme mécanicien</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:#1A3CFF; --blue2:#0F2ACC; --bluelt:rgba(26,60,255,0.12); --blueglow:rgba(26,60,255,0.2);
+  --green:#00C26F; --greenlt:rgba(0,194,111,0.1);
+  --ink:#0A0C1B; --ink2:#1C2040;
+  --line:rgba(255,255,255,0.08); --muted:rgba(255,255,255,0.45); --muted2:rgba(255,255,255,0.22);
+  --grid:rgba(255,255,255,0.025);
+  --r:10px; --r2:16px;
+}
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--ink); color:#fff;
+  min-height:100vh; padding-bottom:5rem;
+  background-image: linear-gradient(var(--grid) 1px,transparent 1px), linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+header {
+  padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:10;
+  background:rgba(10,12,27,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.logo { font-family:'Bricolage Grotesque',sans-serif; font-size:1.4rem; font-weight:800; letter-spacing:-0.5px; }
+.logo span { color:var(--blue); }
+.badge-mec { font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(0,194,111,0.35); color:var(--green); background:rgba(0,194,111,0.1); text-transform:uppercase; letter-spacing:0.5px; }
+
+/* HERO */
+.hero { padding:3rem 1.5rem 2rem; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(26,60,255,0.2) 0%,transparent 70%); pointer-events:none; }
+.hero-pill { display:inline-flex; align-items:center; gap:7px; background:rgba(26,60,255,0.12); border:1px solid rgba(26,60,255,0.35); color:rgba(255,255,255,0.75); font-size:12px; font-weight:500; padding:5px 15px; border-radius:20px; margin-bottom:1.25rem; }
+.pill-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
+.hero h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; letter-spacing:-1px; line-height:1.1; margin-bottom:.75rem; }
+.hero h1 .hl { color:var(--blue); }
+.hero h1 .hl2 { color:var(--green); }
+.hero p { font-size:.95rem; color:var(--muted); max-width:440px; margin:0 auto; line-height:1.65; }
+
+/* PROGRESS */
+.progress-wrap { max-width:580px; margin:1.5rem auto 0; padding:0 1.5rem; }
+.steps-row { display:flex; align-items:center; }
+.step-dot { display:flex; flex-direction:column; align-items:center; gap:5px; flex:0 0 auto; }
+.step-circle { width:33px; height:33px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; background:var(--ink2); color:var(--muted2); border:1.5px solid var(--line); transition:all .3s; }
+.step-dot.active .step-circle { background:var(--blue); color:#fff; border-color:var(--blue); box-shadow:0 0 16px var(--blueglow); }
+.step-dot.done .step-circle { background:var(--green); color:#fff; border-color:var(--green); }
+.step-label { font-size:10px; color:var(--muted2); text-transform:uppercase; letter-spacing:0.5px; white-space:nowrap; }
+.step-dot.active .step-label { color:var(--blue); }
+.step-dot.done .step-label { color:var(--green); }
+.step-line { flex:1; height:1.5px; background:var(--line); margin-bottom:18px; transition:background .4s; }
+.step-line.done { background:var(--green); }
+
+/* CONTAINER & CARDS */
+.container { max-width:580px; margin:1.5rem auto 0; padding:0 1rem; }
+.form-card { background:var(--ink2); border-radius:var(--r2); border:1px solid var(--line); padding:1.75rem; margin-bottom:1rem; }
+.section-title { font-size:13px; font-weight:600; color:#fff; margin-bottom:1.25rem; padding-bottom:.85rem; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px; }
+.section-icon { width:30px; height:30px; border-radius:8px; background:var(--bluelt); border:1px solid rgba(26,60,255,0.25); display:flex; align-items:center; justify-content:center; font-size:15px; }
+
+/* FIELDS */
+.field { margin-bottom:1rem; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+label { display:block; font-size:12px; font-weight:600; color:var(--muted); margin-bottom:5px; }
+label .req { color:var(--blue); }
+input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+  width:100%; padding:11px 14px;
+  background:rgba(255,255,255,0.05); border:1.5px solid var(--line);
+  border-radius:var(--r); font-size:14px; color:#fff;
+  font-family:'DM Sans',sans-serif; transition:border-color .2s, box-shadow .2s;
+  -webkit-appearance:none; appearance:none;
+}
+select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M5 7L0 2h10z' fill='%23666'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-color:rgba(255,255,255,0.05); padding-right:32px; }
+select option { background:#1C2040; color:#fff; }
+input::placeholder, textarea::placeholder { color:rgba(255,255,255,0.2); }
+input:focus, select:focus, textarea:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blueglow); background:rgba(26,60,255,0.07); }
+input.err, select.err { border-color:#f87171; }
+.err-msg { font-size:12px; color:#f87171; margin-top:4px; display:none; }
+.field.has-err .err-msg { display:block; }
+
+/* CHECK GRID */
+.check-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(145px,1fr)); gap:7px; }
+.check-item { display:flex; align-items:center; gap:8px; padding:9px 11px; border:1.5px solid var(--line); border-radius:var(--r); cursor:pointer; font-size:13px; color:var(--muted); background:rgba(255,255,255,0.03); user-select:none; transition:all .15s; }
+.check-item:hover { border-color:rgba(255,255,255,0.18); color:#fff; }
+.check-item input[type="checkbox"] { display:none; }
+.check-item.sel { border-color:var(--blue); background:var(--bluelt); color:#fff; font-weight:500; box-shadow:0 0 10px var(--blueglow); }
+.chk-box { width:16px; height:16px; border-radius:4px; border:1.5px solid rgba(255,255,255,0.2); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10px; color:transparent; transition:all .15s; }
+.check-item.sel .chk-box { background:var(--blue); border-color:var(--blue); color:#fff; }
+
+/* SCHEDULE */
+.schedule-grid { display:grid; grid-template-columns:auto repeat(3,1fr); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
+.sg-head { background:rgba(255,255,255,0.03); padding:7px 6px; text-align:center; font-size:10px; font-weight:700; color:var(--muted2); text-transform:uppercase; letter-spacing:0.4px; border-bottom:1px solid var(--line); }
+.sg-head:first-child { text-align:left; padding-left:12px; }
+.sg-day { padding:9px 12px; font-size:12.5px; color:var(--muted); border-top:1px solid var(--line); }
+.sg-cell { padding:5px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
+.slot-btn { width:100%; padding:7px 4px; border-radius:5px; border:1px solid var(--line); background:rgba(255,255,255,0.03); cursor:pointer; font-size:11px; color:var(--muted2); font-family:'DM Sans',sans-serif; transition:all .15s; }
+.slot-btn.on { background:var(--bluelt); border-color:var(--blue); color:var(--blue); font-weight:700; }
+
+/* SLIDER */
+.radius-row { display:flex; align-items:center; gap:16px; }
+input[type="range"] { flex:1; height:4px; -webkit-appearance:none; appearance:none; background:var(--line); border-radius:2px; outline:none; border:none; padding:0; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--blue); cursor:pointer; border:2px solid var(--ink); box-shadow:0 0 0 2px var(--blue); }
+.radius-val { font-size:20px; font-weight:800; min-width:76px; text-align:right; letter-spacing:-0.5px; }
+
+/* BUTTONS */
+.nav-row { display:flex; gap:10px; margin-top:1.5rem; }
+.btn { flex:1; padding:13px; border-radius:var(--r); font-size:15px; font-weight:700; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; transition:all .2s; }
+.btn-primary { background:var(--blue); color:#fff; box-shadow:0 0 20px var(--blueglow); }
+.btn-primary:hover { background:var(--blue2); }
+.btn-primary:active { transform:scale(0.98); }
+.btn-primary:disabled { opacity:.6; cursor:not-allowed; }
+.btn-secondary { background:rgba(255,255,255,0.05); color:var(--muted); border:1px solid var(--line); flex:0 0 auto; padding:13px 20px; }
+.btn-secondary:hover { border-color:rgba(255,255,255,0.18); color:#fff; }
+.spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:middle; margin-right:6px; }
+@keyframes sp { to{transform:rotate(360deg);} }
+
+/* STEP VISIBILITY */
+.step-screen { display:none; }
+.step-screen.active { display:block; }
+
+/* SUCCESS */
+.success-card { background:var(--ink2); border-radius:var(--r2); padding:3rem 2rem; text-align:center; border:1px solid var(--line); }
+.success-icon { width:72px; height:72px; border-radius:50%; background:rgba(0,194,111,0.1); border:1px solid rgba(0,194,111,0.3); display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; font-size:32px; animation:pop .5s cubic-bezier(.34,1.56,.64,1); }
+@keyframes pop { from{transform:scale(0)} to{transform:scale(1)} }
+.success-card h2 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.5rem; font-weight:800; margin-bottom:.6rem; letter-spacing:-0.5px; }
+.success-card h2 span { color:var(--green); }
+.success-card p { color:var(--muted); font-size:14px; line-height:1.65; max-width:320px; margin:0 auto 1.5rem; }
+.ref-box { background:rgba(26,60,255,0.12); border-radius:var(--r); padding:10px 18px; font-family:monospace; font-size:13px; color:var(--blue); display:inline-block; margin-bottom:1.75rem; border:1px solid rgba(26,60,255,0.25); }
+
+/* FB ERROR */
+.fb-err { background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.25); color:#f87171; padding:10px 14px; border-radius:var(--r); font-size:13px; margin-bottom:1rem; display:none; }
+
+@media(max-width:480px){
+  header { padding:1rem 1.25rem; }
+  .form-card { padding:1.25rem; }
+  .check-grid { grid-template-columns:1fr 1fr; }
+  .field-row { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Gre<span>az</span></div>
+  <span class="badge-mec">● Mécaniciens</span>
+</header>
+
+<div class="hero">
+  <div class="hero-pill"><span class="pill-dot"></span> Rejoins le réseau mobile au Québec</div>
+  <h1>Travaille <span class="hl">à ton rythme.</span><br><span class="hl2">Où tu veux.</span></h1>
+  <p>Tu choisis tes heures, ton rayon, tes spécialités. Greaz t'envoie les missions directement.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="steps-row">
+    <div class="step-dot active" data-step="1"><div class="step-circle">1</div><div class="step-label">Profil</div></div>
+    <div class="step-line" id="line-1-2"></div>
+    <div class="step-dot" data-step="2"><div class="step-circle">2</div><div class="step-label">Véhicules</div></div>
+    <div class="step-line" id="line-2-3"></div>
+    <div class="step-dot" data-step="3"><div class="step-circle">3</div><div class="step-label">Horaires</div></div>
+    <div class="step-line" id="line-3-4"></div>
+    <div class="step-dot" data-step="4"><div class="step-circle">4</div><div class="step-label">Rayon</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STEP 1 -->
+  <div class="step-screen active" id="step-1">
+    <div class="form-card">
+      <div class="section-title"><div class="section-icon">👤</div> Informations personnelles</div>
+      <div class="field-row">
+        <div class="field" id="f-prenom">
+          <label>Prénom <span class="req">*</span></label>
+          <input type="text" id="prenom" placeholder="Jean" autocomplete="given-name">
+          <div class="err-msg">Champ requis.</div>
+        </div>
+        <div class="field" id="f-nom">
+          <label>Nom <span class="req">*</span></label>
+          <input type="text" id="nom" placeholder="Tremblay" autocomplete="family-name">
+          <div class="err-msg">Champ requis.</div>
+        </div>
+      </div>
+      <div class="field" id="f-email">
+        <label>Courriel <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="jean@exemple.com" autocomplete="email">
+        <div class="err-msg">Adresse courriel invalide.</div>
+      </div>
+      <div class="field" id="f-tel">
+        <label>Téléphone <span class="req">*</span></label>
+        <input type="tel" id="tel" placeholder="514 555-1234" autocomplete="tel">
+        <div class="err-msg">Champ requis.</div>
+      </div>
+      <div class="field-row">
+        <div class="field" id="f-ville">
+          <label>Ville principale <span class="req">*</span></label>
+          <select id="ville">
+            <option value="">Choisir...</option>
+            <option>Montréal</option><option>Laval</option><option>Longueuil</option>
+            <option>Québec</option><option>Gatineau</option><option>Sherbrooke</option>
+            <option>Saguenay</option><option>Lévis</option><option>Trois-Rivières</option>
+            <option>Terrebonne</option><option>Autre</option>
+          </select>
+          <div class="err-msg">Sélectionne une ville.</div>
+        </div>
+        <div class="field">
+          <label>Années d'expérience</label>
+          <select id="experience">
+            <option value="">Sélectionner...</option>
+            <option>Moins de 1 an</option><option>1 à 3 ans</option>
+            <option>3 à 5 ans</option><option>5 à 10 ans</option><option>Plus de 10 ans</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Numéro de licence (optionnel)</label>
+        <input type="text" id="licence" placeholder="QC-MEC-12345">
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-primary" onclick="goStep(2)">Continuer →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-screen" id="step-2">
+    <div class="form-card">
+      <div class="section-title"><div class="section-icon">🚗</div> Types de véhicules acceptés</div>
+      <div id="f-vehicules" class="field">
+        <div class="check-grid" id="vehicules-grid">
+          <label class="check-item"><input type="checkbox" value="Berline / Compacte"><span class="chk-box">✓</span> Berline / Compacte</label>
+          <label class="check-item"><input type="checkbox" value="SUV / VUS"><span class="chk-box">✓</span> SUV / VUS</label>
+          <label class="check-item"><input type="checkbox" value="Camionnette"><span class="chk-box">✓</span> Camionnette</label>
+          <label class="check-item"><input type="checkbox" value="Fourgonnette"><span class="chk-box">✓</span> Fourgonnette</label>
+          <label class="check-item"><input type="checkbox" value="Électrique / Hybride"><span class="chk-box">✓</span> Électrique / Hybride</label>
+          <label class="check-item"><input type="checkbox" value="Diesel"><span class="chk-box">✓</span> Diesel</label>
+          <label class="check-item"><input type="checkbox" value="Camion lourd"><span class="chk-box">✓</span> Camion lourd</label>
+          <label class="check-item"><input type="checkbox" value="Moto / Scooter"><span class="chk-box">✓</span> Moto / Scooter</label>
+          <label class="check-item"><input type="checkbox" value="VR / Motorisé"><span class="chk-box">✓</span> VR / Motorisé</label>
+          <label class="check-item"><input type="checkbox" value="Bateau"><span class="chk-box">✓</span> Bateau</label>
+        </div>
+        <div class="err-msg" id="err-vehicules">Sélectionne au moins un type.</div>
+      </div>
+    </div>
+    <div class="form-card">
+      <div class="section-title"><div class="section-icon">🔧</div> Spécialités / Services offerts</div>
+      <div class="check-grid" id="services-grid">
+        <label class="check-item"><input type="checkbox" value="Vidange / huile"><span class="chk-box">✓</span> Vidange / huile</label>
+        <label class="check-item"><input type="checkbox" value="Freins"><span class="chk-box">✓</span> Freins</label>
+        <label class="check-item"><input type="checkbox" value="Batterie / Électrique"><span class="chk-box">✓</span> Batterie / Électrique</label>
+        <label class="check-item"><input type="checkbox" value="Pneus / Jantes"><span class="chk-box">✓</span> Pneus / Jantes</label>
+        <label class="check-item"><input type="checkbox" value="Courroie / Distribution"><span class="chk-box">✓</span> Courroie / Distribution</label>
+        <label class="check-item"><input type="checkbox" value="Diagnostic / OBD"><span class="chk-box">✓</span> Diagnostic / OBD</label>
+        <label class="check-item"><input type="checkbox" value="Suspension"><span class="chk-box">✓</span> Suspension</label>
+        <label class="check-item"><input type="checkbox" value="Climatisation"><span class="chk-box">✓</span> Climatisation</label>
+        <label class="check-item"><input type="checkbox" value="Transmission"><span class="chk-box">✓</span> Transmission</label>
+        <label class="check-item"><input type="checkbox" value="Inspection pré-achat"><span class="chk-box">✓</span> Inspection pré-achat</label>
+        <label class="check-item"><input type="checkbox" value="Lumières / Phares"><span class="chk-box">✓</span> Lumières / Phares</label>
+        <label class="check-item"><input type="checkbox" value="Check engine"><span class="chk-box">✓</span> Check engine</label>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="goStep(1)">← Retour</button>
+      <button class="btn btn-primary" onclick="goStep(3)">Continuer →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-screen" id="step-3">
+    <div class="form-card">
+      <div class="section-title"><div class="section-icon">🗓️</div> Disponibilités habituelles</div>
+      <div class="schedule-grid" id="schedule-grid">
+        <div class="sg-head">Jour</div>
+        <div class="sg-head">Matin<br><span style="font-weight:400;font-size:9px;opacity:.6">8h–12h</span></div>
+        <div class="sg-head">Après-midi<br><span style="font-weight:400;font-size:9px;opacity:.6">12h–17h</span></div>
+        <div class="sg-head">Soir<br><span style="font-weight:400;font-size:9px;opacity:.6">17h–21h</span></div>
+      </div>
+      <p style="font-size:12px;color:var(--muted2);margin-top:.875rem">Clique pour activer ou désactiver une plage.</p>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="goStep(2)">← Retour</button>
+      <button class="btn btn-primary" onclick="goStep(4)">Continuer →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-screen" id="step-4">
+    <div class="form-card">
+      <div class="section-title"><div class="section-icon">📍</div> Rayon de déplacement</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.6">Jusqu'à quelle distance es-tu prêt à te déplacer pour un client ?</p>
+      <div class="radius-row">
+        <input type="range" id="rayon-slider" min="5" max="100" value="30" step="5" oninput="document.getElementById('rayon-val').textContent=this.value+' km'">
+        <div class="radius-val" id="rayon-val">30 km</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted2);margin-top:6px"><span>5 km</span><span>100 km</span></div>
+    </div>
+    <div class="form-card">
+      <div class="section-title"><div class="section-icon">💬</div> Bio courte <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
+      <textarea id="bio" rows="3" placeholder="Ex: Mécanicien certifié depuis 8 ans, spécialisé en freins et suspension. Ponctuel et sérieux." style="width:100%;padding:11px 14px;background:rgba(255,255,255,0.05);border:1.5px solid var(--line);border-radius:var(--r);font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;resize:vertical;outline:none;"></textarea>
+      <div class="fb-err" id="fb-err"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="goStep(3)">← Retour</button>
+      <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">Envoyer ma candidature ✓</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="step-screen" id="step-success">
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <h2>Candidature <span>reçue !</span></h2>
+      <p>Notre équipe va examiner ton profil et te contacter dans les 24–48h. Bienvenue dans la famille Greaz.</p>
+      <div class="ref-box" id="ref-num"></div><br>
+      <button class="btn btn-primary" onclick="location.reload()" style="max-width:260px;margin:0 auto;display:block">Nouvelle candidature</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ── Firebase ── */
+var db;
+try {
+  firebase.initializeApp({
+    apiKey:"AIzaSyAbvCBM1J-LL5B5_v5rqjbGcM8geufmbxs",
+    authDomain:"greaz-4b00c.firebaseapp.com",
+    projectId:"greaz-4b00c",
+    storageBucket:"greaz-4b00c.firebasestorage.app",
+    messagingSenderId:"165170790975",
+    appId:"1:165170790975:web:38fe20428046e6328b6e8a"
+  });
+  db = firebase.firestore();
+} catch(e) { console.error("Firebase:", e); }
+
+/* ── Schedule state ── */
+var DAYS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+var schedule = {};
+DAYS.forEach(function(d){ schedule[d] = {matin:false, aprem:false, soir:false}; });
+
+/* ── Step ── */
+var currentStep = 1;
+
+/* ── Init DOM ── */
+document.addEventListener('DOMContentLoaded', function(){
+
+  /* Build schedule grid */
+  var grid = document.getElementById('schedule-grid');
+  DAYS.forEach(function(day){
+    var dl = document.createElement('div'); dl.className = 'sg-day'; dl.textContent = day; grid.appendChild(dl);
+    ['matin','aprem','soir'].forEach(function(slot){
+      var cell = document.createElement('div'); cell.className = 'sg-cell';
+      var btn = document.createElement('button'); btn.className = 'slot-btn'; btn.textContent = '—'; btn.type = 'button';
+      btn.onclick = function(){
+        schedule[day][slot] = !schedule[day][slot];
+        btn.classList.toggle('on', schedule[day][slot]);
+        btn.textContent = schedule[day][slot] ? '✓' : '—';
+      };
+      cell.appendChild(btn); grid.appendChild(cell);
+    });
+  });
+
+  /* Wire checkboxes */
+  document.querySelectorAll('.check-item input[type="checkbox"]').forEach(function(inp){
+    inp.addEventListener('change', function(){
+      inp.closest('.check-item').classList.toggle('sel', inp.checked);
+    });
+  });
+
+});
+
+/* ── Navigation ── */
+function goStep(n){
+  if(n > currentStep && !validateStep(currentStep)) return;
+
+  document.getElementById('step-'+currentStep).classList.remove('active');
+  document.getElementById('step-'+n).classList.add('active');
+
+  document.querySelectorAll('.step-dot').forEach(function(d){
+    var s = parseInt(d.dataset.step);
+    d.classList.remove('active','done');
+    if(s < n) d.classList.add('done');
+    else if(s === n) d.classList.add('active');
+  });
+
+  ['line-1-2','line-2-3','line-3-4'].forEach(function(id,i){
+    document.getElementById(id).classList.toggle('done', n > i+1);
+  });
+
+  currentStep = n;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ── Validation ── */
+function validateStep(step){
+  var ok = true;
+  if(step === 1){
+    [{id:'prenom',fid:'f-prenom',type:'text'},
+     {id:'nom',   fid:'f-nom',   type:'text'},
+     {id:'email', fid:'f-email', type:'email'},
+     {id:'tel',   fid:'f-tel',   type:'text'},
+     {id:'ville', fid:'f-ville', type:'select'}
+    ].forEach(function(f){
+      var el = document.getElementById(f.id);
+      var fd = document.getElementById(f.fid);
+      var v = el.value.trim();
+      var valid = f.type === 'email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) : v.length > 0;
+      fd.classList.toggle('has-err', !valid);
+      el.classList.toggle('err', !valid);
+      if(!valid) ok = false;
+    });
+  }
+  if(step === 2){
+    var sel = document.querySelectorAll('#vehicules-grid .check-item.sel');
+    var errEl = document.getElementById('err-vehicules');
+    if(sel.length === 0){ errEl.style.display='block'; ok=false; }
+    else errEl.style.display='none';
+  }
+  return ok;
+}
+
+/* ── Submit ── */
+async function submitForm(){
+  var btn = document.getElementById('submit-btn');
+  var errEl = document.getElementById('fb-err');
+  errEl.style.display = 'none';
+
+  var vehicules = Array.from(document.querySelectorAll('#vehicules-grid .check-item.sel input')).map(function(i){return i.value;});
+  var services  = Array.from(document.querySelectorAll('#services-grid .check-item.sel input')).map(function(i){return i.value;});
+
+  var scheduleStr = Object.entries(schedule)
+    .filter(function(e){ return Object.values(e[1]).some(Boolean); })
+    .map(function(e){
+      var s = e[1]; var slots = [];
+      if(s.matin) slots.push('Matin');
+      if(s.aprem) slots.push('Après-midi');
+      if(s.soir)  slots.push('Soir');
+      return e[0]+': '+slots.join(', ');
+    }).join(' | ') || 'Non précisé';
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Envoi en cours...';
+
+  try {
+    await db.collection('mechanic_applications').add({
+      first_name:    document.getElementById('prenom').value.trim(),
+      last_name:     document.getElementById('nom').value.trim(),
+      phone:         document.getElementById('tel').value.trim(),
+      email:         document.getElementById('email').value.trim(),
+      city:          document.getElementById('ville').value,
+      experience:    document.getElementById('experience').value,
+      license:       document.getElementById('licence').value.trim(),
+      vehicle_types: vehicules.join(', ') || 'Non précisé',
+      services:      services.join(', ')  || 'Non précisé',
+      schedule:      scheduleStr,
+      radius:        document.getElementById('rayon-slider').value + ' km',
+      bio:           document.getElementById('bio').value.trim(),
+      status:        'nouveau',
+      source:        'mechanic-signup',
+      created_at:    firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    /* Succès */
+    document.getElementById('step-'+currentStep).classList.remove('active');
+    document.getElementById('step-success').classList.add('active');
+    document.getElementById('ref-num').textContent = 'Référence : MEC-' + Date.now();
+    document.querySelectorAll('.step-dot').forEach(function(d){ d.classList.remove('active'); d.classList.add('done'); });
+    document.querySelectorAll('.step-line').forEach(function(l){ l.classList.add('done'); });
+    window.scrollTo({top:0, behavior:'smooth'});
+
+  } catch(e) {
+    console.error('Firestore:', e);
+    errEl.textContent = 'Erreur : '+e.message;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Envoyer ma candidature ✓';
+  }
+}
+</script>
+</body>
+</html>
