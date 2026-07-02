@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Greaz — Rejoindre comme mécanicien</title>
+<title>Greaz — Rejoindre le réseau</title>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --blue:#1A3CFF; --blue2:#0F2ACC; --bluelt:rgba(26,60,255,0.12); --blueglow:rgba(26,60,255,0.2);
-  --green:#00C26F; --greenlt:rgba(0,194,111,0.1);
+  --green:#00C26F; --greenlt:rgba(0,194,111,0.1); --greenglow:rgba(0,194,111,0.2);
+  --orange:#FF6B2C; --orangelt:rgba(255,107,44,0.12); --orangeglow:rgba(255,107,44,0.2);
   --ink:#0A0C1B; --ink2:#1C2040;
   --line:rgba(255,255,255,0.08); --muted:rgba(255,255,255,0.45); --muted2:rgba(255,255,255,0.22);
   --grid:rgba(255,255,255,0.025);
@@ -19,7 +20,7 @@ body {
   font-family:'DM Sans',sans-serif;
   background:var(--ink); color:#fff;
   min-height:100vh; padding-bottom:5rem;
-  background-image: linear-gradient(var(--grid) 1px,transparent 1px), linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
   background-size:50px 50px;
 }
 header {
@@ -30,7 +31,7 @@ header {
 }
 .logo { font-family:'Bricolage Grotesque',sans-serif; font-size:1.4rem; font-weight:800; letter-spacing:-0.5px; }
 .logo span { color:var(--blue); }
-.badge-mec { font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(0,194,111,0.35); color:var(--green); background:rgba(0,194,111,0.1); text-transform:uppercase; letter-spacing:0.5px; }
+.badge-pro { font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(0,194,111,0.35); color:var(--green); background:rgba(0,194,111,0.1); text-transform:uppercase; letter-spacing:0.5px; }
 
 /* HERO */
 .hero { padding:3rem 1.5rem 2rem; text-align:center; position:relative; overflow:hidden; }
@@ -41,10 +42,26 @@ header {
 .hero h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; letter-spacing:-1px; line-height:1.1; margin-bottom:.75rem; }
 .hero h1 .hl { color:var(--blue); }
 .hero h1 .hl2 { color:var(--green); }
-.hero p { font-size:.95rem; color:var(--muted); max-width:440px; margin:0 auto; line-height:1.65; }
+.hero h1 .hl3 { color:var(--orange); }
+.hero p { font-size:.95rem; color:var(--muted); max-width:480px; margin:0 auto; line-height:1.65; }
+
+/* TYPE TABS */
+.type-tabs { max-width:580px; margin:0 auto 0; padding:0 1rem; }
+.tabs-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.type-tab { padding:1.1rem 1rem; border-radius:var(--r2); border:2px solid var(--line); background:var(--ink2); cursor:pointer; text-align:center; transition:all .25s cubic-bezier(.34,1.56,.64,1); }
+.type-tab:hover { border-color:rgba(255,255,255,.2); transform:translateY(-2px); }
+.type-tab .tab-icon { font-size:2rem; margin-bottom:.5rem; display:block; }
+.type-tab .tab-title { font-family:'Bricolage Grotesque',sans-serif; font-size:15px; font-weight:700; margin-bottom:.25rem; }
+.type-tab .tab-sub { font-size:12px; color:var(--muted); line-height:1.5; }
+.type-tab.act-mec { border-color:var(--green); background:rgba(0,194,111,.08); box-shadow:0 0 24px var(--greenglow); }
+.type-tab.act-garage { border-color:var(--orange); background:rgba(255,107,44,.08); box-shadow:0 0 24px var(--orangeglow); }
+.type-tab .tab-badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; margin-top:.4rem; }
+.type-tab.act-mec .tab-badge { background:rgba(0,194,111,.2); color:var(--green); border:1px solid rgba(0,194,111,.35); }
+.type-tab.act-garage .tab-badge { background:rgba(255,107,44,.2); color:var(--orange); border:1px solid rgba(255,107,44,.35); }
 
 /* PROGRESS */
-.progress-wrap { max-width:580px; margin:1.5rem auto 0; padding:0 1.5rem; }
+.progress-wrap { max-width:580px; margin:1.5rem auto 0; padding:0 1.5rem; display:none; }
+.progress-wrap.show { display:block; }
 .steps-row { display:flex; align-items:center; }
 .step-dot { display:flex; flex-direction:column; align-items:center; gap:5px; flex:0 0 auto; }
 .step-circle { width:33px; height:33px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; background:var(--ink2); color:var(--muted2); border:1.5px solid var(--line); transition:all .3s; }
@@ -56,29 +73,37 @@ header {
 .step-line { flex:1; height:1.5px; background:var(--line); margin-bottom:18px; transition:background .4s; }
 .step-line.done { background:var(--green); }
 
-/* CONTAINER & CARDS */
+/* CONTAINER */
 .container { max-width:580px; margin:1.5rem auto 0; padding:0 1rem; }
+.form-panel { display:none; }
+.form-panel.show { display:block; }
 .form-card { background:var(--ink2); border-radius:var(--r2); border:1px solid var(--line); padding:1.75rem; margin-bottom:1rem; }
 .section-title { font-size:13px; font-weight:600; color:#fff; margin-bottom:1.25rem; padding-bottom:.85rem; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px; }
 .section-icon { width:30px; height:30px; border-radius:8px; background:var(--bluelt); border:1px solid rgba(26,60,255,0.25); display:flex; align-items:center; justify-content:center; font-size:15px; }
+.section-icon.orange { background:var(--orangelt); border-color:rgba(255,107,44,.25); }
+.section-icon.green { background:var(--greenlt); border-color:rgba(0,194,111,.25); }
 
 /* FIELDS */
 .field { margin-bottom:1rem; }
 .field-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 label { display:block; font-size:12px; font-weight:600; color:var(--muted); margin-bottom:5px; }
 label .req { color:var(--blue); }
-input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+input[type="text"],input[type="email"],input[type="tel"],input[type="number"],select,textarea {
   width:100%; padding:11px 14px;
   background:rgba(255,255,255,0.05); border:1.5px solid var(--line);
   border-radius:var(--r); font-size:14px; color:#fff;
-  font-family:'DM Sans',sans-serif; transition:border-color .2s, box-shadow .2s;
+  font-family:'DM Sans',sans-serif; transition:border-color .2s,box-shadow .2s;
   -webkit-appearance:none; appearance:none;
 }
-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M5 7L0 2h10z' fill='%23666'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-color:rgba(255,255,255,0.05); padding-right:32px; }
+select {
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M5 7L0 2h10z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 12px center;
+  background-color:rgba(255,255,255,0.05); padding-right:32px;
+}
 select option { background:#1C2040; color:#fff; }
-input::placeholder, textarea::placeholder { color:rgba(255,255,255,0.2); }
-input:focus, select:focus, textarea:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blueglow); background:rgba(26,60,255,0.07); }
-input.err, select.err { border-color:#f87171; }
+input::placeholder,textarea::placeholder { color:rgba(255,255,255,0.2); }
+input:focus,select:focus,textarea:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blueglow); background:rgba(26,60,255,0.07); }
+input.err,select.err { border-color:#f87171; }
 .err-msg { font-size:12px; color:#f87171; margin-top:4px; display:none; }
 .field.has-err .err-msg { display:block; }
 
@@ -106,6 +131,9 @@ input[type="range"] { flex:1; height:4px; -webkit-appearance:none; appearance:no
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--blue); cursor:pointer; border:2px solid var(--ink); box-shadow:0 0 0 2px var(--blue); }
 .radius-val { font-size:20px; font-weight:800; min-width:76px; text-align:right; letter-spacing:-0.5px; }
 
+/* PRICING HINT */
+.pricing-hint { font-size:12px; color:var(--muted2); margin-top:6px; line-height:1.5; }
+
 /* BUTTONS */
 .nav-row { display:flex; gap:10px; margin-top:1.5rem; }
 .btn { flex:1; padding:13px; border-radius:var(--r); font-size:15px; font-weight:700; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; transition:all .2s; }
@@ -113,6 +141,10 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px;
 .btn-primary:hover { background:var(--blue2); }
 .btn-primary:active { transform:scale(0.98); }
 .btn-primary:disabled { opacity:.6; cursor:not-allowed; }
+.btn-primary.green { background:var(--green); box-shadow:0 0 20px var(--greenglow); }
+.btn-primary.green:hover { background:#00a85e; }
+.btn-primary.orange { background:var(--orange); box-shadow:0 0 20px var(--orangeglow); }
+.btn-primary.orange:hover { background:#e5601f; }
 .btn-secondary { background:rgba(255,255,255,0.05); color:var(--muted); border:1px solid var(--line); flex:0 0 auto; padding:13px 20px; }
 .btn-secondary:hover { border-color:rgba(255,255,255,0.18); color:#fff; }
 .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:middle; margin-right:6px; }
@@ -130,9 +162,11 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px;
 .success-card h2 span { color:var(--green); }
 .success-card p { color:var(--muted); font-size:14px; line-height:1.65; max-width:320px; margin:0 auto 1.5rem; }
 .ref-box { background:rgba(26,60,255,0.12); border-radius:var(--r); padding:10px 18px; font-family:monospace; font-size:13px; color:var(--blue); display:inline-block; margin-bottom:1.75rem; border:1px solid rgba(26,60,255,0.25); }
-
-/* FB ERROR */
 .fb-err { background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.25); color:#f87171; padding:10px 14px; border-radius:var(--r); font-size:13px; margin-bottom:1rem; display:none; }
+
+/* INFO BOX */
+.info-box { background:rgba(0,194,111,.08); border:1px solid rgba(0,194,111,.2); border-radius:var(--r); padding:12px 14px; font-size:13px; color:rgba(0,194,111,.9); line-height:1.6; margin-bottom:1.5rem; }
+.info-box.orange { background:rgba(255,107,44,.08); border-color:rgba(255,107,44,.2); color:rgba(255,107,44,.9); }
 
 @media(max-width:480px){
   header { padding:1rem 1.25rem; }
@@ -146,16 +180,35 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px;
 
 <header>
   <div class="logo">Gre<span>az</span></div>
-  <span class="badge-mec">● Mécaniciens</span>
+  <span class="badge-pro">● Rejoindre le réseau</span>
 </header>
 
 <div class="hero">
-  <div class="hero-pill"><span class="pill-dot"></span> Rejoins le réseau mobile au Québec</div>
-  <h1>Travaille <span class="hl">à ton rythme.</span><br><span class="hl2">Où tu veux.</span></h1>
-  <p>Tu choisis tes heures, ton rayon, tes spécialités. Greaz t'envoie les missions directement.</p>
+  <div class="hero-pill"><span class="pill-dot"></span> Rejoins la plateforme #1 au Québec</div>
+  <h1>Travaille <span class="hl">à ton rythme.</span><br><span class="hl2">Mécanicien</span> ou <span class="hl3">garage.</span></h1>
+  <p>Greaz connecte les clients avec des pros vérifiés. Choisis ton profil et rejoins le réseau.</p>
 </div>
 
-<div class="progress-wrap">
+<!-- TYPE SELECTOR -->
+<div class="type-tabs" id="type-selector">
+  <div class="tabs-row">
+    <div class="type-tab" id="tab-mec" onclick="selectType('mec')">
+      <span class="tab-icon">👨‍🔧</span>
+      <div class="tab-title">Je suis mécanicien</div>
+      <div class="tab-sub">Mobile, indépendant, je me déplace chez les clients.</div>
+      <span class="tab-badge" id="badge-mec" style="display:none">✓ Sélectionné</span>
+    </div>
+    <div class="type-tab" id="tab-garage" onclick="selectType('garage')">
+      <span class="tab-icon">🏪</span>
+      <div class="tab-title">J'ai un garage</div>
+      <div class="tab-sub">Atelier physique, je reçois les véhicules dans mes baies.</div>
+      <span class="tab-badge" id="badge-garage" style="display:none">✓ Sélectionné</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS (mécanicien seulement) -->
+<div class="progress-wrap" id="mec-progress">
   <div class="steps-row">
     <div class="step-dot active" data-step="1"><div class="step-circle">1</div><div class="step-label">Profil</div></div>
     <div class="step-line" id="line-1-2"></div>
@@ -169,163 +222,287 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px;
 
 <div class="container">
 
-  <!-- STEP 1 -->
-  <div class="step-screen active" id="step-1">
+  <!-- ════════════════ MÉCANICIEN ════════════════ -->
+  <div class="form-panel" id="panel-mec">
+
+    <!-- MEC STEP 1 -->
+    <div class="step-screen active" id="mec-step-1">
+      <div class="info-box">👨‍🔧 Tu rejoins le réseau de mécaniciens mobiles Greaz. Tu choisis tes horaires, ton rayon et tes spécialités.</div>
+      <div class="form-card">
+        <div class="section-title"><div class="section-icon">👤</div> Informations personnelles</div>
+        <div class="field-row">
+          <div class="field" id="mf-prenom"><label>Prénom <span class="req">*</span></label><input type="text" id="m_prenom" placeholder="Jean" autocomplete="given-name"><div class="err-msg">Champ requis.</div></div>
+          <div class="field" id="mf-nom"><label>Nom <span class="req">*</span></label><input type="text" id="m_nom" placeholder="Tremblay" autocomplete="family-name"><div class="err-msg">Champ requis.</div></div>
+        </div>
+        <div class="field" id="mf-email"><label>Courriel <span class="req">*</span></label><input type="email" id="m_email" placeholder="jean@exemple.com" autocomplete="email"><div class="err-msg">Adresse courriel invalide.</div></div>
+        <div class="field" id="mf-tel">
+          <label>Téléphone <span class="req">*</span></label>
+          <input type="tel" id="m_tel" placeholder="514 555-1234" autocomplete="tel" oninput="vPhoneMec(this)">
+          <div class="err-msg" id="m-tel-err">Numéro canadien invalide (10 chiffres).</div>
+        </div>
+        <div class="field-row">
+          <div class="field" id="mf-ville"><label>Ville principale <span class="req">*</span></label>
+            <select id="m_ville">
+              <option value="">Choisir...</option>
+              <option>Montréal</option><option>Laval</option><option>Longueuil</option>
+              <option>Québec</option><option>Gatineau</option><option>Sherbrooke</option>
+              <option>Saguenay</option><option>Lévis</option><option>Trois-Rivières</option>
+              <option>Terrebonne</option><option>Autre</option>
+            </select>
+            <div class="err-msg">Sélectionne une ville.</div>
+          </div>
+          <div class="field"><label>Années d'expérience</label>
+            <select id="m_experience">
+              <option value="">Sélectionner...</option>
+              <option>Moins de 1 an</option><option>1 à 3 ans</option>
+              <option>3 à 5 ans</option><option>5 à 10 ans</option><option>Plus de 10 ans</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>Numéro de licence (optionnel)</label><input type="text" id="m_licence" placeholder="QC-MEC-12345"></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-secondary" onclick="selectType(null)">← Changer</button>
+        <button class="btn btn-primary green" onclick="mecGoStep(2)">Continuer →</button>
+      </div>
+    </div>
+
+    <!-- MEC STEP 2 -->
+    <div class="step-screen" id="mec-step-2">
+      <div class="form-card">
+        <div class="section-title"><div class="section-icon">🚗</div> Types de véhicules acceptés</div>
+        <div class="field" id="mf-vehicules">
+          <div class="check-grid" id="m-vehicules-grid">
+            <label class="check-item"><input type="checkbox" value="Berline / Compacte"><span class="chk-box">✓</span> Berline / Compacte</label>
+            <label class="check-item"><input type="checkbox" value="SUV / VUS"><span class="chk-box">✓</span> SUV / VUS</label>
+            <label class="check-item"><input type="checkbox" value="Camionnette"><span class="chk-box">✓</span> Camionnette</label>
+            <label class="check-item"><input type="checkbox" value="Fourgonnette"><span class="chk-box">✓</span> Fourgonnette</label>
+            <label class="check-item"><input type="checkbox" value="Électrique / Hybride"><span class="chk-box">✓</span> Électrique / Hybride</label>
+            <label class="check-item"><input type="checkbox" value="Diesel"><span class="chk-box">✓</span> Diesel</label>
+            <label class="check-item"><input type="checkbox" value="Camion lourd"><span class="chk-box">✓</span> Camion lourd</label>
+            <label class="check-item"><input type="checkbox" value="Moto / Scooter"><span class="chk-box">✓</span> Moto / Scooter</label>
+            <label class="check-item"><input type="checkbox" value="VR / Motorisé"><span class="chk-box">✓</span> VR / Motorisé</label>
+            <label class="check-item"><input type="checkbox" value="Bateau"><span class="chk-box">✓</span> Bateau</label>
+          </div>
+          <div class="err-msg" id="m-err-vehicules">Sélectionne au moins un type.</div>
+        </div>
+      </div>
+      <div class="form-card">
+        <div class="section-title"><div class="section-icon">🔧</div> Spécialités / Services offerts</div>
+        <div class="check-grid" id="m-services-grid">
+          <label class="check-item"><input type="checkbox" value="Vidange / huile"><span class="chk-box">✓</span> Vidange / huile</label>
+          <label class="check-item"><input type="checkbox" value="Freins"><span class="chk-box">✓</span> Freins</label>
+          <label class="check-item"><input type="checkbox" value="Batterie / Électrique"><span class="chk-box">✓</span> Batterie / Électrique</label>
+          <label class="check-item"><input type="checkbox" value="Pneus / Jantes"><span class="chk-box">✓</span> Pneus / Jantes</label>
+          <label class="check-item"><input type="checkbox" value="Courroie / Distribution"><span class="chk-box">✓</span> Courroie</label>
+          <label class="check-item"><input type="checkbox" value="Diagnostic / OBD"><span class="chk-box">✓</span> Diagnostic</label>
+          <label class="check-item"><input type="checkbox" value="Suspension"><span class="chk-box">✓</span> Suspension</label>
+          <label class="check-item"><input type="checkbox" value="Climatisation"><span class="chk-box">✓</span> Climatisation</label>
+          <label class="check-item"><input type="checkbox" value="Transmission"><span class="chk-box">✓</span> Transmission</label>
+          <label class="check-item"><input type="checkbox" value="Inspection pré-achat"><span class="chk-box">✓</span> Inspection</label>
+          <label class="check-item"><input type="checkbox" value="Lumières / Phares"><span class="chk-box">✓</span> Phares</label>
+          <label class="check-item"><input type="checkbox" value="Check engine"><span class="chk-box">✓</span> Check engine</label>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-secondary" onclick="mecGoStep(1)">← Retour</button>
+        <button class="btn btn-primary green" onclick="mecGoStep(3)">Continuer →</button>
+      </div>
+    </div>
+
+    <!-- MEC STEP 3 -->
+    <div class="step-screen" id="mec-step-3">
+      <div class="form-card">
+        <div class="section-title"><div class="section-icon">🗓️</div> Disponibilités habituelles</div>
+        <div class="schedule-grid" id="m-schedule-grid">
+          <div class="sg-head">Jour</div>
+          <div class="sg-head">Matin<br><span style="font-weight:400;font-size:9px;opacity:.6">8h–12h</span></div>
+          <div class="sg-head">Après-midi<br><span style="font-weight:400;font-size:9px;opacity:.6">12h–17h</span></div>
+          <div class="sg-head">Soir<br><span style="font-weight:400;font-size:9px;opacity:.6">17h–21h</span></div>
+        </div>
+        <p style="font-size:12px;color:var(--muted2);margin-top:.875rem">Clique pour activer ou désactiver une plage.</p>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-secondary" onclick="mecGoStep(2)">← Retour</button>
+        <button class="btn btn-primary green" onclick="mecGoStep(4)">Continuer →</button>
+      </div>
+    </div>
+
+    <!-- MEC STEP 4 -->
+    <div class="step-screen" id="mec-step-4">
+      <div class="form-card">
+        <div class="section-title"><div class="section-icon">📍</div> Rayon de déplacement</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.6">Jusqu'à quelle distance es-tu prêt à te déplacer ?</p>
+        <div class="radius-row">
+          <input type="range" id="m_rayon" min="5" max="100" value="30" step="5" oninput="document.getElementById('m-rayon-val').textContent=this.value+' km'">
+          <div class="radius-val" id="m-rayon-val">30 km</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted2);margin-top:6px"><span>5 km</span><span>100 km</span></div>
+      </div>
+      <div class="form-card">
+        <div class="section-title"><div class="section-icon green">📷</div> Photo de profil <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
+        <div style="display:flex;align-items:center;gap:14px">
+          <div id="m-logo-preview" style="width:64px;height:64px;border-radius:50%;background:rgba(0,194,111,.12);border:2px solid rgba(0,194,111,.3);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;background-size:cover;background-position:center">👨‍🔧</div>
+          <div>
+            <label for="m_logo" style="display:inline-block;padding:8px 16px;background:rgba(255,255,255,.07);border:1.5px solid var(--line);border-radius:var(--r);cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s">📁 Choisir un fichier</label>
+            <input type="file" id="m_logo" accept="image/*" style="display:none" onchange="previewLogo(this,'m-logo-preview')">
+            <div style="font-size:11px;color:var(--muted2);margin-top:5px">JPG, PNG, WebP · Max 5MB</div>
+          </div>
+        </div>
+      </div>
+        <input type="text" id="m_pricing" placeholder="Vidange: 49$, Freins: 149$, Pneus: 79$">
+        <p class="pricing-hint">Format : Service: Prix$, séparés par des virgules. Affiché sur ta fiche Greaz.</p>
+      </div>
+      <div class="form-card">
+        <div class="section-title"><div class="section-icon">💬</div> Bio courte <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
+        <textarea id="m_bio" rows="3" placeholder="Ex : Mécanicien certifié depuis 8 ans, spécialisé en freins et suspension. Ponctuel et sérieux."></textarea>
+        <div class="fb-err" id="m-fb-err"></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-secondary" onclick="mecGoStep(3)">← Retour</button>
+        <button class="btn btn-primary green" id="m-submit-btn" onclick="submitMec()">Envoyer ma candidature ✓</button>
+      </div>
+    </div>
+
+    <!-- MEC SUCCESS -->
+    <div class="step-screen" id="mec-step-success">
+      <div class="success-card">
+        <div class="success-icon">✅</div>
+        <h2>Candidature <span>reçue !</span></h2>
+        <p>Notre équipe va examiner ton profil et te contacter dans les 24–48h. Bienvenue dans la famille Greaz.</p>
+        <div class="ref-box" id="m-ref-num"></div><br>
+        <button class="btn btn-primary green" onclick="location.reload()" style="max-width:260px;margin:0 auto;display:block">Nouvelle candidature</button>
+      </div>
+    </div>
+
+  </div><!-- /panel-mec -->
+
+  <!-- ════════════════ GARAGE ════════════════ -->
+  <div class="form-panel" id="panel-garage">
+
+    <div class="info-box orange">🏪 Inscris ton garage sur Greaz et commence à recevoir des clients de qualité directement dans tes baies. C'est gratuit pour commencer.</div>
+
     <div class="form-card">
-      <div class="section-title"><div class="section-icon">👤</div> Informations personnelles</div>
+      <div class="section-title"><div class="section-icon orange">🏪</div> Informations du garage</div>
+      <div class="field" id="gf-nom"><label>Nom du garage <span class="req">*</span></label><input type="text" id="g_nom" placeholder="Garage Tremblay Auto"><div class="err-msg">Champ requis.</div></div>
       <div class="field-row">
-        <div class="field" id="f-prenom">
-          <label>Prénom <span class="req">*</span></label>
-          <input type="text" id="prenom" placeholder="Jean" autocomplete="given-name">
-          <div class="err-msg">Champ requis.</div>
-        </div>
-        <div class="field" id="f-nom">
-          <label>Nom <span class="req">*</span></label>
-          <input type="text" id="nom" placeholder="Tremblay" autocomplete="family-name">
-          <div class="err-msg">Champ requis.</div>
-        </div>
-      </div>
-      <div class="field" id="f-email">
-        <label>Courriel <span class="req">*</span></label>
-        <input type="email" id="email" placeholder="jean@exemple.com" autocomplete="email">
-        <div class="err-msg">Adresse courriel invalide.</div>
-      </div>
-      <div class="field" id="f-tel">
-        <label>Téléphone <span class="req">*</span></label>
-        <input type="tel" id="tel" placeholder="514 555-1234" autocomplete="tel">
-        <div class="err-msg">Champ requis.</div>
-      </div>
-      <div class="field-row">
-        <div class="field" id="f-ville">
-          <label>Ville principale <span class="req">*</span></label>
-          <select id="ville">
+        <div class="field" id="gf-ville"><label>Ville <span class="req">*</span></label>
+          <select id="g_ville">
             <option value="">Choisir...</option>
             <option>Montréal</option><option>Laval</option><option>Longueuil</option>
             <option>Québec</option><option>Gatineau</option><option>Sherbrooke</option>
             <option>Saguenay</option><option>Lévis</option><option>Trois-Rivières</option>
             <option>Terrebonne</option><option>Autre</option>
           </select>
-          <div class="err-msg">Sélectionne une ville.</div>
+          <div class="err-msg">Champ requis.</div>
         </div>
-        <div class="field">
-          <label>Années d'expérience</label>
-          <select id="experience">
+      </div>
+      <div class="field" id="gf-addr"><label>Adresse complète <span class="req">*</span></label><input type="text" id="g_addr" placeholder="1234 Rue Principale, Montréal, QC H2X 1Y4"><div class="err-msg">Champ requis.</div></div>
+      <div class="field-row">
+        <div class="field" id="gf-tel">
+          <label>Téléphone <span class="req">*</span></label>
+          <input type="tel" id="g_tel" placeholder="514 555-1234" oninput="vPhoneGarage(this)">
+          <div class="err-msg" id="g-tel-err">Numéro canadien invalide.</div>
+        </div>
+        <div class="field" id="gf-email"><label>Courriel <span class="req">*</span></label><input type="email" id="g_email" placeholder="info@garage.com"><div class="err-msg">Courriel invalide.</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Nombre de baies</label>
+          <select id="g_baies">
+            <option value="">Sélectionner...</option>
+            <option>1–2 baies</option><option>3–5 baies</option>
+            <option>6–10 baies</option><option>10+ baies</option>
+          </select>
+        </div>
+        <div class="field"><label>Années en activité</label>
+          <select id="g_exp">
             <option value="">Sélectionner...</option>
             <option>Moins de 1 an</option><option>1 à 3 ans</option>
             <option>3 à 5 ans</option><option>5 à 10 ans</option><option>Plus de 10 ans</option>
           </select>
         </div>
       </div>
-      <div class="field">
-        <label>Numéro de licence (optionnel)</label>
-        <input type="text" id="licence" placeholder="QC-MEC-12345">
-      </div>
-      <div class="nav-row">
-        <button class="btn btn-primary" onclick="goStep(2)">Continuer →</button>
-      </div>
     </div>
-  </div>
 
-  <!-- STEP 2 -->
-  <div class="step-screen" id="step-2">
     <div class="form-card">
-      <div class="section-title"><div class="section-icon">🚗</div> Types de véhicules acceptés</div>
-      <div id="f-vehicules" class="field">
-        <div class="check-grid" id="vehicules-grid">
-          <label class="check-item"><input type="checkbox" value="Berline / Compacte"><span class="chk-box">✓</span> Berline / Compacte</label>
-          <label class="check-item"><input type="checkbox" value="SUV / VUS"><span class="chk-box">✓</span> SUV / VUS</label>
-          <label class="check-item"><input type="checkbox" value="Camionnette"><span class="chk-box">✓</span> Camionnette</label>
-          <label class="check-item"><input type="checkbox" value="Fourgonnette"><span class="chk-box">✓</span> Fourgonnette</label>
-          <label class="check-item"><input type="checkbox" value="Électrique / Hybride"><span class="chk-box">✓</span> Électrique / Hybride</label>
-          <label class="check-item"><input type="checkbox" value="Diesel"><span class="chk-box">✓</span> Diesel</label>
-          <label class="check-item"><input type="checkbox" value="Camion lourd"><span class="chk-box">✓</span> Camion lourd</label>
-          <label class="check-item"><input type="checkbox" value="Moto / Scooter"><span class="chk-box">✓</span> Moto / Scooter</label>
-          <label class="check-item"><input type="checkbox" value="VR / Motorisé"><span class="chk-box">✓</span> VR / Motorisé</label>
-          <label class="check-item"><input type="checkbox" value="Bateau"><span class="chk-box">✓</span> Bateau</label>
-        </div>
-        <div class="err-msg" id="err-vehicules">Sélectionne au moins un type.</div>
-      </div>
-    </div>
-    <div class="form-card">
-      <div class="section-title"><div class="section-icon">🔧</div> Spécialités / Services offerts</div>
-      <div class="check-grid" id="services-grid">
+      <div class="section-title"><div class="section-icon orange">🔧</div> Services offerts</div>
+      <div class="check-grid" id="g-services-grid">
         <label class="check-item"><input type="checkbox" value="Vidange / huile"><span class="chk-box">✓</span> Vidange / huile</label>
         <label class="check-item"><input type="checkbox" value="Freins"><span class="chk-box">✓</span> Freins</label>
-        <label class="check-item"><input type="checkbox" value="Batterie / Électrique"><span class="chk-box">✓</span> Batterie / Électrique</label>
         <label class="check-item"><input type="checkbox" value="Pneus / Jantes"><span class="chk-box">✓</span> Pneus / Jantes</label>
-        <label class="check-item"><input type="checkbox" value="Courroie / Distribution"><span class="chk-box">✓</span> Courroie / Distribution</label>
-        <label class="check-item"><input type="checkbox" value="Diagnostic / OBD"><span class="chk-box">✓</span> Diagnostic / OBD</label>
+        <label class="check-item"><input type="checkbox" value="Batterie / Électrique"><span class="chk-box">✓</span> Batterie</label>
+        <label class="check-item"><input type="checkbox" value="Diagnostic / OBD"><span class="chk-box">✓</span> Diagnostic</label>
         <label class="check-item"><input type="checkbox" value="Suspension"><span class="chk-box">✓</span> Suspension</label>
         <label class="check-item"><input type="checkbox" value="Climatisation"><span class="chk-box">✓</span> Climatisation</label>
         <label class="check-item"><input type="checkbox" value="Transmission"><span class="chk-box">✓</span> Transmission</label>
-        <label class="check-item"><input type="checkbox" value="Inspection pré-achat"><span class="chk-box">✓</span> Inspection pré-achat</label>
-        <label class="check-item"><input type="checkbox" value="Lumières / Phares"><span class="chk-box">✓</span> Lumières / Phares</label>
+        <label class="check-item"><input type="checkbox" value="Carrosserie"><span class="chk-box">✓</span> Carrosserie</label>
+        <label class="check-item"><input type="checkbox" value="Inspection pré-achat"><span class="chk-box">✓</span> Inspection</label>
         <label class="check-item"><input type="checkbox" value="Check engine"><span class="chk-box">✓</span> Check engine</label>
+        <label class="check-item"><input type="checkbox" value="Courroie / Distribution"><span class="chk-box">✓</span> Distribution</label>
       </div>
     </div>
-    <div class="nav-row">
-      <button class="btn btn-secondary" onclick="goStep(1)">← Retour</button>
-      <button class="btn btn-primary" onclick="goStep(3)">Continuer →</button>
-    </div>
-  </div>
 
-  <!-- STEP 3 -->
-  <div class="step-screen" id="step-3">
     <div class="form-card">
-      <div class="section-title"><div class="section-icon">🗓️</div> Disponibilités habituelles</div>
-      <div class="schedule-grid" id="schedule-grid">
+      <div class="section-title"><div class="section-icon orange">🗓️</div> Horaires d'ouverture</div>
+      <div class="schedule-grid" id="g-schedule-grid">
         <div class="sg-head">Jour</div>
         <div class="sg-head">Matin<br><span style="font-weight:400;font-size:9px;opacity:.6">8h–12h</span></div>
         <div class="sg-head">Après-midi<br><span style="font-weight:400;font-size:9px;opacity:.6">12h–17h</span></div>
         <div class="sg-head">Soir<br><span style="font-weight:400;font-size:9px;opacity:.6">17h–21h</span></div>
       </div>
-      <p style="font-size:12px;color:var(--muted2);margin-top:.875rem">Clique pour activer ou désactiver une plage.</p>
     </div>
-    <div class="nav-row">
-      <button class="btn btn-secondary" onclick="goStep(2)">← Retour</button>
-      <button class="btn btn-primary" onclick="goStep(4)">Continuer →</button>
-    </div>
-  </div>
 
-  <!-- STEP 4 -->
-  <div class="step-screen" id="step-4">
     <div class="form-card">
-      <div class="section-title"><div class="section-icon">📍</div> Rayon de déplacement</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.6">Jusqu'à quelle distance es-tu prêt à te déplacer pour un client ?</p>
-      <div class="radius-row">
-        <input type="range" id="rayon-slider" min="5" max="100" value="30" step="5" oninput="document.getElementById('rayon-val').textContent=this.value+' km'">
-        <div class="radius-val" id="rayon-val">30 km</div>
+      <div class="section-title"><div class="section-icon orange">💰</div> Tarifs indicatifs <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
+      <input type="text" id="g_pricing" placeholder="Vidange: 49$, Freins: 149$, Pneus: 79$">
+      <p class="pricing-hint">Format : Service: Prix$, séparés par des virgules. Affiché sur ta fiche Greaz.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="section-title"><div class="section-icon orange">📷</div> Logo du garage <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div id="g-logo-preview" style="width:64px;height:64px;border-radius:50%;background:rgba(255,107,44,.12);border:2px solid rgba(255,107,44,.3);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;background-size:cover;background-position:center">🏪</div>
+        <div>
+          <label for="g_logo" style="display:inline-block;padding:8px 16px;background:rgba(255,255,255,.07);border:1.5px solid var(--line);border-radius:var(--r);cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s">📁 Choisir un fichier</label>
+          <input type="file" id="g_logo" accept="image/*" style="display:none" onchange="previewLogo(this,'g-logo-preview')">
+          <div style="font-size:11px;color:var(--muted2);margin-top:5px">JPG, PNG, WebP · Max 5MB</div>
+        </div>
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted2);margin-top:6px"><span>5 km</span><span>100 km</span></div>
     </div>
+
     <div class="form-card">
-      <div class="section-title"><div class="section-icon">💬</div> Bio courte <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
-      <textarea id="bio" rows="3" placeholder="Ex: Mécanicien certifié depuis 8 ans, spécialisé en freins et suspension. Ponctuel et sérieux." style="width:100%;padding:11px 14px;background:rgba(255,255,255,0.05);border:1.5px solid var(--line);border-radius:var(--r);font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;resize:vertical;outline:none;"></textarea>
-      <div class="fb-err" id="fb-err"></div>
+      <div class="section-title"><div class="section-icon orange">💬</div> Description du garage <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
+      <textarea id="g_bio" rows="3" placeholder="Ex : Garage familial depuis 15 ans, spécialisé en véhicules européens. Équipement moderne, devis gratuit."></textarea>
+      <div class="fb-err" id="g-fb-err"></div>
     </div>
+
     <div class="nav-row">
-      <button class="btn btn-secondary" onclick="goStep(3)">← Retour</button>
-      <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">Envoyer ma candidature ✓</button>
+      <button class="btn btn-secondary" onclick="selectType(null)">← Changer</button>
+      <button class="btn btn-primary orange" id="g-submit-btn" onclick="submitGarage()">Inscrire mon garage →</button>
     </div>
-  </div>
 
-  <!-- SUCCESS -->
-  <div class="step-screen" id="step-success">
-    <div class="success-card">
-      <div class="success-icon">✅</div>
-      <h2>Candidature <span>reçue !</span></h2>
-      <p>Notre équipe va examiner ton profil et te contacter dans les 24–48h. Bienvenue dans la famille Greaz.</p>
-      <div class="ref-box" id="ref-num"></div><br>
-      <button class="btn btn-primary" onclick="location.reload()" style="max-width:260px;margin:0 auto;display:block">Nouvelle candidature</button>
+    <!-- GARAGE SUCCESS -->
+    <div id="garage-success" style="display:none">
+      <div class="success-card">
+        <div class="success-icon">🎉</div>
+        <h2>Inscription <span>reçue !</span></h2>
+        <p>L'équipe Greaz va vous contacter dans les 24–48h pour finaliser votre profil sur la plateforme.</p>
+        <div class="ref-box" id="g-ref-num"></div><br>
+        <button class="btn btn-primary orange" onclick="location.reload()" style="max-width:260px;margin:0 auto;display:block">Nouvelle inscription</button>
+      </div>
     </div>
-  </div>
 
-</div>
+  </div><!-- /panel-garage -->
+
+</div><!-- /container -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-/* ── Firebase ── */
+emailjs.init({ publicKey: "COLLE_TA_CLE_PUBLIQUE_ICI" });
+
 var db;
 try {
   firebase.initializeApp({
@@ -337,149 +514,283 @@ try {
     appId:"1:165170790975:web:38fe20428046e6328b6e8a"
   });
   db = firebase.firestore();
-} catch(e) { console.error("Firebase:", e); }
+  var storage = firebase.storage();
+} catch(e){ console.error("Firebase:", e); }
 
-/* ── Schedule state ── */
 var DAYS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-var schedule = {};
-DAYS.forEach(function(d){ schedule[d] = {matin:false, aprem:false, soir:false}; });
+var mecSchedule = {}, garageSchedule = {};
+DAYS.forEach(function(d){ mecSchedule[d]={matin:false,aprem:false,soir:false}; garageSchedule[d]={matin:false,aprem:false,soir:false}; });
 
-/* ── Step ── */
-var currentStep = 1;
+var mecCurrentStep = 1;
 
-/* ── Init DOM ── */
-document.addEventListener('DOMContentLoaded', function(){
+/* ── LOGO UPLOAD ── */
+function previewLogo(input, previewId){
+  var file = input.files[0]; if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var el = document.getElementById(previewId);
+    el.style.backgroundImage = 'url('+e.target.result+')';
+    el.style.backgroundSize = 'cover';
+    el.style.backgroundPosition = 'center';
+    el.textContent = '';
+  };
+  reader.readAsDataURL(file);
+}
 
-  /* Build schedule grid */
-  var grid = document.getElementById('schedule-grid');
-  DAYS.forEach(function(day){
-    var dl = document.createElement('div'); dl.className = 'sg-day'; dl.textContent = day; grid.appendChild(dl);
-    ['matin','aprem','soir'].forEach(function(slot){
-      var cell = document.createElement('div'); cell.className = 'sg-cell';
-      var btn = document.createElement('button'); btn.className = 'slot-btn'; btn.textContent = '—'; btn.type = 'button';
-      btn.onclick = function(){
-        schedule[day][slot] = !schedule[day][slot];
-        btn.classList.toggle('on', schedule[day][slot]);
-        btn.textContent = schedule[day][slot] ? '✓' : '—';
+async function uploadLogo(inputId, folder){
+  var input = document.getElementById(inputId);
+  if(!input || !input.files || !input.files[0]) return null;
+  var file = input.files[0];
+  return new Promise(function(resolve, reject){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var img = new Image();
+      img.onload = function(){
+        var canvas = document.createElement('canvas');
+        var maxSize = 400;
+        var ratio = Math.min(maxSize/img.width, maxSize/img.height, 1);
+        canvas.width = img.width*ratio;
+        canvas.height = img.height*ratio;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(function(blob){
+          var ref = firebase.storage().ref(folder+'/'+Date.now()+'.jpg');
+          ref.put(blob).then(function(snap){
+            snap.ref.getDownloadURL().then(resolve).catch(reject);
+          }).catch(reject);
+        }, 'image/jpeg', 0.75);
       };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ── TYPE SELECTOR ── */
+function selectType(type){
+  document.getElementById('tab-mec').className = 'type-tab' + (type==='mec' ? ' act-mec' : '');
+  document.getElementById('tab-garage').className = 'type-tab' + (type==='garage' ? ' act-garage' : '');
+  document.getElementById('badge-mec').style.display = type==='mec' ? 'inline-block' : 'none';
+  document.getElementById('badge-garage').style.display = type==='garage' ? 'inline-block' : 'none';
+  document.getElementById('panel-mec').className = 'form-panel' + (type==='mec' ? ' show' : '');
+  document.getElementById('panel-garage').className = 'form-panel' + (type==='garage' ? ' show' : '');
+  document.getElementById('mec-progress').className = 'progress-wrap' + (type==='mec' ? ' show' : '');
+  if(type) window.scrollTo({top:document.getElementById('type-selector').offsetTop - 80, behavior:'smooth'});
+  else { mecCurrentStep=1; resetMecSteps(); }
+}
+
+/* ── MEC STEPS ── */
+function mecGoStep(n){
+  if(n > mecCurrentStep && !mecValidateStep(mecCurrentStep)) return;
+  document.getElementById('mec-step-'+mecCurrentStep).classList.remove('active');
+  document.getElementById('mec-step-'+n).classList.add('active');
+  document.querySelectorAll('.step-dot').forEach(function(d){
+    var s=parseInt(d.dataset.step); d.classList.remove('active','done');
+    if(s<n) d.classList.add('done'); else if(s===n) d.classList.add('active');
+  });
+  ['line-1-2','line-2-3','line-3-4'].forEach(function(id,i){
+    document.getElementById(id).classList.toggle('done', n>i+1);
+  });
+  mecCurrentStep=n;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function resetMecSteps(){
+  document.querySelectorAll('[id^="mec-step-"]').forEach(function(el){ el.classList.remove('active'); });
+  var s = document.getElementById('mec-step-1'); if(s) s.classList.add('active');
+  document.querySelectorAll('.step-dot').forEach(function(d){ d.classList.remove('active','done'); if(parseInt(d.dataset.step)===1) d.classList.add('active'); });
+  document.querySelectorAll('.step-line').forEach(function(l){ l.classList.remove('done'); });
+}
+
+function mecValidateStep(step){
+  var ok=true;
+  if(step===1){
+    [{id:'m_prenom',fid:'mf-prenom',type:'text'},
+     {id:'m_nom',   fid:'mf-nom',   type:'text'},
+     {id:'m_email', fid:'mf-email', type:'email'},
+     {id:'m_tel',   fid:'mf-tel',   type:'phone'},
+     {id:'m_ville', fid:'mf-ville', type:'select'}
+    ].forEach(function(f){
+      var el=document.getElementById(f.id), fd=document.getElementById(f.fid);
+      var v=el.value.trim();
+      var valid = f.type==='email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+               : f.type==='phone' ? /^[2-9]\d{2}[2-9]\d{6}$/.test(v.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"")) && v.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"").length===10
+               : v.length>0;
+      fd.classList.toggle('has-err',!valid); el.classList.toggle('err',!valid);
+      if(!valid) ok=false;
+    });
+  }
+  if(step===2){
+    var sel=document.querySelectorAll('#m-vehicules-grid .check-item.sel');
+    var err=document.getElementById('m-err-vehicules');
+    if(!sel.length){ err.style.display='block'; ok=false; } else err.style.display='none';
+  }
+  return ok;
+}
+
+function vPhoneMec(el){
+  var clean=el.value.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"");
+  var ok=/^[2-9]\d{2}[2-9]\d{6}$/.test(clean)&&clean.length===10;
+  el.style.borderColor=el.value.length>3?(ok?"#00C26F":"#f87171"):"";
+}
+function vPhoneGarage(el){
+  var clean=el.value.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"");
+  var ok=/^[2-9]\d{2}[2-9]\d{6}$/.test(clean)&&clean.length===10;
+  el.style.borderColor=el.value.length>3?(ok?"#00C26F":"#f87171"):"";
+}
+
+/* ── SCHEDULE BUILDER ── */
+function buildScheduleGrid(containerId, schedObj){
+  var grid=document.getElementById(containerId);
+  DAYS.forEach(function(day){
+    var dl=document.createElement('div'); dl.className='sg-day'; dl.textContent=day; grid.appendChild(dl);
+    ['matin','aprem','soir'].forEach(function(slot){
+      var cell=document.createElement('div'); cell.className='sg-cell';
+      var btn=document.createElement('button'); btn.className='slot-btn'; btn.textContent='—'; btn.type='button';
+      btn.onclick=function(){ schedObj[day][slot]=!schedObj[day][slot]; btn.classList.toggle('on',schedObj[day][slot]); btn.textContent=schedObj[day][slot]?'✓':'—'; };
       cell.appendChild(btn); grid.appendChild(cell);
     });
   });
+}
 
-  /* Wire checkboxes */
+function scheduleToStr(sched){
+  return Object.entries(sched).filter(function(e){ return Object.values(e[1]).some(Boolean); })
+    .map(function(e){
+      var s=e[1], slots=[];
+      if(s.matin) slots.push('Matin');
+      if(s.aprem) slots.push('Après-midi');
+      if(s.soir) slots.push('Soir');
+      return e[0]+': '+slots.join(', ');
+    }).join(' | ') || 'Non précisé';
+}
+
+/* ── WIRE CHECKBOXES ── */
+document.addEventListener('DOMContentLoaded', function(){
+  buildScheduleGrid('m-schedule-grid', mecSchedule);
+  buildScheduleGrid('g-schedule-grid', garageSchedule);
+
   document.querySelectorAll('.check-item input[type="checkbox"]').forEach(function(inp){
     inp.addEventListener('change', function(){
       inp.closest('.check-item').classList.toggle('sel', inp.checked);
     });
   });
-
 });
 
-/* ── Navigation ── */
-function goStep(n){
-  if(n > currentStep && !validateStep(currentStep)) return;
-
-  document.getElementById('step-'+currentStep).classList.remove('active');
-  document.getElementById('step-'+n).classList.add('active');
-
-  document.querySelectorAll('.step-dot').forEach(function(d){
-    var s = parseInt(d.dataset.step);
-    d.classList.remove('active','done');
-    if(s < n) d.classList.add('done');
-    else if(s === n) d.classList.add('active');
-  });
-
-  ['line-1-2','line-2-3','line-3-4'].forEach(function(id,i){
-    document.getElementById(id).classList.toggle('done', n > i+1);
-  });
-
-  currentStep = n;
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-/* ── Validation ── */
-function validateStep(step){
-  var ok = true;
-  if(step === 1){
-    [{id:'prenom',fid:'f-prenom',type:'text'},
-     {id:'nom',   fid:'f-nom',   type:'text'},
-     {id:'email', fid:'f-email', type:'email'},
-     {id:'tel',   fid:'f-tel',   type:'text'},
-     {id:'ville', fid:'f-ville', type:'select'}
-    ].forEach(function(f){
-      var el = document.getElementById(f.id);
-      var fd = document.getElementById(f.fid);
-      var v = el.value.trim();
-      var valid = f.type === 'email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) : v.length > 0;
-      fd.classList.toggle('has-err', !valid);
-      el.classList.toggle('err', !valid);
-      if(!valid) ok = false;
-    });
-  }
-  if(step === 2){
-    var sel = document.querySelectorAll('#vehicules-grid .check-item.sel');
-    var errEl = document.getElementById('err-vehicules');
-    if(sel.length === 0){ errEl.style.display='block'; ok=false; }
-    else errEl.style.display='none';
-  }
-  return ok;
-}
-
-/* ── Submit ── */
-async function submitForm(){
-  var btn = document.getElementById('submit-btn');
-  var errEl = document.getElementById('fb-err');
-  errEl.style.display = 'none';
-
-  var vehicules = Array.from(document.querySelectorAll('#vehicules-grid .check-item.sel input')).map(function(i){return i.value;});
-  var services  = Array.from(document.querySelectorAll('#services-grid .check-item.sel input')).map(function(i){return i.value;});
-
-  var scheduleStr = Object.entries(schedule)
-    .filter(function(e){ return Object.values(e[1]).some(Boolean); })
-    .map(function(e){
-      var s = e[1]; var slots = [];
-      if(s.matin) slots.push('Matin');
-      if(s.aprem) slots.push('Après-midi');
-      if(s.soir)  slots.push('Soir');
-      return e[0]+': '+slots.join(', ');
-    }).join(' | ') || 'Non précisé';
-
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Envoi en cours...';
-
+/* ── SUBMIT MEC ── */
+async function submitMec(){
+  var btn=document.getElementById('m-submit-btn'), errEl=document.getElementById('m-fb-err');
+  errEl.style.display='none';
+  var vehicules=Array.from(document.querySelectorAll('#m-vehicules-grid .check-item.sel input')).map(function(i){return i.value;});
+  var services=Array.from(document.querySelectorAll('#m-services-grid .check-item.sel input')).map(function(i){return i.value;});
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Envoi en cours...';
   try {
+    var photoUrl = await uploadLogo('m_logo', 'logos/mecaniciens').catch(function(){ return null; });
     await db.collection('mechanic_applications').add({
-      first_name:    document.getElementById('prenom').value.trim(),
-      last_name:     document.getElementById('nom').value.trim(),
-      phone:         document.getElementById('tel').value.trim(),
-      email:         document.getElementById('email').value.trim(),
-      city:          document.getElementById('ville').value,
-      experience:    document.getElementById('experience').value,
-      license:       document.getElementById('licence').value.trim(),
-      vehicle_types: vehicules.join(', ') || 'Non précisé',
-      services:      services.join(', ')  || 'Non précisé',
-      schedule:      scheduleStr,
-      radius:        document.getElementById('rayon-slider').value + ' km',
-      bio:           document.getElementById('bio').value.trim(),
-      status:        'nouveau',
-      source:        'mechanic-signup',
-      created_at:    firebase.firestore.FieldValue.serverTimestamp(),
+      first_name: document.getElementById('m_prenom').value.trim(),
+      last_name:  document.getElementById('m_nom').value.trim(),
+      phone:      document.getElementById('m_tel').value.trim(),
+      email:      document.getElementById('m_email').value.trim(),
+      city:       document.getElementById('m_ville').value,
+      experience: document.getElementById('m_experience').value,
+      license:    document.getElementById('m_licence').value.trim(),
+      vehicle_types: vehicules.join(', ')||'Non précisé',
+      services:      services.join(', ')||'Non précisé',
+      schedule:      scheduleToStr(mecSchedule),
+      radius:        document.getElementById('m_rayon').value+' km',
+      pricing:       document.getElementById('m_pricing').value.trim(),
+      bio:           document.getElementById('m_bio').value.trim(),
+      photo_url:     photoUrl || '',
+      status: 'nouveau', source: 'mechanic-signup',
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
     });
-
-    /* Succès */
-    document.getElementById('step-'+currentStep).classList.remove('active');
-    document.getElementById('step-success').classList.add('active');
-    document.getElementById('ref-num').textContent = 'Référence : MEC-' + Date.now();
+    emailjs.send("service_h2f013c","template_moboyo8",{
+      to_email:"contact@greaz.ca", type_demande:"Nouveau mécanicien",
+      nom_client:document.getElementById('m_prenom').value.trim()+" "+document.getElementById('m_nom').value.trim(),
+      telephone:document.getElementById('m_tel').value.trim(),
+      courriel:document.getElementById('m_email').value.trim(),
+      adresse:document.getElementById('m_ville').value,
+      vehicule:vehicules.join(', '),
+      probleme:services.join(', '),
+      urgence:'Mécanicien mobile', code_reservation:'—',
+    }).catch(function(){});
+    document.getElementById('mec-step-'+mecCurrentStep).classList.remove('active');
+    document.getElementById('mec-step-success').classList.add('active');
+    document.getElementById('m-ref-num').textContent='Référence : MEC-'+Date.now();
     document.querySelectorAll('.step-dot').forEach(function(d){ d.classList.remove('active'); d.classList.add('done'); });
     document.querySelectorAll('.step-line').forEach(function(l){ l.classList.add('done'); });
     window.scrollTo({top:0, behavior:'smooth'});
+  } catch(e){
+    errEl.textContent='Erreur : '+e.message; errEl.style.display='block';
+    btn.disabled=false; btn.textContent='Envoyer ma candidature ✓';
+  }
+}
 
-  } catch(e) {
-    console.error('Firestore:', e);
-    errEl.textContent = 'Erreur : '+e.message;
-    errEl.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Envoyer ma candidature ✓';
+/* ── SUBMIT GARAGE ── */
+async function submitGarage(){
+  var btn=document.getElementById('g-submit-btn'), errEl=document.getElementById('g-fb-err');
+  errEl.style.display='none';
+  var ok=true;
+  [{id:'g_nom',fid:'gf-nom'},{id:'g_ville',fid:'gf-ville'},
+   {id:'g_addr',fid:'gf-addr'}].forEach(function(f){
+    var el=document.getElementById(f.id), fd=document.getElementById(f.fid);
+    var valid=el.value.trim().length>0;
+    fd.classList.toggle('has-err',!valid); el.classList.toggle('err',!valid);
+    if(!valid) ok=false;
+  });
+  var gtel=document.getElementById('g_tel');
+  var tclean=gtel.value.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"");
+  var telOk=/^[2-9]\d{2}[2-9]\d{6}$/.test(tclean)&&tclean.length===10;
+  document.getElementById('gf-tel').classList.toggle('has-err',!telOk);
+  if(!telOk) ok=false;
+  var gemail=document.getElementById('g_email');
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gemail.value.trim());
+  document.getElementById('gf-email').classList.toggle('has-err',!emailOk);
+  if(!emailOk) ok=false;
+  if(!ok){ errEl.textContent='Veuillez remplir tous les champs obligatoires (*).'; errEl.style.display='block'; return; }
+
+  var services=Array.from(document.querySelectorAll('#g-services-grid .check-item.sel input')).map(function(i){return i.value;});
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Envoi en cours...';
+
+  try {
+    var photoUrl = await uploadLogo('g_logo', 'logos/garages').catch(function(){ return null; });
+    await db.collection('mechanic_applications').add({
+      type_inscription: 'garage',
+      garage_name:  document.getElementById('g_nom').value.trim(),
+      first_name:   document.getElementById('g_nom').value.trim(),
+      last_name:    '',
+      phone:        document.getElementById('g_tel').value.trim(),
+      email:        document.getElementById('g_email').value.trim(),
+      address:      document.getElementById('g_addr').value.trim(),
+      city:         document.getElementById('g_ville').value,
+      baies:        document.getElementById('g_baies').value,
+      experience:   document.getElementById('g_exp').value,
+      services:     services.join(', ')||'Non précisé',
+      schedule:     scheduleToStr(garageSchedule),
+      pricing:      document.getElementById('g_pricing').value.trim(),
+      bio:          document.getElementById('g_bio').value.trim(),
+      photo_url:    photoUrl || '',
+      status: 'nouveau', source: 'garage-signup',
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    emailjs.send("service_h2f013c","template_moboyo8",{
+      to_email:"contact@greaz.ca", type_demande:"Nouveau garage",
+      nom_client:document.getElementById('g_nom').value.trim(),
+      telephone:document.getElementById('g_tel').value.trim(),
+      courriel:document.getElementById('g_email').value.trim(),
+      adresse:document.getElementById('g_addr').value.trim(),
+      vehicule:services.join(', '),
+      probleme:document.getElementById('g_baies').value,
+      urgence:'Garage physique', code_reservation:'—',
+    }).catch(function(){});
+
+    // Cacher le formulaire, montrer le succès
+    var form=document.getElementById('panel-garage');
+    form.querySelectorAll('.form-card,.info-box,.nav-row').forEach(function(el){ el.style.display='none'; });
+    document.getElementById('garage-success').style.display='block';
+    document.getElementById('g-ref-num').textContent='Référence : GAR-'+Date.now();
+    window.scrollTo({top:0, behavior:'smooth'});
+  } catch(e){
+    errEl.textContent='Erreur : '+e.message; errEl.style.display='block';
+    btn.disabled=false; btn.textContent='Inscrire mon garage →';
   }
 }
 </script>
