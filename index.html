@@ -474,6 +474,11 @@ function listenJobs(){
   db.collection('jobs').where('mechanic_id','==',garageId)
     .onSnapshot(function(snap){
       _jobs = snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+      // Compatibilité : les anciens statuts (recu, confirme, en_traitement...) redeviennent "à répondre"
+      var VALIDES = ['envoye','accepte','a_reprogrammer','refuse'];
+      _jobs.forEach(function(j){
+        if(VALIDES.indexOf(j.status) === -1){ j._legacy = j.status; j.status = 'envoye'; }
+      });
       renderCounters();
       renderJobs();
     }, function(e){
