@@ -3,795 +3,1515 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Greaz — Rejoindre le réseau</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Greaz Pro — Mes demandes</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --blue:#1A3CFF; --blue2:#0F2ACC; --bluelt:rgba(26,60,255,0.12); --blueglow:rgba(26,60,255,0.2);
-  --green:#00C26F; --greenlt:rgba(0,194,111,0.1); --greenglow:rgba(0,194,111,0.2);
-  --orange:#FF6B2C; --orangelt:rgba(255,107,44,0.12); --orangeglow:rgba(255,107,44,0.2);
-  --ink:#0A0C1B; --ink2:#1C2040;
-  --line:rgba(255,255,255,0.08); --muted:rgba(255,255,255,0.45); --muted2:rgba(255,255,255,0.22);
-  --grid:rgba(255,255,255,0.025);
+:root{
+  --graphite:#14161C; --graphite2:#1C1F27; --graphite3:#252932;
+  --orange:#FF6B2C; --orangelt:rgba(255,107,44,.12);
+  --sodium:#FFC940; --sodiumlt:rgba(255,201,64,.12);
+  --green:#00C26F; --greenlt:rgba(0,194,111,.12);
+  --blue:#3B82F6; --bluelt:rgba(59,130,246,.12);
+  --red:#EF4444; --redlt:rgba(239,68,68,.12);
+  --purple:#A855F7; --purplelt:rgba(168,85,247,.12);
+  --line:rgba(255,255,255,.09);
+  --txt:#F1F3F6; --muted:#8B92A0;
   --r:10px; --r2:16px;
 }
-body {
-  font-family:'DM Sans',sans-serif;
-  background:var(--ink); color:#fff;
-  min-height:100vh; padding-bottom:5rem;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:50px 50px;
-}
-header {
-  padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between;
-  position:sticky; top:0; z-index:10;
-  background:rgba(10,12,27,0.85); backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);
-}
-.logo { font-family:'Bricolage Grotesque',sans-serif; font-size:1.4rem; font-weight:800; letter-spacing:-0.5px; }
-.logo span { color:var(--blue); }
-.badge-pro { font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px; border:1px solid rgba(0,194,111,0.35); color:var(--green); background:rgba(0,194,111,0.1); text-transform:uppercase; letter-spacing:0.5px; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--graphite);color:var(--txt);min-height:100vh}
+.mono{font-family:'Space Mono',monospace}
 
-/* HERO */
-.hero { padding:3rem 1.5rem 2rem; text-align:center; position:relative; overflow:hidden; }
-.hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(26,60,255,0.2) 0%,transparent 70%); pointer-events:none; }
-.hero-pill { display:inline-flex; align-items:center; gap:7px; background:rgba(26,60,255,0.12); border:1px solid rgba(26,60,255,0.35); color:rgba(255,255,255,0.75); font-size:12px; font-weight:500; padding:5px 15px; border-radius:20px; margin-bottom:1.25rem; }
-.pill-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:blink 1.5s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
-.hero h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; letter-spacing:-1px; line-height:1.1; margin-bottom:.75rem; }
-.hero h1 .hl { color:var(--blue); }
-.hero h1 .hl2 { color:var(--green); }
-.hero h1 .hl3 { color:var(--orange); }
-.hero p { font-size:.95rem; color:var(--muted); max-width:480px; margin:0 auto; line-height:1.65; }
+/* LOGIN */
+.login-screen{display:none;min-height:100vh;align-items:center;justify-content:center;padding:1.5rem}
+.login-screen.show{display:flex}
+.login-box{background:var(--graphite2);border:1px solid var(--line);border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:380px;text-align:center}
+.login-logo{font-family:'Bricolage Grotesque',sans-serif;font-size:2rem;font-weight:800;margin-bottom:.25rem}
+.login-logo span{color:var(--orange)}
+.login-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);background:var(--orangelt);padding:3px 10px;border-radius:6px;margin-bottom:1.75rem}
+.login-input{width:100%;padding:14px 16px;background:rgba(255,255,255,.05);border:1.5px solid var(--line);border-radius:var(--r);color:white;font-size:16px;font-family:inherit;outline:none;margin-bottom:10px}
+.login-input:focus{border-color:var(--orange)}
+.login-btn{width:100%;padding:14px;background:var(--orange);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:6px}
+.login-btn:disabled{opacity:.6}
+.login-err{display:none;background:var(--redlt);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;padding:10px;border-radius:var(--r);font-size:13px;margin-top:1rem}
+.login-help{font-size:11.5px;color:var(--muted);margin-top:1.25rem;line-height:1.6}
 
-/* TYPE TABS */
-.type-tabs { max-width:580px; margin:0 auto 0; padding:0 1rem; }
-.tabs-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.type-tab { padding:1.1rem 1rem; border-radius:var(--r2); border:2px solid var(--line); background:var(--ink2); cursor:pointer; text-align:center; transition:all .25s cubic-bezier(.34,1.56,.64,1); }
-.type-tab:hover { border-color:rgba(255,255,255,.2); transform:translateY(-2px); }
-.type-tab .tab-icon { font-size:2rem; margin-bottom:.5rem; display:block; }
-.type-tab .tab-title { font-family:'Bricolage Grotesque',sans-serif; font-size:15px; font-weight:700; margin-bottom:.25rem; }
-.type-tab .tab-sub { font-size:12px; color:var(--muted); line-height:1.5; }
-.type-tab.act-mec { border-color:var(--green); background:rgba(0,194,111,.08); box-shadow:0 0 24px var(--greenglow); }
-.type-tab.act-garage { border-color:var(--orange); background:rgba(255,107,44,.08); box-shadow:0 0 24px var(--orangeglow); }
-.type-tab .tab-badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; margin-top:.4rem; }
-.type-tab.act-mec .tab-badge { background:rgba(0,194,111,.2); color:var(--green); border:1px solid rgba(0,194,111,.35); }
-.type-tab.act-garage .tab-badge { background:rgba(255,107,44,.2); color:var(--orange); border:1px solid rgba(255,107,44,.35); }
+/* APP */
+.app{display:none}
+.app.show{display:block}
+header{background:var(--graphite2);border-bottom:1px solid var(--line);padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.logo{font-family:'Bricolage Grotesque',sans-serif;font-size:1.3rem;font-weight:800}
+.logo span{color:var(--orange)}
+.hbadge{font-size:9.5px;font-weight:700;color:var(--orange);background:var(--orangelt);padding:2px 7px;border-radius:5px;margin-left:5px;vertical-align:middle}
+.hright{display:flex;align-items:center;gap:12px}
+.garage-name{font-size:12.5px;color:var(--muted);font-weight:600}
+.logout{background:none;border:1px solid var(--line);color:var(--muted);padding:6px 12px;border-radius:7px;font-size:12px;cursor:pointer;font-family:inherit}
+.logout:hover{border-color:var(--red);color:var(--red)}
 
-/* PROGRESS */
-.progress-wrap { max-width:580px; margin:1.5rem auto 0; padding:0 1.5rem; display:none; }
-.progress-wrap.show { display:block; }
-.steps-row { display:flex; align-items:center; }
-.step-dot { display:flex; flex-direction:column; align-items:center; gap:5px; flex:0 0 auto; }
-.step-circle { width:33px; height:33px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; background:var(--ink2); color:var(--muted2); border:1.5px solid var(--line); transition:all .3s; }
-.step-dot.active .step-circle { background:var(--blue); color:#fff; border-color:var(--blue); box-shadow:0 0 16px var(--blueglow); }
-.step-dot.done .step-circle { background:var(--green); color:#fff; border-color:var(--green); }
-.step-label { font-size:10px; color:var(--muted2); text-transform:uppercase; letter-spacing:0.5px; white-space:nowrap; }
-.step-dot.active .step-label { color:var(--blue); }
-.step-dot.done .step-label { color:var(--green); }
-.step-line { flex:1; height:1.5px; background:var(--line); margin-bottom:18px; transition:background .4s; }
-.step-line.done { background:var(--green); }
+/* STATS BAR */
+.statsbar{display:flex;gap:0;background:var(--graphite2);border-bottom:1px solid var(--line);overflow-x:auto}
+.stat{flex:1;min-width:90px;padding:.85rem 1rem;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border:none}
+.stat-n{font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;line-height:1}
+.stat-l{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
 
-/* CONTAINER */
-.container { max-width:580px; margin:1.5rem auto 0; padding:0 1rem; }
-.form-panel { display:none; }
-.form-panel.show { display:block; }
-.form-card { background:var(--ink2); border-radius:var(--r2); border:1px solid var(--line); padding:1.75rem; margin-bottom:1rem; }
-.section-title { font-size:13px; font-weight:600; color:#fff; margin-bottom:1.25rem; padding-bottom:.85rem; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px; }
-.section-icon { width:30px; height:30px; border-radius:8px; background:var(--bluelt); border:1px solid rgba(26,60,255,0.25); display:flex; align-items:center; justify-content:center; font-size:15px; }
-.section-icon.orange { background:var(--orangelt); border-color:rgba(255,107,44,.25); }
-.section-icon.green { background:var(--greenlt); border-color:rgba(0,194,111,.25); }
+/* TABS */
+.tabs{display:flex;background:var(--graphite2);border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{padding:.9rem 1.4rem;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.tab.act{color:var(--orange);border-bottom-color:var(--orange)}
+.tcount{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;background:var(--orange);color:white;padding:1px 7px;border-radius:20px;min-width:20px;text-align:center}
+.tcount.zero{background:var(--graphite3);color:var(--muted)}
 
-/* FIELDS */
-.field { margin-bottom:1rem; }
-.field-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-label { display:block; font-size:12px; font-weight:600; color:var(--muted); margin-bottom:5px; }
-label .req { color:var(--blue); }
-input[type="text"],input[type="email"],input[type="tel"],input[type="number"],select,textarea {
-  width:100%; padding:11px 14px;
-  background:rgba(255,255,255,0.05); border:1.5px solid var(--line);
-  border-radius:var(--r); font-size:14px; color:#fff;
-  font-family:'DM Sans',sans-serif; transition:border-color .2s,box-shadow .2s;
-  -webkit-appearance:none; appearance:none;
-}
-select {
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M5 7L0 2h10z' fill='%23666'/%3E%3C/svg%3E");
-  background-repeat:no-repeat; background-position:right 12px center;
-  background-color:rgba(255,255,255,0.05); padding-right:32px;
-}
-select option { background:#1C2040; color:#fff; }
-input::placeholder,textarea::placeholder { color:rgba(255,255,255,0.2); }
-input:focus,select:focus,textarea:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blueglow); background:rgba(26,60,255,0.07); }
-input.err,select.err { border-color:#f87171; }
-.err-msg { font-size:12px; color:#f87171; margin-top:4px; display:none; }
-.field.has-err .err-msg { display:block; }
+.wrap{padding:1.25rem;max-width:1000px;margin:0 auto}
+.panel{display:none}
+.panel.act{display:block}
 
-/* CHECK GRID */
-.check-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(145px,1fr)); gap:7px; }
-.check-item { display:flex; align-items:center; gap:8px; padding:9px 11px; border:1.5px solid var(--line); border-radius:var(--r); cursor:pointer; font-size:13px; color:var(--muted); background:rgba(255,255,255,0.03); user-select:none; transition:all .15s; }
-.check-item:hover { border-color:rgba(255,255,255,0.18); color:#fff; }
-.check-item input[type="checkbox"] { display:none; }
-.check-item.sel { border-color:var(--blue); background:var(--bluelt); color:#fff; font-weight:500; box-shadow:0 0 10px var(--blueglow); }
-.chk-box { width:16px; height:16px; border-radius:4px; border:1.5px solid rgba(255,255,255,0.2); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10px; color:transparent; transition:all .15s; }
-.check-item.sel .chk-box { background:var(--blue); border-color:var(--blue); color:#fff; }
+/* FILTER CHIPS */
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1.25rem}
+.chip{padding:7px 14px;background:var(--graphite2);border:1.5px solid var(--line);border-radius:20px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;white-space:nowrap}
+.chip.act{background:var(--orangelt);border-color:var(--orange);color:var(--orange)}
 
-/* SCHEDULE */
-.schedule-grid { display:grid; grid-template-columns:auto repeat(3,1fr); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
-.sg-head { background:rgba(255,255,255,0.03); padding:7px 6px; text-align:center; font-size:10px; font-weight:700; color:var(--muted2); text-transform:uppercase; letter-spacing:0.4px; border-bottom:1px solid var(--line); }
-.sg-head:first-child { text-align:left; padding-left:12px; }
-.sg-day { padding:9px 12px; font-size:12.5px; color:var(--muted); border-top:1px solid var(--line); }
-.sg-cell { padding:5px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
-.slot-btn { width:100%; padding:7px 4px; border-radius:5px; border:1px solid var(--line); background:rgba(255,255,255,0.03); cursor:pointer; font-size:11px; color:var(--muted2); font-family:'DM Sans',sans-serif; transition:all .15s; }
-.slot-btn.on { background:var(--bluelt); border-color:var(--blue); color:var(--blue); font-weight:700; }
+/* JOB CARD */
+.job{background:var(--graphite2);border:1px solid var(--line);border-radius:var(--r2);padding:1.1rem;margin-bottom:12px;border-left:4px solid var(--muted)}
+.job-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:.85rem}
+.job-client{font-size:15.5px;font-weight:700}
+.job-veh{font-size:12.5px;color:var(--muted);margin-top:2px}
+.job-code{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:3px}
+.jstatus{font-size:11px;font-weight:700;padding:4px 10px;border-radius:7px;white-space:nowrap}
+.ask-box{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin:11px 0}
+.ask-row{display:flex;gap:10px;align-items:flex-start;padding:3px 0}
+.ask-lbl{flex-shrink:0;width:66px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:2px}
+.ask-val{flex:1;font-size:14px;line-height:1.5}
+.ask-val.strong{font-weight:700;color:var(--sodium)}
+.jcontact{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;margin:0 6px 6px 0;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:9px;font-size:13px;color:var(--txt);text-decoration:none;transition:background .2s}
+.jcontact:hover{background:rgba(255,255,255,.1)}
+.jaddr{font-size:13px;color:var(--muted);line-height:1.6;margin-top:2px}
+.job-info{font-size:13px;line-height:1.85;color:#C9CFD8;padding:.7rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:.85rem}
+.job-info a{color:var(--blue);text-decoration:none;font-weight:600}
+.job-info b{color:var(--txt)}
+.alert-box{background:var(--sodiumlt);border:1px solid rgba(255,201,64,.3);border-radius:var(--r);padding:9px 12px;font-size:12.5px;color:var(--sodium);margin-bottom:.85rem}
+.acts{display:flex;gap:7px;flex-wrap:wrap}
+.act-btn{padding:9px 15px;border-radius:9px;font-size:13px;font-weight:700;border:1.5px solid;cursor:pointer;font-family:inherit;background:transparent}
+.b-orange{border-color:var(--orange);color:var(--orange);background:var(--orangelt)}
+.b-green{border-color:var(--green);color:var(--green);background:var(--greenlt)}
+.b-blue{border-color:var(--blue);color:var(--blue);background:var(--bluelt)}
+.b-sodium{border-color:var(--sodium);color:var(--sodium);background:var(--sodiumlt)}
+.b-purple{border-color:var(--purple);color:var(--purple);background:var(--purplelt)}
+.b-red{border-color:var(--red);color:var(--red);background:var(--redlt)}
+.act-btn:hover{filter:brightness(1.25)}
 
-/* SLIDER */
-.radius-row { display:flex; align-items:center; gap:16px; }
-input[type="range"] { flex:1; height:4px; -webkit-appearance:none; appearance:none; background:var(--line); border-radius:2px; outline:none; border:none; padding:0; }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--blue); cursor:pointer; border:2px solid var(--ink); box-shadow:0 0 0 2px var(--blue); }
-.radius-val { font-size:20px; font-weight:800; min-width:76px; text-align:right; letter-spacing:-0.5px; }
+/* TIMELINE */
+.tl{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--line)}
+.tl-item{display:flex;gap:9px;font-size:11.5px;color:var(--muted);padding:3px 0}
+.tl-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);margin-top:5px;flex-shrink:0}
 
-/* PRICING HINT */
-.pricing-hint { font-size:12px; color:var(--muted2); margin-top:6px; line-height:1.5; }
+.empty{text-align:center;padding:3.5rem 1rem;color:var(--muted)}
+.empty-ic{font-size:2.8rem;margin-bottom:.85rem;opacity:.5}
 
-/* BUTTONS */
-.nav-row { display:flex; gap:10px; margin-top:1.5rem; }
-.btn { flex:1; padding:13px; border-radius:var(--r); font-size:15px; font-weight:700; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; transition:all .2s; }
-.btn-primary { background:var(--blue); color:#fff; box-shadow:0 0 20px var(--blueglow); }
-.btn-primary:hover { background:var(--blue2); }
-.btn-primary:active { transform:scale(0.98); }
-.btn-primary:disabled { opacity:.6; cursor:not-allowed; }
-.btn-primary.green { background:var(--green); box-shadow:0 0 20px var(--greenglow); }
-.btn-primary.green:hover { background:#00a85e; }
-.btn-primary.orange { background:var(--orange); box-shadow:0 0 20px var(--orangeglow); }
-.btn-primary.orange:hover { background:#e5601f; }
-.btn-secondary { background:rgba(255,255,255,0.05); color:var(--muted); border:1px solid var(--line); flex:0 0 auto; padding:13px 20px; }
-.btn-secondary:hover { border-color:rgba(255,255,255,0.18); color:#fff; }
-.spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:middle; margin-right:6px; }
-@keyframes sp { to{transform:rotate(360deg);} }
+/* GARAGE FORM */
+.card{background:var(--graphite2);border:1px solid var(--line);border-radius:var(--r2);padding:1.4rem;margin-bottom:1.1rem}
+.card-t{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:1.1rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.fg input,.fg textarea,.fg select{width:100%;padding:11px 13px;background:rgba(255,255,255,.05);border:1.5px solid var(--line);border-radius:var(--r);color:white;font-size:15px;font-family:inherit;outline:none}
 
-/* STEP VISIBILITY */
-.step-screen { display:none; }
-.step-screen.active { display:block; }
+/* Options de menus déroulants — fond sombre lisible partout */
+select option, select optgroup{background:#1C1F27;color:#F1F3F6}
+select{color:#F1F3F6}
+input[type=date]::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.6);cursor:pointer}
+input[type=time]::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.6);cursor:pointer}
+.fg input:focus,.fg textarea:focus{border-color:var(--orange)}
+.fg textarea{resize:vertical}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
 
-/* SUCCESS */
-.success-card { background:var(--ink2); border-radius:var(--r2); padding:3rem 2rem; text-align:center; border:1px solid var(--line); }
-.success-icon { width:72px; height:72px; border-radius:50%; background:rgba(0,194,111,0.1); border:1px solid rgba(0,194,111,0.3); display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; font-size:32px; animation:pop .5s cubic-bezier(.34,1.56,.64,1); }
-@keyframes pop { from{transform:scale(0)} to{transform:scale(1)} }
-.success-card h2 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.5rem; font-weight:800; margin-bottom:.6rem; letter-spacing:-0.5px; }
-.success-card h2 span { color:var(--green); }
-.success-card p { color:var(--muted); font-size:14px; line-height:1.65; max-width:320px; margin:0 auto 1.5rem; }
-.ref-box { background:rgba(26,60,255,0.12); border-radius:var(--r); padding:10px 18px; font-family:monospace; font-size:13px; color:var(--blue); display:inline-block; margin-bottom:1.75rem; border:1px solid rgba(26,60,255,0.25); }
-.fb-err { background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.25); color:#f87171; padding:10px 14px; border-radius:var(--r); font-size:13px; margin-bottom:1rem; display:none; }
+/* SCHEDULE GRID */
+.sched{border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.srow{display:grid;grid-template-columns:1fr repeat(3,70px);border-bottom:1px solid var(--line)}
+.srow:last-child{border:none}
+.srow.head{background:rgba(255,255,255,.03)}
+.scell{padding:11px 8px;text-align:center;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase}
+.scell:first-child{text-align:left;padding-left:14px;font-size:13px;text-transform:none;color:var(--txt);font-weight:600}
+.stog{width:24px;height:24px;border-radius:6px;border:2px solid var(--line);background:transparent;cursor:pointer;margin:0 auto;display:block;transition:all .15s}
+.stog.on{background:var(--green);border-color:var(--green)}
+.stog.on::after{content:'✓';color:white;font-size:13px;font-weight:700;display:block;line-height:20px}
 
-/* INFO BOX */
-.info-box { background:rgba(0,194,111,.08); border:1px solid rgba(0,194,111,.2); border-radius:var(--r); padding:12px 14px; font-size:13px; color:rgba(0,194,111,.9); line-height:1.6; margin-bottom:1.5rem; }
-.info-box.orange { background:rgba(255,107,44,.08); border-color:rgba(255,107,44,.2); color:rgba(255,107,44,.9); }
+.save-btn{width:100%;padding:15px;background:var(--orange);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:.5rem}
+.save-btn:disabled{opacity:.6}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--green);color:white;padding:13px 22px;border-radius:var(--r);font-size:14px;font-weight:700;z-index:200;transition:transform .3s;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--red)}
 
-@media(max-width:480px){
-  header { padding:1rem 1.25rem; }
-  .form-card { padding:1.25rem; }
-  .check-grid { grid-template-columns:1fr 1fr; }
-  .field-row { grid-template-columns:1fr; }
+.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:sp .7s linear infinite;display:inline-block;vertical-align:middle}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loading{text-align:center;padding:2.5rem;color:var(--muted);font-size:13px}
+
+@media(max-width:600px){
+  .wrap{padding:1rem .85rem}
+  .fg2{grid-template-columns:1fr}
+  .srow{grid-template-columns:1fr repeat(3,56px)}
+  .acts{flex-direction:column}
+  .act-btn{width:100%}
+  .stat-n{font-size:1.25rem}
 }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">Gre<span>az</span></div>
-  <span class="badge-pro">● Rejoindre le réseau</span>
-</header>
-
-<div class="hero">
-  <div class="hero-pill"><span class="pill-dot"></span> Rejoins la plateforme #1 au Québec</div>
-  <h1>Travaille <span class="hl">à ton rythme.</span><br><span class="hl2">Mécanicien</span> ou <span class="hl3">garage.</span></h1>
-  <p>Greaz connecte les clients avec des pros vérifiés. Choisis ton profil et rejoins le réseau.</p>
-</div>
-
-<!-- TYPE SELECTOR -->
-<div class="type-tabs" id="type-selector">
-  <div class="tabs-row">
-    <div class="type-tab" id="tab-mec" onclick="selectType('mec')">
-      <span class="tab-icon">👨‍🔧</span>
-      <div class="tab-title">Je suis mécanicien</div>
-      <div class="tab-sub">Mobile, indépendant, je me déplace chez les clients.</div>
-      <span class="tab-badge" id="badge-mec" style="display:none">✓ Sélectionné</span>
-    </div>
-    <div class="type-tab" id="tab-garage" onclick="selectType('garage')">
-      <span class="tab-icon">🏪</span>
-      <div class="tab-title">J'ai un garage</div>
-      <div class="tab-sub">Atelier physique, je reçois les véhicules dans mes baies.</div>
-      <span class="tab-badge" id="badge-garage" style="display:none">✓ Sélectionné</span>
+<!-- LOGIN -->
+<div class="login-screen show" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Gre<span>az</span></div>
+    <div class="login-tag">Espace Pro</div>
+    <input class="login-input" type="email" id="mEmail" placeholder="ton@courriel.com" autocomplete="username">
+    <input class="login-input" type="password" id="mPass" placeholder="Mot de passe" autocomplete="current-password"
+      onkeydown="if(event.key==='Enter')mecanoLogin()">
+    <button class="login-btn" id="loginBtn" onclick="mecanoLogin()">Se connecter →</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-help">
+      🔧 Espace réservé aux mécaniciens et garages partenaires Greaz.<br>
+      Pas encore de compte ? Contacte-nous à <a href="mailto:partenariats@greaz.ca" style="color:var(--orange);font-weight:700;text-decoration:none">partenariats@greaz.ca</a>
     </div>
   </div>
 </div>
 
-<!-- PROGRESS (mécanicien seulement) -->
-<div class="progress-wrap" id="mec-progress">
-  <div class="steps-row">
-    <div class="step-dot active" data-step="1"><div class="step-circle">1</div><div class="step-label">Profil</div></div>
-    <div class="step-line" id="line-1-2"></div>
-    <div class="step-dot" data-step="2"><div class="step-circle">2</div><div class="step-label">Véhicules</div></div>
-    <div class="step-line" id="line-2-3"></div>
-    <div class="step-dot" data-step="3"><div class="step-circle">3</div><div class="step-label">Horaires</div></div>
-    <div class="step-line" id="line-3-4"></div>
-    <div class="step-dot" data-step="4"><div class="step-circle">4</div><div class="step-label">Rayon</div></div>
+<!-- APP -->
+<div class="app" id="app">
+  <header>
+    <div>
+      <span class="logo">Gre<span>az</span></span>
+      <span class="hbadge">PRO</span>
+    </div>
+    <div class="hright">
+      <span class="garage-name" id="garageName"></span>
+      <button class="logout" onclick="mecanoLogout()">Sortir</button>
+    </div>
+  </header>
+
+  <div class="statsbar">
+    <div class="stat"><div class="stat-n" style="color:var(--orange)" id="s-new">0</div><div class="stat-l">À répondre</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--green)" id="s-conf">0</div><div class="stat-l">Acceptés</div></div>
+    <div class="stat"><div class="stat-n" style="color:var(--sodium)" id="s-work">0</div><div class="stat-l">En attente Greaz</div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab act" id="tab-jobs" onclick="mSwitch('jobs')">📨 Demandes <span class="tcount zero" id="tc-jobs">0</span></div>
+    <div class="tab" id="tab-agenda" onclick="mSwitch('agenda')">📅 Mon calendrier</div>
+    <div class="tab" id="tab-garage" onclick="mSwitch('garage')">🏪 Mon garage</div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- AUJOURD'HUI -->
+    <div class="panel" id="panel-today" style="display:none">
+      <div id="today-content"><div class="loading"><span class="spin"></span> Chargement...</div></div>
+    </div>
+
+    <!-- DEMANDES GREAZ -->
+    <div class="panel act" id="panel-jobs">
+      <div class="chips">
+        <button class="chip act" onclick="jFilter('envoye',this)">📨 À répondre</button>
+        <button class="chip" onclick="jFilter('accepte',this)">✅ Acceptés</button>
+        <button class="chip" onclick="jFilter('a_reprogrammer',this)">🔄 En attente Greaz</button>
+        <button class="chip" onclick="jFilter('',this)">Tous</button>
+      </div>
+      <div id="jobs-list"><div class="loading"><span class="spin"></span> Chargement...</div></div>
+    </div>
+
+    <!-- AGENDA / RENDEZ-VOUS -->
+    <div class="panel" id="panel-agenda">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center">
+        <button class="act-btn b-orange" onclick="openRdvForm()">➕ Nouveau rendez-vous</button>
+        <div style="display:flex;gap:6px;margin-left:auto;align-items:center">
+          <button class="chip" onclick="agendaNav(-1)">‹</button>
+          <span id="agenda-label" class="mono" style="font-size:13px;min-width:150px;text-align:center;font-weight:700"></span>
+          <button class="chip" onclick="agendaNav(1)">›</button>
+          <button class="chip" onclick="agendaToday()">Aujourd'hui</button>
+        </div>
+      </div>
+      <div id="agenda-content"><div class="loading"><span class="spin"></span> Chargement...</div></div>
+    </div>
+
+    <!-- CLIENTS & VÉHICULES -->
+    <div class="panel" id="panel-clients" style="display:none">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center">
+        <input class="login-input" type="text" id="cli-search" placeholder="🔍 Nom, téléphone, plaque, modèle..." oninput="renderClients()" style="flex:1;min-width:200px;margin:0;padding:11px 14px">
+        <button class="act-btn b-orange" onclick="openClientForm()">➕ Nouveau client</button>
+      </div>
+      <div id="clients-content"><div class="loading"><span class="spin"></span> Chargement...</div></div>
+    </div>
+
+    <!-- STATISTIQUES (patron seulement) -->
+    <div class="panel" id="panel-stats" style="display:none">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap">
+        <select id="stats-period" onchange="renderGarageStats()" style="padding:9px 13px;background:var(--graphite2);border:1.5px solid var(--line);border-radius:10px;color:var(--txt);font-size:14px;font-family:inherit">
+          <option value="month">Ce mois-ci</option>
+          <option value="prev">Mois dernier</option>
+          <option value="year">Cette année</option>
+          <option value="all">Depuis le début</option>
+        </select>
+      </div>
+      <div id="stats-content"><div class="loading"><span class="spin"></span> Chargement...</div></div>
+    </div>
+
+    <!-- GARAGE -->
+    <div class="panel" id="panel-garage">
+      <div class="card">
+        <div class="card-t">📋 Informations</div>
+        <div class="fg"><label>Nom du garage</label><input type="text" id="g-name" placeholder="Garage Untel"></div>
+        <div class="fg2">
+          <div class="fg"><label>Téléphone</label><input type="tel" id="g-phone" placeholder="450-555-0100"></div>
+          <div class="fg"><label>Ville</label><input type="text" id="g-city" placeholder="Laval"></div>
+        </div>
+        <div class="fg"><label>Adresse</label><input type="text" id="g-address" placeholder="1234 boul. Industriel, Laval"></div>
+        <div class="fg"><label>Présentation</label><textarea id="g-bio" rows="2" placeholder="Spécialiste freins et suspension depuis 15 ans..."></textarea></div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">📧 Contact pour tes clients</div>
+        <div style="background:var(--bluelt);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:11px 13px;font-size:12px;color:#93C5FD;line-height:1.6;margin-bottom:1rem">
+          Quand tu préviens un client (RDV confirmé, voiture prête, rappel...), le courriel part <b>au nom de ton garage</b>. Si le client répond, ça arrive à l'adresse ci-dessous.
+        </div>
+        <div class="fg">
+          <label>Courriel de réponse *</label>
+          <input type="email" id="g-reply-email" placeholder="tongarage@gmail.com">
+          <div class="hint">C'est là que tu recevras les réponses de tes clients. Mets ton vrai courriel.</div>
+        </div>
+        <div class="fg">
+          <label>Numéro affiché aux clients</label>
+          <input type="tel" id="g-contact-phone" placeholder="450-555-0100">
+          <div class="hint">Ce numéro apparaît dans les courriels pour que le client puisse t'appeler.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">💰 Mes tarifs</div>
+        <div class="fg">
+          <label>Prix par service</label>
+          <textarea id="g-pricing" rows="4" placeholder="Vidange: 60$, Freins: 250$, Pneus: 80$"></textarea>
+          <div class="hint">Format : <b class="mono">Service: Prix</b> séparés par des virgules.<br>Ces prix s'affichent sur ta fiche publique et sur la carte Greaz.</div>
+        </div>
+        <div class="fg">
+          <label>Services offerts</label>
+          <input type="text" id="g-services" placeholder="Freins, Vidange, Suspension, Diagnostic">
+          <div class="hint">Séparés par des virgules.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-t">🕐 Mes disponibilités</div>
+        <div class="sched" id="sched-grid"></div>
+        <div class="hint" style="margin-top:10px">Coche les plages où tu acceptes des rendez-vous. Les clients ne pourront réserver que dans ces créneaux.</div>
+      </div>
+
+      <button class="save-btn" id="saveBtn" onclick="saveGarage()">💾 Enregistrer et publier</button>
+      <div class="hint" style="text-align:center;margin-top:8px">Tes changements apparaissent immédiatement sur greaz.ca</div>
+    </div>
+
   </div>
 </div>
 
-<div class="container">
-
-  <!-- ════════════════ MÉCANICIEN ════════════════ -->
-  <div class="form-panel" id="panel-mec">
-
-    <!-- MEC STEP 1 -->
-    <div class="step-screen active" id="mec-step-1">
-      <div class="info-box">👨‍🔧 Tu rejoins le réseau de mécaniciens mobiles Greaz. Tu choisis tes horaires, ton rayon et tes spécialités.</div>
-      <div class="form-card">
-        <div class="section-title"><div class="section-icon">👤</div> Informations personnelles</div>
-        <div class="field-row">
-          <div class="field" id="mf-prenom"><label>Prénom <span class="req">*</span></label><input type="text" id="m_prenom" placeholder="Jean" autocomplete="given-name"><div class="err-msg">Champ requis.</div></div>
-          <div class="field" id="mf-nom"><label>Nom <span class="req">*</span></label><input type="text" id="m_nom" placeholder="Tremblay" autocomplete="family-name"><div class="err-msg">Champ requis.</div></div>
-        </div>
-        <div class="field" id="mf-email"><label>Courriel <span class="req">*</span></label><input type="email" id="m_email" placeholder="jean@exemple.com" autocomplete="email"><div class="err-msg">Adresse courriel invalide.</div></div>
-        <div class="field" id="mf-tel">
-          <label>Téléphone <span class="req">*</span></label>
-          <input type="tel" id="m_tel" placeholder="514 555-1234" autocomplete="tel" oninput="vPhoneMec(this)">
-          <div class="err-msg" id="m-tel-err">Numéro canadien invalide (10 chiffres).</div>
-        </div>
-        <div class="field-row">
-          <div class="field" id="mf-ville"><label>Ville principale <span class="req">*</span></label>
-            <select id="m_ville">
-              <option value="">Choisir...</option>
-              <option>Montréal</option><option>Laval</option><option>Longueuil</option>
-              <option>Québec</option><option>Gatineau</option><option>Sherbrooke</option>
-              <option>Saguenay</option><option>Lévis</option><option>Trois-Rivières</option>
-              <option>Terrebonne</option><option>Autre</option>
-            </select>
-            <div class="err-msg">Sélectionne une ville.</div>
-          </div>
-          <div class="field"><label>Années d'expérience</label>
-            <select id="m_experience">
-              <option value="">Sélectionner...</option>
-              <option>Moins de 1 an</option><option>1 à 3 ans</option>
-              <option>3 à 5 ans</option><option>5 à 10 ans</option><option>Plus de 10 ans</option>
-            </select>
-          </div>
-        </div>
-        <div class="field"><label>Numéro de licence (optionnel)</label><input type="text" id="m_licence" placeholder="QC-MEC-12345"></div>
-      </div>
-      <div class="nav-row">
-        <button class="btn btn-secondary" onclick="selectType(null)">← Changer</button>
-        <button class="btn btn-primary green" onclick="mecGoStep(2)">Continuer →</button>
-      </div>
-    </div>
-
-    <!-- MEC STEP 2 -->
-    <div class="step-screen" id="mec-step-2">
-      <div class="form-card">
-        <div class="section-title"><div class="section-icon">🚗</div> Types de véhicules acceptés</div>
-        <div class="field" id="mf-vehicules">
-          <div class="check-grid" id="m-vehicules-grid">
-            <label class="check-item"><input type="checkbox" value="Berline / Compacte"><span class="chk-box">✓</span> Berline / Compacte</label>
-            <label class="check-item"><input type="checkbox" value="SUV / VUS"><span class="chk-box">✓</span> SUV / VUS</label>
-            <label class="check-item"><input type="checkbox" value="Camionnette"><span class="chk-box">✓</span> Camionnette</label>
-            <label class="check-item"><input type="checkbox" value="Fourgonnette"><span class="chk-box">✓</span> Fourgonnette</label>
-            <label class="check-item"><input type="checkbox" value="Électrique / Hybride"><span class="chk-box">✓</span> Électrique / Hybride</label>
-            <label class="check-item"><input type="checkbox" value="Diesel"><span class="chk-box">✓</span> Diesel</label>
-            <label class="check-item"><input type="checkbox" value="Camion lourd"><span class="chk-box">✓</span> Camion lourd</label>
-            <label class="check-item"><input type="checkbox" value="Moto / Scooter"><span class="chk-box">✓</span> Moto / Scooter</label>
-            <label class="check-item"><input type="checkbox" value="VR / Motorisé"><span class="chk-box">✓</span> VR / Motorisé</label>
-            <label class="check-item"><input type="checkbox" value="Bateau"><span class="chk-box">✓</span> Bateau</label>
-          </div>
-          <div class="err-msg" id="m-err-vehicules">Sélectionne au moins un type.</div>
-        </div>
-      </div>
-      <div class="form-card">
-        <div class="section-title"><div class="section-icon">🔧</div> Spécialités / Services offerts</div>
-        <div class="check-grid" id="m-services-grid">
-          <label class="check-item"><input type="checkbox" value="Vidange / huile"><span class="chk-box">✓</span> Vidange / huile</label>
-          <label class="check-item"><input type="checkbox" value="Freins"><span class="chk-box">✓</span> Freins</label>
-          <label class="check-item"><input type="checkbox" value="Batterie / Électrique"><span class="chk-box">✓</span> Batterie / Électrique</label>
-          <label class="check-item"><input type="checkbox" value="Pneus / Jantes"><span class="chk-box">✓</span> Pneus / Jantes</label>
-          <label class="check-item"><input type="checkbox" value="Courroie / Distribution"><span class="chk-box">✓</span> Courroie</label>
-          <label class="check-item"><input type="checkbox" value="Diagnostic / OBD"><span class="chk-box">✓</span> Diagnostic</label>
-          <label class="check-item"><input type="checkbox" value="Suspension"><span class="chk-box">✓</span> Suspension</label>
-          <label class="check-item"><input type="checkbox" value="Climatisation"><span class="chk-box">✓</span> Climatisation</label>
-          <label class="check-item"><input type="checkbox" value="Transmission"><span class="chk-box">✓</span> Transmission</label>
-          <label class="check-item"><input type="checkbox" value="Inspection pré-achat"><span class="chk-box">✓</span> Inspection</label>
-          <label class="check-item"><input type="checkbox" value="Lumières / Phares"><span class="chk-box">✓</span> Phares</label>
-          <label class="check-item"><input type="checkbox" value="Check engine"><span class="chk-box">✓</span> Check engine</label>
-        </div>
-      </div>
-      <div class="nav-row">
-        <button class="btn btn-secondary" onclick="mecGoStep(1)">← Retour</button>
-        <button class="btn btn-primary green" onclick="mecGoStep(3)">Continuer →</button>
-      </div>
-    </div>
-
-    <!-- MEC STEP 3 -->
-    <div class="step-screen" id="mec-step-3">
-      <div class="form-card">
-        <div class="section-title"><div class="section-icon">🗓️</div> Disponibilités habituelles</div>
-        <div class="schedule-grid" id="m-schedule-grid">
-          <div class="sg-head">Jour</div>
-          <div class="sg-head">Matin<br><span style="font-weight:400;font-size:9px;opacity:.6">8h–12h</span></div>
-          <div class="sg-head">Après-midi<br><span style="font-weight:400;font-size:9px;opacity:.6">12h–17h</span></div>
-          <div class="sg-head">Soir<br><span style="font-weight:400;font-size:9px;opacity:.6">17h–21h</span></div>
-        </div>
-        <p style="font-size:12px;color:var(--muted2);margin-top:.875rem">Clique pour activer ou désactiver une plage.</p>
-      </div>
-      <div class="nav-row">
-        <button class="btn btn-secondary" onclick="mecGoStep(2)">← Retour</button>
-        <button class="btn btn-primary green" onclick="mecGoStep(4)">Continuer →</button>
-      </div>
-    </div>
-
-    <!-- MEC STEP 4 -->
-    <div class="step-screen" id="mec-step-4">
-      <div class="form-card">
-        <div class="section-title"><div class="section-icon">📍</div> Rayon de déplacement</div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.6">Jusqu'à quelle distance es-tu prêt à te déplacer ?</p>
-        <div class="radius-row">
-          <input type="range" id="m_rayon" min="5" max="100" value="30" step="5" oninput="document.getElementById('m-rayon-val').textContent=this.value+' km'">
-          <div class="radius-val" id="m-rayon-val">30 km</div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted2);margin-top:6px"><span>5 km</span><span>100 km</span></div>
-      </div>
-      <div class="form-card">
-        <div class="section-title"><div class="section-icon green">📷</div> Photo de profil <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
-        <div style="display:flex;align-items:center;gap:14px">
-          <div id="m-logo-preview" style="width:64px;height:64px;border-radius:50%;background:rgba(0,194,111,.12);border:2px solid rgba(0,194,111,.3);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;background-size:cover;background-position:center">👨‍🔧</div>
-          <div>
-            <label for="m_logo" style="display:inline-block;padding:8px 16px;background:rgba(255,255,255,.07);border:1.5px solid var(--line);border-radius:var(--r);cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s">📁 Choisir un fichier</label>
-            <input type="file" id="m_logo" accept="image/*" style="display:none" onchange="previewLogo(this,'m-logo-preview')">
-            <div style="font-size:11px;color:var(--muted2);margin-top:5px">JPG, PNG, WebP · Max 5MB</div>
-          </div>
-        </div>
-      </div>
-        <input type="text" id="m_pricing" placeholder="Vidange: 49$, Freins: 149$, Pneus: 79$">
-        <p class="pricing-hint">Format : Service: Prix$, séparés par des virgules. Affiché sur ta fiche Greaz.</p>
-      </div>
-      <div class="form-card">
-        <div class="section-title"><div class="section-icon">💬</div> Bio courte <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
-        <textarea id="m_bio" rows="3" placeholder="Ex : Mécanicien certifié depuis 8 ans, spécialisé en freins et suspension. Ponctuel et sérieux."></textarea>
-        <div class="fb-err" id="m-fb-err"></div>
-      </div>
-      <div class="nav-row">
-        <button class="btn btn-secondary" onclick="mecGoStep(3)">← Retour</button>
-        <button class="btn btn-primary green" id="m-submit-btn" onclick="submitMec()">Envoyer ma candidature ✓</button>
-      </div>
-    </div>
-
-    <!-- MEC SUCCESS -->
-    <div class="step-screen" id="mec-step-success">
-      <div class="success-card">
-        <div class="success-icon">✅</div>
-        <h2>Candidature <span>reçue !</span></h2>
-        <p>Notre équipe va examiner ton profil et te contacter dans les 24–48h. Bienvenue dans la famille Greaz.</p>
-        <div class="ref-box" id="m-ref-num"></div><br>
-        <button class="btn btn-primary green" onclick="location.reload()" style="max-width:260px;margin:0 auto;display:block">Nouvelle candidature</button>
-      </div>
-    </div>
-
-  </div><!-- /panel-mec -->
-
-  <!-- ════════════════ GARAGE ════════════════ -->
-  <div class="form-panel" id="panel-garage">
-
-    <div class="info-box orange">🏪 Inscris ton garage sur Greaz et commence à recevoir des clients de qualité directement dans tes baies. C'est gratuit pour commencer.</div>
-
-    <div class="form-card">
-      <div class="section-title"><div class="section-icon orange">🏪</div> Informations du garage</div>
-      <div class="field" id="gf-nom"><label>Nom du garage <span class="req">*</span></label><input type="text" id="g_nom" placeholder="Garage Tremblay Auto"><div class="err-msg">Champ requis.</div></div>
-      <div class="field-row">
-        <div class="field" id="gf-ville"><label>Ville <span class="req">*</span></label>
-          <select id="g_ville">
-            <option value="">Choisir...</option>
-            <option>Montréal</option><option>Laval</option><option>Longueuil</option>
-            <option>Québec</option><option>Gatineau</option><option>Sherbrooke</option>
-            <option>Saguenay</option><option>Lévis</option><option>Trois-Rivières</option>
-            <option>Terrebonne</option><option>Autre</option>
-          </select>
-          <div class="err-msg">Champ requis.</div>
-        </div>
-      </div>
-      <div class="field" id="gf-addr"><label>Adresse complète <span class="req">*</span></label><input type="text" id="g_addr" placeholder="1234 Rue Principale, Montréal, QC H2X 1Y4"><div class="err-msg">Champ requis.</div></div>
-      <div class="field-row">
-        <div class="field" id="gf-tel">
-          <label>Téléphone <span class="req">*</span></label>
-          <input type="tel" id="g_tel" placeholder="514 555-1234" oninput="vPhoneGarage(this)">
-          <div class="err-msg" id="g-tel-err">Numéro canadien invalide.</div>
-        </div>
-        <div class="field" id="gf-email"><label>Courriel <span class="req">*</span></label><input type="email" id="g_email" placeholder="info@garage.com"><div class="err-msg">Courriel invalide.</div></div>
-      </div>
-      <div class="field-row">
-        <div class="field"><label>Nombre de baies</label>
-          <select id="g_baies">
-            <option value="">Sélectionner...</option>
-            <option>1–2 baies</option><option>3–5 baies</option>
-            <option>6–10 baies</option><option>10+ baies</option>
-          </select>
-        </div>
-        <div class="field"><label>Années en activité</label>
-          <select id="g_exp">
-            <option value="">Sélectionner...</option>
-            <option>Moins de 1 an</option><option>1 à 3 ans</option>
-            <option>3 à 5 ans</option><option>5 à 10 ans</option><option>Plus de 10 ans</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-card">
-      <div class="section-title"><div class="section-icon orange">🔧</div> Services offerts</div>
-      <div class="check-grid" id="g-services-grid">
-        <label class="check-item"><input type="checkbox" value="Vidange / huile"><span class="chk-box">✓</span> Vidange / huile</label>
-        <label class="check-item"><input type="checkbox" value="Freins"><span class="chk-box">✓</span> Freins</label>
-        <label class="check-item"><input type="checkbox" value="Pneus / Jantes"><span class="chk-box">✓</span> Pneus / Jantes</label>
-        <label class="check-item"><input type="checkbox" value="Batterie / Électrique"><span class="chk-box">✓</span> Batterie</label>
-        <label class="check-item"><input type="checkbox" value="Diagnostic / OBD"><span class="chk-box">✓</span> Diagnostic</label>
-        <label class="check-item"><input type="checkbox" value="Suspension"><span class="chk-box">✓</span> Suspension</label>
-        <label class="check-item"><input type="checkbox" value="Climatisation"><span class="chk-box">✓</span> Climatisation</label>
-        <label class="check-item"><input type="checkbox" value="Transmission"><span class="chk-box">✓</span> Transmission</label>
-        <label class="check-item"><input type="checkbox" value="Carrosserie"><span class="chk-box">✓</span> Carrosserie</label>
-        <label class="check-item"><input type="checkbox" value="Inspection pré-achat"><span class="chk-box">✓</span> Inspection</label>
-        <label class="check-item"><input type="checkbox" value="Check engine"><span class="chk-box">✓</span> Check engine</label>
-        <label class="check-item"><input type="checkbox" value="Courroie / Distribution"><span class="chk-box">✓</span> Distribution</label>
-      </div>
-    </div>
-
-    <div class="form-card">
-      <div class="section-title"><div class="section-icon orange">🗓️</div> Horaires d'ouverture</div>
-      <div class="schedule-grid" id="g-schedule-grid">
-        <div class="sg-head">Jour</div>
-        <div class="sg-head">Matin<br><span style="font-weight:400;font-size:9px;opacity:.6">8h–12h</span></div>
-        <div class="sg-head">Après-midi<br><span style="font-weight:400;font-size:9px;opacity:.6">12h–17h</span></div>
-        <div class="sg-head">Soir<br><span style="font-weight:400;font-size:9px;opacity:.6">17h–21h</span></div>
-      </div>
-    </div>
-
-    <div class="form-card">
-      <div class="section-title"><div class="section-icon orange">💰</div> Tarifs indicatifs <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
-      <input type="text" id="g_pricing" placeholder="Vidange: 49$, Freins: 149$, Pneus: 79$">
-      <p class="pricing-hint">Format : Service: Prix$, séparés par des virgules. Affiché sur ta fiche Greaz.</p>
-    </div>
-
-    <div class="form-card">
-      <div class="section-title"><div class="section-icon orange">📷</div> Logo du garage <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
-      <div style="display:flex;align-items:center;gap:14px">
-        <div id="g-logo-preview" style="width:64px;height:64px;border-radius:50%;background:rgba(255,107,44,.12);border:2px solid rgba(255,107,44,.3);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;background-size:cover;background-position:center">🏪</div>
-        <div>
-          <label for="g_logo" style="display:inline-block;padding:8px 16px;background:rgba(255,255,255,.07);border:1.5px solid var(--line);border-radius:var(--r);cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s">📁 Choisir un fichier</label>
-          <input type="file" id="g_logo" accept="image/*" style="display:none" onchange="previewLogo(this,'g-logo-preview')">
-          <div style="font-size:11px;color:var(--muted2);margin-top:5px">JPG, PNG, WebP · Max 5MB</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-card">
-      <div class="section-title"><div class="section-icon orange">💬</div> Description du garage <span style="font-size:11px;color:var(--muted2);font-weight:400;margin-left:4px">(optionnel)</span></div>
-      <textarea id="g_bio" rows="3" placeholder="Ex : Garage familial depuis 15 ans, spécialisé en véhicules européens. Équipement moderne, devis gratuit."></textarea>
-      <div class="fb-err" id="g-fb-err"></div>
-    </div>
-
-    <div class="nav-row">
-      <button class="btn btn-secondary" onclick="selectType(null)">← Changer</button>
-      <button class="btn btn-primary orange" id="g-submit-btn" onclick="submitGarage()">Inscrire mon garage →</button>
-    </div>
-
-    <!-- GARAGE SUCCESS -->
-    <div id="garage-success" style="display:none">
-      <div class="success-card">
-        <div class="success-icon">🎉</div>
-        <h2>Inscription <span>reçue !</span></h2>
-        <p>L'équipe Greaz va vous contacter dans les 24–48h pour finaliser votre profil sur la plateforme.</p>
-        <div class="ref-box" id="g-ref-num"></div><br>
-        <button class="btn btn-primary orange" onclick="location.reload()" style="max-width:260px;margin:0 auto;display:block">Nouvelle inscription</button>
-      </div>
-    </div>
-
-  </div><!-- /panel-garage -->
-
-</div><!-- /container -->
+<div class="toast" id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-emailjs.init({ publicKey: "COLLE_TA_CLE_PUBLIQUE_ICI" });
+/* ══════════ CONFIG ══════════ */
+emailjs.init({ publicKey: "wVQqsSCjIEvcucyEc" });
+var EJS_SERVICE = "service_2v5zpll";
+var EJS_TEMPLATE = "template_b0le5ae";
 
-var db;
-try {
-  firebase.initializeApp({
-    apiKey:"AIzaSyAbvCBM1J-LL5B5_v5rqjbGcM8geufmbxs",
-    authDomain:"greaz-4b00c.firebaseapp.com",
-    projectId:"greaz-4b00c",
-    storageBucket:"greaz-4b00c.firebasestorage.app",
-    messagingSenderId:"165170790975",
-    appId:"1:165170790975:web:38fe20428046e6328b6e8a"
-  });
-  db = firebase.firestore();
-  var storage = firebase.storage();
-} catch(e){ console.error("Firebase:", e); }
+firebase.initializeApp({
+  apiKey:"AIzaSyAbvCBM1J-LL5B5_v5rqjbGcM8geufmbxs",
+  authDomain:"greaz-4b00c.firebaseapp.com",
+  projectId:"greaz-4b00c",
+  storageBucket:"greaz-4b00c.firebasestorage.app",
+  messagingSenderId:"165170790975",
+  appId:"1:165170790975:web:38fe20428046e6328b6e8a"
+});
+var db = firebase.firestore();
 
 var DAYS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-var mecSchedule = {}, garageSchedule = {};
-DAYS.forEach(function(d){ mecSchedule[d]={matin:false,aprem:false,soir:false}; garageSchedule[d]={matin:false,aprem:false,soir:false}; });
+var SLOTS = ['matin','aprem','soir'];
+var SLOT_LABEL = { matin:'Matin', aprem:'Après-midi', soir:'Soir' };
 
-var mecCurrentStep = 1;
+/* ══════════ STATUTS DU FLUX ══════════ */
+var JOB_STATUS = {
+  envoye:         { icon:'📨', label:'En attente de réponse', color:'#FF6B2C', bg:'rgba(255,107,44,.12)' },
+  accepte:        { icon:'✅', label:'Accepté',               color:'#00C26F', bg:'rgba(0,194,111,.12)' },
+  a_reprogrammer: { icon:'🔄', label:'Autre date proposée',   color:'#FFC940', bg:'rgba(255,201,64,.12)' },
+  refuse:         { icon:'❌', label:'Refusé',                color:'#EF4444', bg:'rgba(239,68,68,.12)' },
+};
+var ACTIFS = ['envoye','accepte','a_reprogrammer'];
 
-/* ── LOGO UPLOAD ── */
-function previewLogo(input, previewId){
-  var file = input.files[0]; if(!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e){
-    var el = document.getElementById(previewId);
-    el.style.backgroundImage = 'url('+e.target.result+')';
-    el.style.backgroundSize = 'cover';
-    el.style.backgroundPosition = 'center';
-    el.textContent = '';
-  };
-  reader.readAsDataURL(file);
+/* ══════════ ÉTAT ══════════ */
+var mecano = null;      // user Firebase
+var garage = null;      // doc mechanics_public
+var garageId = null;
+var staffRole = 'patron';  // 'patron' | 'employe'
+var staffName = '';
+var _jobs = [];
+var _jFilter = 'envoye';
+
+/* ══════════ TOAST ══════════ */
+function toast(msg, isErr){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' err' : '');
+  setTimeout(function(){ t.className = 'toast' + (isErr?' err':''); }, 3000);
 }
 
-async function uploadLogo(inputId, folder){
-  var input = document.getElementById(inputId);
-  if(!input || !input.files || !input.files[0]) return null;
-  var file = input.files[0];
-  return new Promise(function(resolve, reject){
-    var reader = new FileReader();
-    reader.onload = function(e){
-      var img = new Image();
-      img.onload = function(){
-        var canvas = document.createElement('canvas');
-        var maxSize = 400;
-        var ratio = Math.min(maxSize/img.width, maxSize/img.height, 1);
-        canvas.width = img.width*ratio;
-        canvas.height = img.height*ratio;
-        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob(function(blob){
-          var ref = firebase.storage().ref(folder+'/'+Date.now()+'.jpg');
-          ref.put(blob).then(function(snap){
-            snap.ref.getDownloadURL().then(resolve).catch(reject);
-          }).catch(reject);
-        }, 'image/jpeg', 0.75);
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
+/* ══════════ CONNEXION ══════════ */
+async function mecanoLogin(){
+  var email = (document.getElementById('mEmail').value||'').trim();
+  var pass = document.getElementById('mPass').value||'';
+  var btn = document.getElementById('loginBtn');
+  var err = document.getElementById('loginErr');
+  err.style.display = 'none';
 
-/* ── TYPE SELECTOR ── */
-function selectType(type){
-  document.getElementById('tab-mec').className = 'type-tab' + (type==='mec' ? ' act-mec' : '');
-  document.getElementById('tab-garage').className = 'type-tab' + (type==='garage' ? ' act-garage' : '');
-  document.getElementById('badge-mec').style.display = type==='mec' ? 'inline-block' : 'none';
-  document.getElementById('badge-garage').style.display = type==='garage' ? 'inline-block' : 'none';
-  document.getElementById('panel-mec').className = 'form-panel' + (type==='mec' ? ' show' : '');
-  document.getElementById('panel-garage').className = 'form-panel' + (type==='garage' ? ' show' : '');
-  document.getElementById('mec-progress').className = 'progress-wrap' + (type==='mec' ? ' show' : '');
-  if(type) window.scrollTo({top:document.getElementById('type-selector').offsetTop - 80, behavior:'smooth'});
-  else { mecCurrentStep=1; resetMecSteps(); }
-}
+  if(!email || !pass){ err.textContent='Entre ton courriel et ton mot de passe.'; err.style.display='block'; return; }
 
-/* ── MEC STEPS ── */
-function mecGoStep(n){
-  if(n > mecCurrentStep && !mecValidateStep(mecCurrentStep)) return;
-  document.getElementById('mec-step-'+mecCurrentStep).classList.remove('active');
-  document.getElementById('mec-step-'+n).classList.add('active');
-  document.querySelectorAll('.step-dot').forEach(function(d){
-    var s=parseInt(d.dataset.step); d.classList.remove('active','done');
-    if(s<n) d.classList.add('done'); else if(s===n) d.classList.add('active');
-  });
-  ['line-1-2','line-2-3','line-3-4'].forEach(function(id,i){
-    document.getElementById(id).classList.toggle('done', n>i+1);
-  });
-  mecCurrentStep=n;
-  window.scrollTo({top:0, behavior:'smooth'});
-}
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Connexion...';
 
-function resetMecSteps(){
-  document.querySelectorAll('[id^="mec-step-"]').forEach(function(el){ el.classList.remove('active'); });
-  var s = document.getElementById('mec-step-1'); if(s) s.classList.add('active');
-  document.querySelectorAll('.step-dot').forEach(function(d){ d.classList.remove('active','done'); if(parseInt(d.dataset.step)===1) d.classList.add('active'); });
-  document.querySelectorAll('.step-line').forEach(function(l){ l.classList.remove('done'); });
-}
-
-function mecValidateStep(step){
-  var ok=true;
-  if(step===1){
-    [{id:'m_prenom',fid:'mf-prenom',type:'text'},
-     {id:'m_nom',   fid:'mf-nom',   type:'text'},
-     {id:'m_email', fid:'mf-email', type:'email'},
-     {id:'m_tel',   fid:'mf-tel',   type:'phone'},
-     {id:'m_ville', fid:'mf-ville', type:'select'}
-    ].forEach(function(f){
-      var el=document.getElementById(f.id), fd=document.getElementById(f.fid);
-      var v=el.value.trim();
-      var valid = f.type==='email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-               : f.type==='phone' ? /^[2-9]\d{2}[2-9]\d{6}$/.test(v.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"")) && v.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"").length===10
-               : v.length>0;
-      fd.classList.toggle('has-err',!valid); el.classList.toggle('err',!valid);
-      if(!valid) ok=false;
-    });
+  try {
+    var cred = await firebase.auth().signInWithEmailAndPassword(email, pass);
+    await loadGarage(cred.user);
+  } catch(e){
+    var msg = 'Identifiants incorrects.';
+    if(e.code === 'auth/too-many-requests') msg = 'Trop de tentatives. Réessaie dans quelques minutes.';
+    if(e.code === 'auth/network-request-failed') msg = 'Problème de connexion réseau.';
+    err.textContent = msg; err.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Se connecter →';
   }
-  if(step===2){
-    var sel=document.querySelectorAll('#m-vehicules-grid .check-item.sel');
-    var err=document.getElementById('m-err-vehicules');
-    if(!sel.length){ err.style.display='block'; ok=false; } else err.style.display='none';
+}
+
+async function loadGarage(user){
+  var btn = document.getElementById('loginBtn');
+  var err = document.getElementById('loginErr');
+  try {
+    // 1. Est-ce un PATRON ? (propriétaire d'un garage)
+    var snap = await db.collection('mechanics_public').where('owner_uid','==',user.uid).limit(1).get();
+
+    if(!snap.empty){
+      mecano = user;
+      garageId = snap.docs[0].id;
+      garage = snap.docs[0].data();
+      staffRole = 'patron';
+    } else {
+      // 2. Est-ce un EMPLOYÉ ? (compte dans garage_staff)
+      var staffSnap = await db.collection('garage_staff').where('uid','==',user.uid).limit(1).get();
+      if(staffSnap.empty){
+        await firebase.auth().signOut();
+        err.innerHTML = "Aucun garage n'est lié à ce compte.<br>Contacte-nous à <b>partenariats@greaz.ca</b>";
+        err.style.display = 'block';
+        if(btn){ btn.disabled=false; btn.textContent='Se connecter →'; }
+        return;
+      }
+      var staff = staffSnap.docs[0].data();
+      garageId = staff.garage_id;
+      staffRole = 'employe';
+      staffName = staff.name || '';
+      // Charge le garage du patron
+      var gDoc = await db.collection('mechanics_public').doc(garageId).get();
+      if(!gDoc.exists){
+        await firebase.auth().signOut();
+        err.innerHTML = "Le garage lié à ton compte est introuvable.<br>Contacte <b>partenariats@greaz.ca</b>";
+        err.style.display = 'block';
+        if(btn){ btn.disabled=false; btn.textContent='Se connecter →'; }
+        return;
+      }
+      mecano = user;
+      garage = gDoc.data();
+    }
+
+    document.getElementById('loginScreen').classList.remove('show');
+    document.getElementById('app').classList.add('show');
+    document.getElementById('garageName').textContent = '🏪 ' + (garage.name||'') + (staffRole==='employe' ? ' · '+staffName : '');
+
+    applyStaffPermissions();
+    if(staffRole==='patron') fillGarageForm();
+    listenJobs();
+    listenCRM();
+    renderToday();
+  } catch(e){
+    err.textContent = 'Erreur : ' + e.message;
+    err.style.display = 'block';
+    if(btn){ btn.disabled=false; btn.textContent='Se connecter →'; }
   }
-  return ok;
 }
 
-function vPhoneMec(el){
-  var clean=el.value.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"");
-  var ok=/^[2-9]\d{2}[2-9]\d{6}$/.test(clean)&&clean.length===10;
-  el.style.borderColor=el.value.length>3?(ok?"#00C26F":"#f87171"):"";
-}
-function vPhoneGarage(el){
-  var clean=el.value.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"");
-  var ok=/^[2-9]\d{2}[2-9]\d{6}$/.test(clean)&&clean.length===10;
-  el.style.borderColor=el.value.length>3?(ok?"#00C26F":"#f87171"):"";
-}
-
-/* ── SCHEDULE BUILDER ── */
-function buildScheduleGrid(containerId, schedObj){
-  var grid=document.getElementById(containerId);
-  DAYS.forEach(function(day){
-    var dl=document.createElement('div'); dl.className='sg-day'; dl.textContent=day; grid.appendChild(dl);
-    ['matin','aprem','soir'].forEach(function(slot){
-      var cell=document.createElement('div'); cell.className='sg-cell';
-      var btn=document.createElement('button'); btn.className='slot-btn'; btn.textContent='—'; btn.type='button';
-      btn.onclick=function(){ schedObj[day][slot]=!schedObj[day][slot]; btn.classList.toggle('on',schedObj[day][slot]); btn.textContent=schedObj[day][slot]?'✓':'—'; };
-      cell.appendChild(btn); grid.appendChild(cell);
-    });
-  });
-}
-
-function scheduleToStr(sched){
-  return Object.entries(sched).filter(function(e){ return Object.values(e[1]).some(Boolean); })
-    .map(function(e){
-      var s=e[1], slots=[];
-      if(s.matin) slots.push('Matin');
-      if(s.aprem) slots.push('Après-midi');
-      if(s.soir) slots.push('Soir');
-      return e[0]+': '+slots.join(', ');
-    }).join(' | ') || 'Non précisé';
-}
-
-/* ── WIRE CHECKBOXES ── */
-document.addEventListener('DOMContentLoaded', function(){
-  buildScheduleGrid('m-schedule-grid', mecSchedule);
-  buildScheduleGrid('g-schedule-grid', garageSchedule);
-
-  document.querySelectorAll('.check-item input[type="checkbox"]').forEach(function(inp){
-    inp.addEventListener('change', function(){
-      inp.closest('.check-item').classList.toggle('sel', inp.checked);
-    });
-  });
+firebase.auth().onAuthStateChanged(function(user){
+  if(user && !mecano) loadGarage(user);
 });
 
-/* ── SUBMIT MEC ── */
-async function submitMec(){
-  var btn=document.getElementById('m-submit-btn'), errEl=document.getElementById('m-fb-err');
-  errEl.style.display='none';
-  var vehicules=Array.from(document.querySelectorAll('#m-vehicules-grid .check-item.sel input')).map(function(i){return i.value;});
-  var services=Array.from(document.querySelectorAll('#m-services-grid .check-item.sel input')).map(function(i){return i.value;});
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Envoi en cours...';
-  try {
-    var photoUrl = await uploadLogo('m_logo', 'logos/mecaniciens').catch(function(){ return null; });
-    await db.collection('mechanic_applications').add({
-      first_name: document.getElementById('m_prenom').value.trim(),
-      last_name:  document.getElementById('m_nom').value.trim(),
-      phone:      document.getElementById('m_tel').value.trim(),
-      email:      document.getElementById('m_email').value.trim(),
-      city:       document.getElementById('m_ville').value,
-      experience: document.getElementById('m_experience').value,
-      license:    document.getElementById('m_licence').value.trim(),
-      vehicle_types: vehicules.join(', ')||'Non précisé',
-      services:      services.join(', ')||'Non précisé',
-      schedule:      scheduleToStr(mecSchedule),
-      radius:        document.getElementById('m_rayon').value+' km',
-      pricing:       document.getElementById('m_pricing').value.trim(),
-      bio:           document.getElementById('m_bio').value.trim(),
-      photo_url:     photoUrl || '',
-      status: 'nouveau', source: 'mechanic-signup',
-      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+function mecanoLogout(){
+  firebase.auth().signOut().then(function(){ location.reload(); });
+}
+
+function applyStaffPermissions(){
+  // L'employé ne voit PAS les statistiques ni la config du garage (argent + réglages)
+  var isEmploye = staffRole === 'employe';
+  var statsTab = document.getElementById('tab-stats');
+  var garageTab = document.getElementById('tab-garage');
+  if(statsTab) statsTab.style.display = isEmploye ? 'none' : '';
+  if(garageTab) garageTab.style.display = isEmploye ? 'none' : '';
+}
+
+function mSwitch(t){
+  ['jobs','agenda','garage'].forEach(function(x){
+    var tab = document.getElementById('tab-'+x);
+    var pan = document.getElementById('panel-'+x);
+    if(tab) tab.classList.toggle('act', x===t);
+    if(pan) pan.classList.toggle('act', x===t);
+  });
+  if(t==='agenda') renderAgenda();
+}
+
+/* ══════════ MES DEMANDES ══════════ */
+function listenJobs(){
+  db.collection('jobs').where('mechanic_id','==',garageId)
+    .onSnapshot(function(snap){
+      _jobs = snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+      renderCounters();
+      renderJobs();
+    }, function(e){
+      document.getElementById('jobs-list').innerHTML = '<div class="empty">⚠️ '+e.message+'</div>';
     });
-    emailjs.send("service_h2f013c","template_moboyo8",{
-      to_email:"contact@greaz.ca", type_demande:"Nouveau mécanicien",
-      nom_client:document.getElementById('m_prenom').value.trim()+" "+document.getElementById('m_nom').value.trim(),
-      telephone:document.getElementById('m_tel').value.trim(),
-      courriel:document.getElementById('m_email').value.trim(),
-      adresse:document.getElementById('m_ville').value,
-      vehicule:vehicules.join(', '),
-      probleme:services.join(', '),
-      urgence:'Mécanicien mobile', code_reservation:'—',
-    }).catch(function(){});
-    document.getElementById('mec-step-'+mecCurrentStep).classList.remove('active');
-    document.getElementById('mec-step-success').classList.add('active');
-    document.getElementById('m-ref-num').textContent='Référence : MEC-'+Date.now();
-    document.querySelectorAll('.step-dot').forEach(function(d){ d.classList.remove('active'); d.classList.add('done'); });
-    document.querySelectorAll('.step-line').forEach(function(l){ l.classList.add('done'); });
-    window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function renderCounters(){
+  var c = function(s){ return _jobs.filter(function(j){ return j.status===s; }).length; };
+  document.getElementById('s-new').textContent = c('envoye');
+  document.getElementById('s-conf').textContent = c('accepte');
+  document.getElementById('s-work').textContent = c('a_reprogrammer');
+  var actifs = c('envoye');   // le badge de l'onglet = ce qui attend une réponse
+  var tc = document.getElementById('tc-jobs');
+  tc.textContent = actifs;
+  tc.className = 'tcount' + (actifs===0?' zero':'');
+}
+
+function jFilter(f, btn){
+  _jFilter = f;
+  btn.parentElement.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('act'); });
+  btn.classList.add('act');
+  renderJobs();
+}
+
+function renderJobs(){
+  var el = document.getElementById('jobs-list');
+  var list = _jobs.slice();
+
+  if(_jFilter === 'actifs') list = list.filter(function(j){ return ACTIFS.indexOf(j.status)!==-1; });
+  else if(_jFilter) list = list.filter(function(j){ return j.status===_jFilter; });
+
+  // Tri : nouvelles en premier, puis par date
+  var prio = { envoye:0, a_reprogrammer:1, accepte:2, refuse:3 };
+  list.sort(function(a,b){
+    var pa = prio[a.status]!==undefined?prio[a.status]:9;
+    var pb = prio[b.status]!==undefined?prio[b.status]:9;
+    if(pa!==pb) return pa-pb;
+    var da = a.updated_at&&a.updated_at.toDate?a.updated_at.toDate():new Date(0);
+    var db2 = b.updated_at&&b.updated_at.toDate?b.updated_at.toDate():new Date(0);
+    return db2-da;
+  });
+
+  if(!list.length){
+    el.innerHTML = '<div class="empty"><div class="empty-ic">🔧</div>'
+      + (_jFilter==='actifs' ? 'Aucune demande active.<br>Greaz t\'enverra les clients ici.' : 'Aucune demande pour ce filtre.')
+      + '</div>';
+    return;
+  }
+
+  el.innerHTML = list.map(function(j){
+    var s = JOB_STATUS[j.status] || JOB_STATUS.envoye;
+    var veh = [j.vehicle_year, j.vehicle_make, j.vehicle_model].filter(Boolean).join(' ');
+
+    return '<div class="job" style="border-left-color:'+s.color+'">'
+
+      // En-tête : qui, quoi, statut
+      +'<div class="job-head">'
+      +'<div><div class="job-client">'+(j.client_name||'Client')+'</div>'
+      +(veh?'<div class="job-veh">🚗 '+veh+(j.vehicle_type?' · '+j.vehicle_type:'')+'</div>':'')
+      +'<div class="job-code mono">'+(j.booking_code||'')+'</div></div>'
+      +'<div class="jstatus" style="background:'+s.bg+';color:'+s.color+'">'+s.icon+' '+s.label+'</div>'
+      +'</div>'
+
+      // Ce que le client demande, mis en avant
+      +'<div class="ask-box">'
+      +'<div class="ask-row"><span class="ask-lbl">Service</span><span class="ask-val">'+(j.problem||'Non précisé')+'</span></div>'
+      +(j.date
+        ? '<div class="ask-row"><span class="ask-lbl">Souhaité</span><span class="ask-val strong">'+fmtDate(j.date)
+          +(j.time_slot?' · '+(SLOT_LABEL[j.time_slot]||j.time_slot):'')+'</span></div>'
+        : '<div class="ask-row"><span class="ask-lbl">Souhaité</span><span class="ask-val" style="color:var(--muted)">Pas de date précisée</span></div>')
+      +(j.description?'<div class="ask-row"><span class="ask-lbl">Détail</span><span class="ask-val">'+j.description+'</span></div>':'')
+      +'</div>'
+
+      // Coordonnées, actionnables
+      +'<div class="job-info">'
+      +(j.client_phone?'<a href="tel:'+j.client_phone+'" class="jcontact">📞 '+j.client_phone+'</a>':'')
+      +(j.client_email?'<a href="mailto:'+j.client_email+'" class="jcontact">📧 '+j.client_email+'</a>':'')
+      +(j.client_address?'<div class="jaddr">📍 '+j.client_address+'</div>':'')
+      +'</div>'
+
+      // Proposition en attente chez Greaz
+      +(j.status==='a_reprogrammer' && j.proposed_date
+        ? '<div class="alert-box" style="background:var(--sodiumlt);border-color:rgba(255,201,64,.3);color:var(--sodium)">'
+          +'🔄 Tu as proposé le <b>'+fmtDate(j.proposed_date)+(j.proposed_slot?' ('+(SLOT_LABEL[j.proposed_slot]||j.proposed_slot)+')':'')+'</b>'
+          +(j.reschedule_note?'<br><span style="opacity:.8">« '+j.reschedule_note+' »</span>':'')+'</div>'
+        : '')
+      +(j.status==='refuse' && j.refuse_reason
+        ? '<div class="alert-box" style="background:var(--redlt);border-color:rgba(239,68,68,.3);color:#FCA5A5">❌ '+j.refuse_reason+'</div>'
+        : '')
+
+      + buildActions(j)
+      +'</div>';
+  }).join('');
+}
+
+function buildActions(j){
+  var b = '<div class="acts">';
+  if(j.status === 'envoye'){
+    b += '<button class="act-btn b-green" onclick="acceptJob(\''+j.id+'\')">✅ J\'accepte</button>';
+    b += '<button class="act-btn b-sodium" onclick="openReschedule(\''+j.id+'\')">🔄 Proposer une autre date</button>';
+    b += '<button class="act-btn b-red" onclick="refuseJob(\''+j.id+'\')">❌ Je ne peux pas</button>';
+  } else if(j.status === 'accepte'){
+    b += '<span style="font-size:12.5px;color:var(--green);padding:8px 0">✓ Dans ton calendrier'
+      + (j.date ? ' — ' + fmtDate(j.date) + (j.time_slot ? ' ' + (SLOT_LABEL[j.time_slot]||j.time_slot) : '') : '')
+      + '</span>';
+  } else if(j.status === 'a_reprogrammer'){
+    b += '<span style="font-size:12.5px;color:var(--sodium);padding:8px 0">⏳ Greaz contacte le client avec ta proposition</span>';
+  } else {
+    b += '<span style="font-size:12px;color:var(--muted);padding:8px 0">Demande fermée.</span>';
+  }
+  b += '</div>';
+  return b;
+}
+
+/* ══════════ CHANGEMENTS DE STATUT ══════════ */
+async function setStatus(id, status, extra){
+  var j = _jobs.find(function(x){ return x.id===id; });
+  if(!j) return;
+
+  var tl = j.timeline || [];
+  tl.push({ status:status, at:new Date().toISOString(), by:garage.name||'Mécanicien', note:(extra&&extra.note)||'' });
+
+  var updates = Object.assign({
+    status: status,
+    timeline: tl,
+    updated_at: firebase.firestore.FieldValue.serverTimestamp(),
+  }, extra || {});
+  delete updates.note;
+
+  try {
+    await db.collection('jobs').doc(id).update(updates);
+    notifyClient(j, status, extra);
+    toast(JOB_STATUS[status].icon + ' ' + JOB_STATUS[status].label);
   } catch(e){
-    errEl.textContent='Erreur : '+e.message; errEl.style.display='block';
-    btn.disabled=false; btn.textContent='Envoyer ma candidature ✓';
+    toast('Erreur : ' + e.message, true);
   }
 }
 
-/* ── SUBMIT GARAGE ── */
-async function submitGarage(){
-  var btn=document.getElementById('g-submit-btn'), errEl=document.getElementById('g-fb-err');
-  errEl.style.display='none';
-  var ok=true;
-  [{id:'g_nom',fid:'gf-nom'},{id:'g_ville',fid:'gf-ville'},
-   {id:'g_addr',fid:'gf-addr'}].forEach(function(f){
-    var el=document.getElementById(f.id), fd=document.getElementById(f.fid);
-    var valid=el.value.trim().length>0;
-    fd.classList.toggle('has-err',!valid); el.classList.toggle('err',!valid);
-    if(!valid) ok=false;
-  });
-  var gtel=document.getElementById('g_tel');
-  var tclean=gtel.value.replace(/[\s\-\(\)\.]/g,"").replace(/^\+1/,"");
-  var telOk=/^[2-9]\d{2}[2-9]\d{6}$/.test(tclean)&&tclean.length===10;
-  document.getElementById('gf-tel').classList.toggle('has-err',!telOk);
-  if(!telOk) ok=false;
-  var gemail=document.getElementById('g_email');
-  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gemail.value.trim());
-  document.getElementById('gf-email').classList.toggle('has-err',!emailOk);
-  if(!emailOk) ok=false;
-  if(!ok){ errEl.textContent='Veuillez remplir tous les champs obligatoires (*).'; errEl.style.display='block'; return; }
+function acceptJob(id){
+  var j = _jobs.find(function(x){ return x.id===id; });
+  if(!j) return;
+  var quand = j.date ? fmtDate(j.date) + (j.time_slot ? ' — ' + (SLOT_LABEL[j.time_slot]||j.time_slot) : '') : 'la date demandée';
+  if(!confirm('Accepter ce client ?\n\n' + (j.client_name||'Client') + '\n' + quand + '\n\nIl sera ajouté à ton calendrier et Greaz le confirmera.')) return;
+  setStatus(id, 'accepte');
+}
 
-  var services=Array.from(document.querySelectorAll('#g-services-grid .check-item.sel input')).map(function(i){return i.value;});
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Envoi en cours...';
+/* Le mécano propose une autre date — Greaz s'occupe d'en parler au client */
+function openReschedule(id){
+  var j = _jobs.find(function(x){ return x.id===id; });
+  if(!j) return;
+  var fld = 'width:100%;padding:12px 14px;background:rgba(255,255,255,.05);border:1.5px solid var(--line);border-radius:10px;color:white;font-size:16px;font-family:inherit;outline:none';
+  var lbl = 'display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px';
+  var today = new Date().toISOString().slice(0,10);
+
+  var modal = document.createElement('div');
+  modal.id = 'resch-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:flex;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto';
+  modal.innerHTML = '<div style="background:var(--graphite2);border:1px solid var(--line);border-radius:16px;padding:1.5rem;max-width:430px;width:100%;margin:auto">'
+    +'<h3 style="font-size:17px;font-weight:700;margin-bottom:.35rem">🔄 Proposer une autre date</h3>'
+    +'<p style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:1.25rem">'
+    + (j.client_name||'Client') + ' avait demandé <b>' + (j.date?fmtDate(j.date):'—')
+    + (j.time_slot?' ('+(SLOT_LABEL[j.time_slot]||j.time_slot)+')':'') + '</b>.<br>'
+    + 'Greaz contactera le client avec ta proposition.</p>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">'
+    +'<div><label style="'+lbl+'">Nouvelle date *</label><input id="rs-date" type="date" min="'+today+'" style="'+fld+'"></div>'
+    +'<div><label style="'+lbl+'">Plage *</label><select id="rs-slot" style="'+fld+'"><option value="matin">Matin</option><option value="aprem">Après-midi</option><option value="soir">Soir</option></select></div>'
+    +'</div>'
+    +'<div style="margin-bottom:1.25rem"><label style="'+lbl+'">Message pour le client (optionnel)</label>'
+    +'<input id="rs-note" type="text" placeholder="Ex : Je suis complet mardi, mais libre jeudi matin" style="'+fld+'"></div>'
+    +'<div id="rs-err" style="display:none;background:var(--redlt);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;padding:10px 12px;border-radius:9px;font-size:12.5px;margin-bottom:1rem"></div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<button id="rs-save" onclick="saveReschedule(\''+id+'\')" style="flex:1;padding:14px;background:var(--sodium);color:#1a1200;border:none;border-radius:10px;font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit">Envoyer à Greaz</button>'
+    +'<button onclick="document.getElementById(\'resch-modal\').remove()" style="padding:14px 18px;background:rgba(255,255,255,.08);border:none;border-radius:10px;color:var(--txt);font-size:14px;cursor:pointer;font-family:inherit">Annuler</button>'
+    +'</div></div>';
+  document.body.appendChild(modal);
+}
+
+function saveReschedule(id){
+  var date = document.getElementById('rs-date').value;
+  var slot = document.getElementById('rs-slot').value;
+  var note = (document.getElementById('rs-note').value||'').trim();
+  var err = document.getElementById('rs-err');
+  if(!date){ err.textContent = 'Choisis une nouvelle date.'; err.style.display='block'; return; }
+
+  var btn = document.getElementById('rs-save');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span>';
+
+  setStatus(id, 'a_reprogrammer', {
+    proposed_date: date,
+    proposed_slot: slot,
+    reschedule_note: note,
+    note: 'Propose le ' + fmtDate(date) + ' (' + (SLOT_LABEL[slot]||slot) + ')' + (note ? ' — ' + note : ''),
+  }).then(function(){
+    var m = document.getElementById('resch-modal'); if(m) m.remove();
+  });
+}
+
+function refuseJob(id){
+  var raison = prompt('Pourquoi tu ne peux pas prendre ce client ?\n\n(Greaz va lui trouver quelqu\'un d\'autre)');
+  if(raison === null) return;
+  setStatus(id, 'refuse', { refuse_reason: (raison||'').trim(), note: (raison||'').trim() });
+}
+
+/* ══════════ NOTIFICATION CLIENT ══════════ */
+function notifyClient(j, status, extra){
+  if(!j.client_email) return;
+  // Seule l'acceptation part directement au client.
+  // Refus et reprogrammation remontent à Greaz, qui contacte le client lui-même.
+  var messages = {
+    accepte: {
+      sujet: 'Votre rendez-vous est confirmé ✅',
+      corps: (garage.name||'Le garage')+' a confirmé votre rendez-vous'
+             +(j.date?' du '+fmtDate(j.date)+(j.time_slot?' ('+(SLOT_LABEL[j.time_slot]||j.time_slot)+')':''):'')
+             +'.\n\nAdresse : '+(garage.address||garage.city||'')
+             +'\nTéléphone : '+(garage.contact_phone||garage.phone||'')
+             +'\n\nÀ bientôt !'
+    },
+  };
+  var m = messages[status];
+  if(!m) return;
+
+  sendClientEmail({
+    to: j.client_email,
+    clientName: j.client_name||'',
+    vehicule: [j.vehicle_make, j.vehicle_model, j.vehicle_year].filter(Boolean).join(' '),
+    sujet: m.sujet,
+    corps: m.corps,
+    code: j.booking_code||'',
+  }).catch(function(e){ console.log('EmailJS:', e); });
+}
+
+/* ══════════ MON GARAGE ══════════ */
+function buildSchedGrid(){
+  var h = '<div class="srow head"><div class="scell">Jour</div>'
+    + SLOTS.map(function(s){ return '<div class="scell">'+(s==='aprem'?'P-M':s==='matin'?'Matin':'Soir')+'</div>'; }).join('')
+    + '</div>';
+  h += DAYS.map(function(d){
+    return '<div class="srow"><div class="scell">'+d+'</div>'
+      + SLOTS.map(function(s){
+          return '<div class="scell"><button class="stog" id="tog-'+d+'-'+s+'" onclick="this.classList.toggle(\'on\')"></button></div>';
+        }).join('')
+      + '</div>';
+  }).join('');
+  document.getElementById('sched-grid').innerHTML = h;
+}
+
+function parseSchedule(str){
+  var r = {};
+  DAYS.forEach(function(d){ r[d] = { matin:false, aprem:false, soir:false }; });
+  if(!str || str === 'Non précisé') return r;
+  String(str).split('|').forEach(function(chunk){
+    var p = chunk.split(':');
+    if(p.length < 2) return;
+    var day = p[0].trim();
+    if(!r[day]) return;
+    var slots = p.slice(1).join(':').split(',').map(function(x){ return x.trim(); });
+    slots.forEach(function(s){
+      if(s.indexOf('Matin')===0) r[day].matin = true;
+      if(s.indexOf('Après-midi')===0) r[day].aprem = true;
+      if(s.indexOf('Soir')===0) r[day].soir = true;
+    });
+  });
+  return r;
+}
+
+function buildScheduleString(){
+  var parts = [];
+  DAYS.forEach(function(d){
+    var on = [];
+    SLOTS.forEach(function(s){
+      var t = document.getElementById('tog-'+d+'-'+s);
+      if(t && t.classList.contains('on')) on.push(SLOT_LABEL[s]);
+    });
+    if(on.length) parts.push(d + ':' + on.join(','));
+  });
+  return parts.length ? parts.join('|') : 'Non précisé';
+}
+
+function fillGarageForm(){
+  buildSchedGrid();
+  document.getElementById('g-name').value = garage.name || '';
+  document.getElementById('g-phone').value = garage.phone || '';
+  document.getElementById('g-city').value = garage.city || '';
+  document.getElementById('g-address').value = garage.address || '';
+  document.getElementById('g-bio').value = garage.bio || '';
+  document.getElementById('g-pricing').value = garage.pricing || '';
+  document.getElementById('g-services').value = garage.services || '';
+  document.getElementById('g-reply-email').value = garage.reply_email || garage.email || '';
+  document.getElementById('g-contact-phone').value = garage.contact_phone || garage.phone || '';
+
+  var sched = parseSchedule(garage.schedule);
+  DAYS.forEach(function(d){
+    SLOTS.forEach(function(s){
+      var t = document.getElementById('tog-'+d+'-'+s);
+      if(t && sched[d][s]) t.classList.add('on');
+    });
+  });
+}
+
+async function saveGarage(){
+  var btn = document.getElementById('saveBtn');
+  var name = (document.getElementById('g-name').value||'').trim();
+  if(!name){ toast('Le nom du garage est obligatoire.', true); return; }
+
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Publication...';
+
+  var updates = {
+    name: name,
+    phone: (document.getElementById('g-phone').value||'').trim(),
+    city: (document.getElementById('g-city').value||'').trim(),
+    address: (document.getElementById('g-address').value||'').trim(),
+    bio: (document.getElementById('g-bio').value||'').trim(),
+    pricing: (document.getElementById('g-pricing').value||'').trim(),
+    services: (document.getElementById('g-services').value||'').trim(),
+    reply_email: (document.getElementById('g-reply-email').value||'').trim(),
+    contact_phone: (document.getElementById('g-contact-phone').value||'').trim(),
+    schedule: buildScheduleString(),
+    updated_at: firebase.firestore.FieldValue.serverTimestamp(),
+  };
 
   try {
-    var photoUrl = await uploadLogo('g_logo', 'logos/garages').catch(function(){ return null; });
-    await db.collection('mechanic_applications').add({
-      type_inscription: 'garage',
-      garage_name:  document.getElementById('g_nom').value.trim(),
-      first_name:   document.getElementById('g_nom').value.trim(),
-      last_name:    '',
-      phone:        document.getElementById('g_tel').value.trim(),
-      email:        document.getElementById('g_email').value.trim(),
-      address:      document.getElementById('g_addr').value.trim(),
-      city:         document.getElementById('g_ville').value,
-      baies:        document.getElementById('g_baies').value,
-      experience:   document.getElementById('g_exp').value,
-      services:     services.join(', ')||'Non précisé',
-      schedule:     scheduleToStr(garageSchedule),
-      pricing:      document.getElementById('g_pricing').value.trim(),
-      bio:          document.getElementById('g_bio').value.trim(),
-      photo_url:    photoUrl || '',
-      status: 'nouveau', source: 'garage-signup',
+    await db.collection('mechanics_public').doc(garageId).update(updates);
+    Object.assign(garage, updates);
+    document.getElementById('garageName').textContent = '🏪 ' + name;
+    toast('✓ Publié sur greaz.ca !');
+  } catch(e){
+    toast('Erreur : ' + e.message, true);
+  }
+  btn.disabled = false; btn.textContent = '💾 Enregistrer et publier';
+}
+
+/* ══════════ CRM : ÉTAT ══════════ */
+var _rdvs = [];        // rendez-vous du garage (collection garage_rdvs)
+var _clients = [];     // clients + véhicules (collection garage_clients)
+var _agendaRef = new Date(); // semaine affichée dans l'agenda
+
+function listenCRM(){
+  db.collection('garage_rdvs').where('garage_id','==',garageId)
+    .onSnapshot(function(snap){
+      _rdvs = snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+      if(document.getElementById('panel-today').classList.contains('act')) renderToday();
+      if(document.getElementById('panel-agenda').classList.contains('act')) renderAgenda();
+    }, function(e){ console.log('RDV:', e.message); toast('Erreur RDV : '+e.message, true); });
+
+  db.collection('garage_clients').where('garage_id','==',garageId)
+    .onSnapshot(function(snap){
+      _clients = snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+      if(document.getElementById('panel-clients').classList.contains('act')) renderClients();
+      if(document.getElementById('panel-today').classList.contains('act')) renderToday();
+    }, function(e){ console.log('Clients:', e.message); toast('Erreur clients : '+e.message, true); });
+}
+
+/* ══════════ AUJOURD'HUI ══════════ */
+function renderToday(){
+  var el = document.getElementById('today-content');
+  var todayStr = new Date().toISOString().slice(0,10);
+
+  // RDV du jour (garage_rdvs + jobs Greaz confirmés)
+  var rdvToday = _rdvs.filter(function(r){ return r.date === todayStr; });
+  var jobsToday = _jobs.filter(function(j){ return j.date === todayStr && j.status==='accepte'; });
+
+  var inShop = [];
+  var ready = [];
+  var newJobs = _jobs.filter(function(j){ return j.status==='envoye'; });
+
+  var dateLabel = new Date().toLocaleDateString('fr-CA',{weekday:'long',day:'numeric',month:'long'});
+
+  var h = '<div style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:.25rem;text-transform:capitalize">'+dateLabel+'</div>'
+    +'<div style="font-size:13px;color:var(--muted);margin-bottom:1.5rem">Voici ta journée en un coup d\'œil</div>';
+
+  // Bandeau alertes
+  if(newJobs.length){
+    h += '<div class="card" style="border-left:4px solid var(--orange);cursor:pointer" onclick="mSwitch(\'jobs\')">'
+      +'<div style="font-size:14px;font-weight:700;color:var(--orange)">📨 '+newJobs.length+' nouvelle'+(newJobs.length>1?'s':'')+' demande'+(newJobs.length>1?'s':'')+' de Greaz</div>'
+      +'<div style="font-size:12.5px;color:var(--muted);margin-top:3px">Clique pour voir et confirmer →</div></div>';
+  }
+
+  // 4 blocs de synthèse
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:1.5rem">'
+    + todayBlock('📅', rdvToday.length + jobsToday.length, 'RDV aujourd\'hui', 'var(--blue)')
+    + todayBlock('🔧', inShop.length, 'En atelier', 'var(--purple)')
+    + todayBlock('🎉', ready.length, 'Prêtes à récupérer', 'var(--green)')
+    + todayBlock('🚗', _clients.length, 'Clients au total', 'var(--sodium)')
+    + '</div>';
+
+  // Liste des RDV du jour
+  h += '<div class="card-t">📅 Rendez-vous du jour</div>';
+  var allToday = rdvToday.map(function(r){ return {type:'rdv', name:r.client_name, veh:r.vehicle, time:r.time_slot, note:r.reason, phone:r.client_phone}; })
+    .concat(jobsToday.map(function(j){ return {type:'greaz', name:j.client_name, veh:[j.vehicle_make,j.vehicle_model].filter(Boolean).join(' '), time:j.time_slot, note:j.problem, phone:j.client_phone}; }));
+
+  if(!allToday.length){
+    h += '<div class="empty" style="padding:2rem"><div class="empty-ic">☕</div>Aucun rendez-vous aujourd\'hui.</div>';
+  } else {
+    var slotOrder = {matin:0, aprem:1, soir:2};
+    allToday.sort(function(a,b){ return (slotOrder[a.time]||9)-(slotOrder[b.time]||9); });
+    h += allToday.map(function(r){
+      return '<div class="job" style="border-left-color:'+(r.type==='greaz'?'var(--orange)':'var(--blue)')+';margin-bottom:8px">'
+        +'<div class="job-head"><div>'
+        +'<div class="job-client">'+(r.name||'Client')+(r.type==='greaz'?' <span style="font-size:10px;background:var(--orangelt);color:var(--orange);padding:1px 7px;border-radius:5px;font-weight:700">GREAZ</span>':'')+'</div>'
+        +(r.veh?'<div class="job-veh">🚗 '+r.veh+'</div>':'')
+        +'</div>'
+        +'<div class="jstatus" style="background:var(--bluelt);color:var(--blue)">'+(SLOT_LABEL[r.time]||r.time||'—')+'</div>'
+        +'</div>'
+        +(r.note?'<div style="font-size:12.5px;color:var(--muted);padding-top:6px">🔧 '+r.note+'</div>':'')
+        +(r.phone?'<div style="margin-top:8px"><a href="tel:'+r.phone+'" class="act-btn b-green" style="display:inline-block;text-decoration:none">📞 '+r.phone+'</a></div>':'')
+        +'</div>';
+    }).join('');
+  }
+
+  el.innerHTML = h;
+}
+function todayBlock(icon, n, label, color){
+  return '<div class="card" style="text-align:center;padding:1.1rem .75rem;margin:0">'
+    +'<div style="font-size:1.6rem">'+icon+'</div>'
+    +'<div class="mono" style="font-size:1.9rem;font-weight:700;color:'+color+';line-height:1.1">'+n+'</div>'
+    +'<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em">'+label+'</div></div>';
+}
+
+/* ══════════ AGENDA ══════════ */
+function agendaNav(dir){ _agendaRef.setDate(_agendaRef.getDate() + dir*7); renderAgenda(); }
+function agendaToday(){ _agendaRef = new Date(); renderAgenda(); }
+
+function startOfWeek(d){
+  var x = new Date(d);
+  var day = (x.getDay()+6)%7; // lundi=0
+  x.setDate(x.getDate()-day);
+  x.setHours(0,0,0,0);
+  return x;
+}
+
+function renderAgenda(){
+  var el = document.getElementById('agenda-content');
+  var start = startOfWeek(_agendaRef);
+  var days = [];
+  for(var i=0;i<7;i++){ var dd = new Date(start); dd.setDate(dd.getDate()+i); days.push(dd); }
+
+  var end = new Date(days[6]);
+  document.getElementById('agenda-label').textContent =
+    start.toLocaleDateString('fr-CA',{day:'numeric',month:'short'}) + ' – ' + end.toLocaleDateString('fr-CA',{day:'numeric',month:'short'});
+
+  var h = '';
+  days.forEach(function(dd){
+    var ds = dd.toISOString().slice(0,10);
+    var isToday = ds === new Date().toISOString().slice(0,10);
+    var dayRdvs = _rdvs.filter(function(r){ return r.date===ds; })
+      .concat(_jobs.filter(function(j){ return j.date===ds && j.status==='accepte'; })
+        .map(function(j){ return {greaz:true, client_name:j.client_name, vehicle:[j.vehicle_make,j.vehicle_model].filter(Boolean).join(' '), time_slot:j.time_slot, reason:j.problem, id:j.id}; }));
+    var slotOrder = {matin:0,aprem:1,soir:2};
+    dayRdvs.sort(function(a,b){ return (slotOrder[a.time_slot]||9)-(slotOrder[b.time_slot]||9); });
+
+    h += '<div class="card" style="margin-bottom:10px;'+(isToday?'border-color:var(--orange)':'')+'">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:'+(dayRdvs.length?'.75rem':'0')+'">'
+      +'<div style="font-weight:700;font-size:14px;text-transform:capitalize'+(isToday?';color:var(--orange)':'')+'">'
+      + dd.toLocaleDateString('fr-CA',{weekday:'long',day:'numeric',month:'short'}) + (isToday?' · Aujourd\'hui':'') + '</div>'
+      +'<button class="chip" style="padding:4px 12px" onclick="openRdvForm(\''+ds+'\')">+ RDV</button>'
+      +'</div>';
+
+    if(dayRdvs.length){
+      h += dayRdvs.map(function(r){
+        return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)">'
+          +'<div class="mono" style="font-size:11px;color:var(--sodium);min-width:70px">'+(SLOT_LABEL[r.time_slot]||r.time_slot||'—')+'</div>'
+          +'<div style="flex:1"><div style="font-size:13.5px;font-weight:600">'+(r.client_name||'Client')
+          +(r.greaz?' <span style="font-size:9px;background:var(--orangelt);color:var(--orange);padding:1px 6px;border-radius:4px">GREAZ</span>':'')+'</div>'
+          +(r.vehicle?'<div style="font-size:11.5px;color:var(--muted)">🚗 '+r.vehicle+(r.reason?' · '+r.reason:'')+'</div>':(r.reason?'<div style="font-size:11.5px;color:var(--muted)">'+r.reason+'</div>':''))
+          +'</div>'
+          +(r.greaz?'':'<button class="chip" style="padding:3px 9px;font-size:11px" onclick="deleteRdv(\''+r.id+'\')">🗑</button>')
+          +'</div>';
+      }).join('');
+    } else {
+      h += '<div style="font-size:12px;color:var(--muted)">—</div>';
+    }
+    h += '</div>';
+  });
+  el.innerHTML = h;
+}
+
+function openRdvForm(presetDate){
+  var fld = 'width:100%;padding:11px 13px;background:rgba(255,255,255,.05);border:1.5px solid var(--line);border-radius:10px;color:white;font-size:15px;font-family:inherit;outline:none';
+  var lbl = 'display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px';
+  var today = new Date().toISOString().slice(0,10);
+
+  // Liste des clients existants pour auto-remplir
+  var cliOpts = '<option value="">— Nouveau client —</option>' + _clients.map(function(c){
+    return '<option value="'+c.id+'">'+c.name+(c.phone?' ('+c.phone+')':'')+'</option>';
+  }).join('');
+
+  var modal = document.createElement('div');
+  modal.id = 'rdv-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem';
+  modal.innerHTML = '<div style="background:var(--graphite2);border:1px solid var(--line);border-radius:16px;padding:1.5rem;max-width:440px;width:100%;max-height:92vh;overflow-y:auto">'
+    +'<h3 style="font-size:16px;font-weight:700;margin-bottom:1.25rem">📅 Nouveau rendez-vous</h3>'
+    +'<div style="margin-bottom:1rem"><label style="'+lbl+'">Client existant</label><select id="rdv-client" style="'+fld+'" onchange="rdvClientPick()">'+cliOpts+'</select></div>'
+    +'<div style="margin-bottom:1rem"><label style="'+lbl+'">Nom du client *</label><input id="rdv-name" type="text" style="'+fld+'"></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">'
+    +'<div><label style="'+lbl+'">Téléphone</label><input id="rdv-phone" type="tel" style="'+fld+'"></div>'
+    +'<div><label style="'+lbl+'">Véhicule</label><input id="rdv-veh" type="text" placeholder="Toyota Corolla 2020" style="'+fld+'"></div>'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">'
+    +'<div><label style="'+lbl+'">Date *</label><input id="rdv-date" type="date" min="'+today+'" value="'+(presetDate||today)+'" style="'+fld+'"></div>'
+    +'<div><label style="'+lbl+'">Plage *</label><select id="rdv-slot" style="'+fld+'"><option value="matin">Matin</option><option value="aprem">Après-midi</option><option value="soir">Soir</option></select></div>'
+    +'</div>'
+    +'<div style="margin-bottom:1.25rem"><label style="'+lbl+'">Raison / travaux</label><input id="rdv-reason" type="text" placeholder="Vidange, freins, diagnostic..." style="'+fld+'"></div>'
+    +'<div id="rdv-err" style="display:none;background:var(--redlt);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;padding:9px 12px;border-radius:9px;font-size:12.5px;margin-bottom:1rem"></div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<button id="rdv-save" onclick="saveRdv()" style="flex:1;padding:13px;background:var(--orange);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">✓ Enregistrer</button>'
+    +'<button onclick="document.getElementById(\'rdv-modal\').remove()" style="padding:13px 18px;background:rgba(255,255,255,.08);border:none;border-radius:10px;color:var(--txt);font-size:14px;cursor:pointer;font-family:inherit">Annuler</button>'
+    +'</div></div>';
+  document.body.appendChild(modal);
+}
+function rdvClientPick(){
+  var id = document.getElementById('rdv-client').value;
+  var c = _clients.find(function(x){ return x.id===id; });
+  if(c){
+    document.getElementById('rdv-name').value = c.name||'';
+    document.getElementById('rdv-phone').value = c.phone||'';
+    if(c.vehicles && c.vehicles.length) document.getElementById('rdv-veh').value = c.vehicles[0].label||'';
+  }
+}
+async function saveRdv(){
+  var name = (document.getElementById('rdv-name').value||'').trim();
+  var err = document.getElementById('rdv-err');
+  var btn = document.getElementById('rdv-save');
+  if(!name){ err.textContent='Le nom du client est obligatoire.'; err.style.display='block'; return; }
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>';
+  try {
+    await db.collection('garage_rdvs').add({
+      garage_id: garageId,
+      client_name: name,
+      client_phone: (document.getElementById('rdv-phone').value||'').trim(),
+      vehicle: (document.getElementById('rdv-veh').value||'').trim(),
+      date: document.getElementById('rdv-date').value,
+      time_slot: document.getElementById('rdv-slot').value,
+      reason: (document.getElementById('rdv-reason').value||'').trim(),
+      client_id: document.getElementById('rdv-client').value||'',
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    emailjs.send("service_h2f013c","template_moboyo8",{
-      to_email:"contact@greaz.ca", type_demande:"Nouveau garage",
-      nom_client:document.getElementById('g_nom').value.trim(),
-      telephone:document.getElementById('g_tel').value.trim(),
-      courriel:document.getElementById('g_email').value.trim(),
-      adresse:document.getElementById('g_addr').value.trim(),
-      vehicule:services.join(', '),
-      probleme:document.getElementById('g_baies').value,
-      urgence:'Garage physique', code_reservation:'—',
-    }).catch(function(){});
+    document.getElementById('rdv-modal').remove();
+    toast('✓ Rendez-vous ajouté');
+    setTimeout(function(){ if(document.getElementById('panel-agenda').classList.contains('act')) renderAgenda(); if(document.getElementById('panel-today').classList.contains('act')) renderToday(); }, 400);
+  } catch(e){ err.textContent='Erreur : '+e.message; err.style.display='block'; btn.disabled=false; btn.textContent='✓ Enregistrer'; }
+}
+function deleteRdv(id){
+  if(!confirm('Supprimer ce rendez-vous ?')) return;
+  db.collection('garage_rdvs').doc(id).delete().then(function(){ toast('Rendez-vous supprimé'); }).catch(function(e){ toast('Erreur : '+e.message, true); });
+}
 
-    // Cacher le formulaire, montrer le succès
-    var form=document.getElementById('panel-garage');
-    form.querySelectorAll('.form-card,.info-box,.nav-row').forEach(function(el){ el.style.display='none'; });
-    document.getElementById('garage-success').style.display='block';
-    document.getElementById('g-ref-num').textContent='Référence : GAR-'+Date.now();
-    window.scrollTo({top:0, behavior:'smooth'});
-  } catch(e){
-    errEl.textContent='Erreur : '+e.message; errEl.style.display='block';
-    btn.disabled=false; btn.textContent='Inscrire mon garage →';
+/* ══════════ CLIENTS & VÉHICULES ══════════ */
+function renderClients(){
+  var el = document.getElementById('clients-content');
+  var search = (document.getElementById('cli-search') ? document.getElementById('cli-search').value : '').toLowerCase().trim();
+
+  var list = _clients.slice();
+  if(search){
+    list = list.filter(function(c){
+      var hay = (c.name||'')+(c.phone||'')+(c.email||'');
+      if(c.vehicles) c.vehicles.forEach(function(v){ hay += (v.label||'')+(v.plate||''); });
+      return hay.toLowerCase().indexOf(search)!==-1;
+    });
   }
+  list.sort(function(a,b){ return (a.name||'').localeCompare(b.name||''); });
+
+  if(!list.length){
+    el.innerHTML = '<div class="empty"><div class="empty-ic">🚗</div>'
+      +(search?'Aucun client trouvé.':'Aucun client encore. Clique "➕ Nouveau client" pour commencer ta base.')+'</div>';
+    return;
+  }
+
+  el.innerHTML = list.map(function(c){
+    var vehCount = (c.vehicles||[]).length;
+    var histCount = (c.history||[]).length;
+    // Prochaine visite prévue la plus proche
+    var nextVisit = null;
+    (c.history||[]).forEach(function(h){ if(h.next_date && (!nextVisit || h.next_date < nextVisit)) nextVisit = h.next_date; });
+
+    return '<div class="card" style="cursor:pointer;margin-bottom:10px" onclick="openClientDetail(\''+c.id+'\')">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start">'
+      +'<div style="flex:1"><div style="font-size:15.5px;font-weight:700">'+(c.name||'Client')+'</div>'
+      +'<div style="font-size:12.5px;color:var(--muted);margin-top:3px">'
+      +(c.phone?'📞 '+c.phone:'')+(c.email?' · 📧 '+c.email:'')+'</div>'
+      +'<div style="font-size:12px;color:var(--muted);margin-top:5px">'
+      +'🚗 '+vehCount+' véhicule'+(vehCount>1?'s':'')+' · 🔧 '+histCount+' intervention'+(histCount>1?'s':'')+'</div>'
+      +(nextVisit?'<div style="font-size:12px;color:var(--sodium);margin-top:5px;font-weight:600">🔔 Prochaine visite prévue : '+fmtDate(nextVisit)+'</div>':'')
+      +'</div><div style="font-size:1.3rem;color:var(--muted)">›</div>'
+      +'</div></div>';
+  }).join('');
+}
+
+function openClientForm(existing){
+  var c = existing || {};
+  var fld = 'width:100%;padding:11px 13px;background:rgba(255,255,255,.05);border:1.5px solid var(--line);border-radius:10px;color:white;font-size:15px;font-family:inherit;outline:none';
+  var lbl = 'display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px';
+
+  var modal = document.createElement('div');
+  modal.id = 'client-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem';
+  modal.innerHTML = '<div style="background:var(--graphite2);border:1px solid var(--line);border-radius:16px;padding:1.5rem;max-width:440px;width:100%;max-height:92vh;overflow-y:auto">'
+    +'<h3 style="font-size:16px;font-weight:700;margin-bottom:1.25rem">'+(existing?'✏️ Modifier le client':'➕ Nouveau client')+'</h3>'
+    +'<div style="margin-bottom:1rem"><label style="'+lbl+'">Nom complet *</label><input id="cl-name" type="text" value="'+(c.name||'')+'" style="'+fld+'"></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">'
+    +'<div><label style="'+lbl+'">Téléphone</label><input id="cl-phone" type="tel" value="'+(c.phone||'')+'" style="'+fld+'"></div>'
+    +'<div><label style="'+lbl+'">Courriel</label><input id="cl-email" type="email" value="'+(c.email||'')+'" style="'+fld+'"></div>'
+    +'</div>'
+    +'<div style="margin-bottom:1.25rem"><label style="'+lbl+'">Premier véhicule (optionnel)</label>'
+    +'<input id="cl-veh" type="text" value="'+((c.vehicles&&c.vehicles[0])?c.vehicles[0].label:'')+'" placeholder="Toyota Corolla 2020" style="'+fld+';margin-bottom:8px">'
+    +'<input id="cl-plate" type="text" value="'+((c.vehicles&&c.vehicles[0])?(c.vehicles[0].plate||''):'')+'" placeholder="Plaque : ABC 123" style="'+fld+'"></div>'
+    +'<div id="cl-err" style="display:none;background:var(--redlt);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;padding:9px 12px;border-radius:9px;font-size:12.5px;margin-bottom:1rem"></div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<button id="cl-save" onclick="saveClient(\''+(existing?existing.id:'')+'\')" style="flex:1;padding:13px;background:var(--orange);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">✓ Enregistrer</button>'
+    +'<button onclick="document.getElementById(\'client-modal\').remove()" style="padding:13px 18px;background:rgba(255,255,255,.08);border:none;border-radius:10px;color:var(--txt);font-size:14px;cursor:pointer;font-family:inherit">Annuler</button>'
+    +'</div></div>';
+  document.body.appendChild(modal);
+}
+
+async function saveClient(existingId){
+  var name = (document.getElementById('cl-name').value||'').trim();
+  var err = document.getElementById('cl-err');
+  var btn = document.getElementById('cl-save');
+  if(!name){ err.textContent='Le nom est obligatoire.'; err.style.display='block'; return; }
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>';
+
+  var vehLabel = (document.getElementById('cl-veh').value||'').trim();
+  var vehPlate = (document.getElementById('cl-plate').value||'').trim();
+
+  try {
+    if(existingId){
+      var existing = _clients.find(function(x){ return x.id===existingId; });
+      var vehicles = existing.vehicles || [];
+      if(vehLabel){
+        if(vehicles.length) { vehicles[0] = {label:vehLabel, plate:vehPlate}; }
+        else vehicles.push({label:vehLabel, plate:vehPlate});
+      }
+      await db.collection('garage_clients').doc(existingId).update({
+        name:name,
+        phone:(document.getElementById('cl-phone').value||'').trim(),
+        email:(document.getElementById('cl-email').value||'').trim(),
+        vehicles:vehicles,
+      });
+    } else {
+      var vehicles2 = [];
+      if(vehLabel) vehicles2.push({label:vehLabel, plate:vehPlate});
+      await db.collection('garage_clients').add({
+        garage_id: garageId,
+        name: name,
+        phone: (document.getElementById('cl-phone').value||'').trim(),
+        email: (document.getElementById('cl-email').value||'').trim(),
+        vehicles: vehicles2,
+        history: [],
+        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+    document.getElementById('client-modal').remove();
+    var cm = document.getElementById('client-detail-modal'); if(cm) cm.remove();
+    toast('✓ Client enregistré');
+  } catch(e){ err.textContent='Erreur : '+e.message; err.style.display='block'; btn.disabled=false; btn.textContent='✓ Enregistrer'; }
+}
+
+function openClientDetail(id){
+  var c = _clients.find(function(x){ return x.id===id; });
+  if(!c) return;
+
+  var vehicles = c.vehicles || [];
+  var history = (c.history || []).slice().sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+
+  var vehHtml = vehicles.length
+    ? vehicles.map(function(v,idx){ return '<div style="background:rgba(255,255,255,.04);border-radius:9px;padding:10px 12px;margin-bottom:6px">'
+        +'<div style="font-size:13.5px">🚗 <b>'+v.label+'</b>'+(v.plate?' · <span class="mono" style="color:var(--sodium)">'+v.plate+'</span>':'')+'</div>'
+        +'<button class="chip" style="margin-top:8px;padding:5px 12px;font-size:11.5px" onclick="openNextVisit(\''+id+'\','+idx+')">🔔 Planifier prochaine visite</button>'
+        +'</div>'; }).join('')
+    : '<div style="font-size:12.5px;color:var(--muted)">Aucun véhicule enregistré.</div>';
+
+  var histHtml = history.length
+    ? history.map(function(h){
+        return '<div style="border-left:3px solid var(--orange);padding:9px 0 9px 12px;margin-bottom:10px">'
+          +'<div style="display:flex;justify-content:space-between;align-items:baseline">'
+          +'<span style="font-size:13.5px;font-weight:700">'+(h.service||'Intervention')+'</span>'
+          +'<span class="mono" style="font-size:11px;color:var(--muted)">'+fmtDate(h.date)+'</span></div>'
+          +(h.parts?'<div style="font-size:12.5px;color:#C9CFD8;margin-top:4px">🔩 '+h.parts+'</div>':'')
+          +(h.cost?'<div style="font-size:12.5px;color:var(--green);margin-top:2px;font-weight:600">💰 '+h.cost+'</div>':'')
+          +(h.note?'<div style="font-size:12px;color:var(--muted);margin-top:3px">'+h.note+'</div>':'')
+          +(h.next_date?'<div style="font-size:12px;color:var(--sodium);margin-top:4px;font-weight:600">🔔 Prochaine visite : '+fmtDate(h.next_date)+(h.next_reason?' ('+h.next_reason+')':'')+'</div>':'')
+          +'</div>';
+      }).join('')
+    : '<div class="empty" style="padding:1.5rem"><div class="empty-ic" style="font-size:2rem">📋</div>Aucune intervention encore.</div>';
+
+  var modal = document.createElement('div');
+  modal.id = 'client-detail-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto';
+  modal.innerHTML = '<div style="background:var(--graphite2);border:1px solid var(--line);border-radius:16px;padding:1.5rem;max-width:500px;width:100%;margin:auto">'
+    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">'
+    +'<div><h3 style="font-size:18px;font-weight:800">'+c.name+'</h3>'
+    +'<div style="font-size:12.5px;color:var(--muted);margin-top:3px">'+(c.phone?'📞 '+c.phone:'')+(c.email?' · 📧 '+c.email:'')+'</div></div>'
+    +'<button onclick="document.getElementById(\'client-detail-modal\').remove()" style="background:rgba(255,255,255,.08);border:none;border-radius:50%;width:32px;height:32px;color:var(--txt);cursor:pointer;font-size:16px">✕</button>'
+    +'</div>'
+    +'<div style="display:flex;gap:7px;margin-bottom:1.25rem;flex-wrap:wrap">'
+    +(c.phone?'<a href="tel:'+c.phone+'" class="act-btn b-green" style="text-decoration:none">📞 Appeler</a>':'')
+    +(c.phone?'<a href="sms:'+c.phone+'" class="act-btn b-blue" style="text-decoration:none">💬 SMS</a>':'')
+    +'<button class="act-btn b-sodium" onclick="openClientEdit(\''+id+'\')">✏️ Modifier</button>'
+    +'</div>'
+    +'<div class="card-t">🚗 Véhicules</div>'+vehHtml
+    +'<div class="card-t" style="margin-top:1.25rem;display:flex;justify-content:space-between;align-items:center">'
+    +'<span>🔧 Historique d\'interventions</span>'
+    +'<button class="chip" style="padding:5px 12px" onclick="openHistoryForm(\''+id+'\')">+ Ajouter</button></div>'
+    + histHtml
+    +'</div>';
+  document.body.appendChild(modal);
+}
+
+function openClientEdit(id){
+  var c = _clients.find(function(x){ return x.id===id; });
+  document.getElementById('client-detail-modal').remove();
+  openClientForm(c);
+}
+
+function openHistoryForm(clientId){
+  var c = _clients.find(function(x){ return x.id===clientId; });
+  var fld = 'width:100%;padding:11px 13px;background:rgba(255,255,255,.05);border:1.5px solid var(--line);border-radius:10px;color:white;font-size:15px;font-family:inherit;outline:none';
+  var lbl = 'display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px';
+  var today = new Date().toISOString().slice(0,10);
+
+  var vehOpts = (c.vehicles||[]).map(function(v){ return '<option value="'+v.label+'">'+v.label+'</option>'; }).join('');
+
+  var modal = document.createElement('div');
+  modal.id = 'hist-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:flex;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto';
+  modal.innerHTML = '<div style="background:var(--graphite2);border:1px solid var(--line);border-radius:16px;padding:1.5rem;max-width:440px;width:100%;margin:auto">'
+    +'<h3 style="font-size:16px;font-weight:700;margin-bottom:1.25rem">🔧 Nouvelle intervention</h3>'
+    +(vehOpts?'<div style="margin-bottom:1rem"><label style="'+lbl+'">Véhicule</label><select id="h-veh" style="'+fld+'">'+vehOpts+'</select></div>':'')
+    +'<div style="margin-bottom:1rem"><label style="'+lbl+'">Service effectué *</label><input id="h-service" type="text" placeholder="Vidange + filtre à huile" style="'+fld+'"></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">'
+    +'<div><label style="'+lbl+'">Date</label><input id="h-date" type="date" value="'+today+'" style="'+fld+'"></div>'
+    +'<div><label style="'+lbl+'">Coût total</label><input id="h-cost" type="text" placeholder="85$" style="'+fld+'"></div>'
+    +'</div>'
+    +'<div style="margin-bottom:1rem"><label style="'+lbl+'">Pièces utilisées</label><input id="h-parts" type="text" placeholder="Filtre à huile, 5L huile 5W30" style="'+fld+'"></div>'
+    +'<div style="margin-bottom:1rem"><label style="'+lbl+'">Note</label><input id="h-note" type="text" placeholder="Prochaine vidange dans 5000 km" style="'+fld+'"></div>'
+    +'<div style="background:var(--sodiumlt);border:1px solid rgba(255,201,64,.25);border-radius:10px;padding:12px;margin-bottom:1.25rem">'
+    +'<div style="font-size:12px;font-weight:700;color:var(--sodium);margin-bottom:8px">🔔 Prochaine visite prévue (pour relance auto plus tard)</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    +'<div><label style="'+lbl+'">Date prévue</label><input id="h-next-date" type="date" style="'+fld+'"></div>'
+    +'<div><label style="'+lbl+'">Motif</label><input id="h-next-reason" type="text" placeholder="Vidange" style="'+fld+'"></div>'
+    +'</div></div>'
+    +'<div id="h-err" style="display:none;background:var(--redlt);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;padding:9px 12px;border-radius:9px;font-size:12.5px;margin-bottom:1rem"></div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<button id="h-save" onclick="saveHistory(\''+clientId+'\')" style="flex:1;padding:13px;background:var(--orange);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">✓ Ajouter à l\'historique</button>'
+    +'<button onclick="document.getElementById(\'hist-modal\').remove()" style="padding:13px 18px;background:rgba(255,255,255,.08);border:none;border-radius:10px;color:var(--txt);font-size:14px;cursor:pointer;font-family:inherit">Annuler</button>'
+    +'</div></div>';
+  document.body.appendChild(modal);
+}
+
+async function saveHistory(clientId){
+  var c = _clients.find(function(x){ return x.id===clientId; });
+  var service = (document.getElementById('h-service').value||'').trim();
+  var err = document.getElementById('h-err');
+  var btn = document.getElementById('h-save');
+  if(!service){ err.textContent='Décris le service effectué.'; err.style.display='block'; return; }
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>';
+
+  var vehEl = document.getElementById('h-veh');
+  var entry = {
+    service: service,
+    vehicle: vehEl ? vehEl.value : '',
+    date: document.getElementById('h-date').value || new Date().toISOString().slice(0,10),
+    cost: (document.getElementById('h-cost').value||'').trim(),
+    parts: (document.getElementById('h-parts').value||'').trim(),
+    note: (document.getElementById('h-note').value||'').trim(),
+    next_date: document.getElementById('h-next-date').value || '',
+    next_reason: (document.getElementById('h-next-reason').value||'').trim(),
+    at: new Date().toISOString(),
+  };
+  var history = (c.history||[]).slice();
+  history.push(entry);
+
+  try {
+    await db.collection('garage_clients').doc(clientId).update({ history: history });
+    document.getElementById('hist-modal').remove();
+    var dm = document.getElementById('client-detail-modal'); if(dm) dm.remove();
+    openClientDetail(clientId);
+    toast('✓ Intervention ajoutée');
+  } catch(e){ err.textContent='Erreur : '+e.message; err.style.display='block'; btn.disabled=false; btn.textContent='✓ Ajouter à l\'historique'; }
+}
+
+function openNextVisit(clientId, vehIdx){
+  var c = _clients.find(function(x){ return x.id===clientId; });
+  if(!c) return;
+  var veh = (c.vehicles||[])[vehIdx] || {};
+  var fld = 'width:100%;padding:11px 13px;background:rgba(255,255,255,.05);border:1.5px solid var(--line);border-radius:10px;color:white;font-size:15px;font-family:inherit;outline:none';
+  var lbl = 'display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px';
+
+  var modal = document.createElement('div');
+  modal.id = 'next-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:flex;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto';
+  modal.innerHTML = '<div style="background:var(--graphite2);border:1px solid var(--line);border-radius:16px;padding:1.5rem;max-width:430px;width:100%;margin:auto">'
+    +'<h3 style="font-size:16px;font-weight:700;margin-bottom:.3rem">🔔 Planifier la prochaine visite</h3>'
+    +'<p style="font-size:12.5px;color:var(--muted);margin-bottom:1.25rem">'+(c.name||'Client')+' · 🚗 '+(veh.label||'')+'</p>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">'
+    +'<div><label style="'+lbl+'">Date prévue *</label><input id="nv-date" type="date" min="'+new Date().toISOString().slice(0,10)+'" style="'+fld+'"></div>'
+    +'<div><label style="'+lbl+'">Plage</label><select id="nv-slot" style="'+fld+'"><option value="">—</option><option value="matin">Matin</option><option value="aprem">Après-midi</option><option value="soir">Soir</option></select></div>'
+    +'</div>'
+    +'<div style="margin-bottom:1.25rem"><label style="'+lbl+'">Motif *</label><input id="nv-reason" type="text" placeholder="Vidange, rotation pneus, inspection..." style="'+fld+'"></div>'
+
+    +'<div style="background:rgba(255,255,255,.03);border-radius:10px;padding:12px;margin-bottom:1.25rem">'
+    +'<label style="display:flex;align-items:center;gap:9px;cursor:pointer">'
+    +'<input type="checkbox" id="nv-notify" '+(c.email||c.phone?'checked':'')+' style="width:18px;height:18px;accent-color:var(--orange)">'
+    +'<span style="font-size:13px;font-weight:600">📧 Prévenir le client maintenant</span></label>'
+    +'<div style="font-size:11.5px;color:var(--muted);margin-top:6px;padding-left:27px">'
+    +(c.email?'Courriel : '+c.email:'⚠️ Pas de courriel — ajoute-le pour notifier')
+    +'</div></div>'
+
+    +'<div id="nv-err" style="display:none;background:var(--redlt);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;padding:9px 12px;border-radius:9px;font-size:12.5px;margin-bottom:1rem"></div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<button id="nv-save" onclick="saveNextVisit(\''+clientId+'\','+vehIdx+')" style="flex:1;padding:13px;background:var(--orange);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">✓ Planifier</button>'
+    +'<button onclick="document.getElementById(\'next-modal\').remove()" style="padding:13px 18px;background:rgba(255,255,255,.08);border:none;border-radius:10px;color:var(--txt);font-size:14px;cursor:pointer;font-family:inherit">Annuler</button>'
+    +'</div></div>';
+  document.body.appendChild(modal);
+}
+
+async function saveNextVisit(clientId, vehIdx){
+  var c = _clients.find(function(x){ return x.id===clientId; });
+  var veh = (c.vehicles||[])[vehIdx] || {};
+  var date = document.getElementById('nv-date').value;
+  var slot = document.getElementById('nv-slot').value;
+  var reason = (document.getElementById('nv-reason').value||'').trim();
+  var notify = document.getElementById('nv-notify').checked;
+  var err = document.getElementById('nv-err');
+  var btn = document.getElementById('nv-save');
+
+  if(!date){ err.textContent='Choisis une date.'; err.style.display='block'; return; }
+  if(!reason){ err.textContent='Indique le motif de la visite.'; err.style.display='block'; return; }
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>';
+
+  // 1. Crée un vrai rendez-vous dans l'agenda
+  try {
+    await db.collection('garage_rdvs').add({
+      garage_id: garageId,
+      client_name: c.name||'',
+      client_phone: c.phone||'',
+      client_email: c.email||'',
+      vehicle: veh.label||'',
+      date: date,
+      time_slot: slot||'matin',
+      reason: reason,
+      client_id: clientId,
+      is_next_visit: true,
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    // 2. Enregistre aussi dans l'historique du client (prochaine visite)
+    var history = (c.history||[]).slice();
+    history.push({
+      service: 'Prochaine visite planifiée : '+reason,
+      vehicle: veh.label||'',
+      date: new Date().toISOString().slice(0,10),
+      next_date: date,
+      next_reason: reason,
+      note: 'Rendez-vous planifié'+(notify?' · client prévenu':''),
+      at: new Date().toISOString(),
+    });
+    await db.collection('garage_clients').doc(clientId).update({ history: history });
+
+    // 3. Notifie le client si demandé
+    var notified = false;
+    if(notify && c.email){
+      try {
+        await sendClientEmail({
+          to: c.email,
+          clientName: c.name||'',
+          vehicule: veh.label||'',
+          sujet: '🔔 Rappel de rendez-vous — '+(garage.name||'Greaz'),
+          corps: 'Bonjour '+(c.name||'')+',\n\n'+(garage.name||'Votre garage')+' vous propose un rendez-vous pour : '+reason
+                  +'.\n\nDate proposée : '+fmtDate(date)+(slot?' ('+(SLOT_LABEL[slot]||slot)+')':'')
+                  +'.\n\nPour confirmer ou reporter, contactez-nous au '+(garage.contact_phone||garage.phone||'')+'.\n\nÀ bientôt !',
+        });
+        notified = true;
+      } catch(mailErr){
+        console.log('EmailJS:', mailErr);
+        toast('⚠️ Visite planifiée, mais le courriel n\'est pas parti (vérifie ta config EmailJS)', true);
+      }
+    }
+
+    document.getElementById('next-modal').remove();
+    var dm = document.getElementById('client-detail-modal'); if(dm) dm.remove();
+    openClientDetail(clientId);
+    if(!(notify && c.email && !notified)) toast(notified ? '✓ Visite planifiée et client prévenu' : '✓ Visite planifiée');
+  } catch(e){
+    err.textContent='Erreur : '+e.message; err.style.display='block';
+    btn.disabled=false; btn.textContent='✓ Planifier';
+  }
+}
+
+/* ══════════ STATISTIQUES DU GARAGE ══════════ */
+function parseMoney(str){
+  if(!str) return 0;
+  var m = String(str).replace(/[^0-9.,]/g,'').replace(',','.');
+  var n = parseFloat(m);
+  return isNaN(n) ? 0 : n;
+}
+
+function renderGarageStats(){
+  var el = document.getElementById('stats-content');
+  var period = document.getElementById('stats-period') ? document.getElementById('stats-period').value : 'month';
+
+  var now = new Date();
+  var start, end;
+  if(period === 'month'){ start = new Date(now.getFullYear(), now.getMonth(), 1); end = new Date(now.getFullYear(), now.getMonth()+1, 1); }
+  else if(period === 'prev'){ start = new Date(now.getFullYear(), now.getMonth()-1, 1); end = new Date(now.getFullYear(), now.getMonth(), 1); }
+  else if(period === 'year'){ start = new Date(now.getFullYear(), 0, 1); end = new Date(now.getFullYear()+1, 0, 1); }
+  else { start = new Date(2000,0,1); end = new Date(2100,0,1); }
+
+  function inRange(dateStr){
+    if(!dateStr) return false;
+    var d = new Date(dateStr+'T00:00:00');
+    return d >= start && d < end;
+  }
+
+  // 1. Interventions depuis l'historique des clients (source de revenus)
+  var interventions = [];
+  _clients.forEach(function(c){
+    (c.history||[]).forEach(function(h){
+      if(h.service && h.service.indexOf('Prochaine visite planifiée')===0) return; // pas une vraie intervention
+      if(inRange(h.date)){
+        interventions.push({ service:h.service, cost:parseMoney(h.cost), date:h.date, client:c.name });
+      }
+    });
+  });
+
+  // 2. Jobs Greaz terminés dans la période
+  var jobsDone = _jobs.filter(function(j){
+    return j.status==='accepte' && inRange(j.date || (j.updated_at&&j.updated_at.toDate?j.updated_at.toDate().toISOString().slice(0,10):''));
+  });
+
+  var totalChars = interventions.length + jobsDone.length;
+  var totalRevenue = interventions.reduce(function(s,i){ return s+i.cost; }, 0);
+  var avgTicket = interventions.length ? totalRevenue/interventions.length : 0;
+
+  // Top services
+  var svcCount = {};
+  interventions.forEach(function(i){
+    var key = (i.service||'Autre').split(' ').slice(0,3).join(' ');
+    svcCount[key] = (svcCount[key]||0)+1;
+  });
+  jobsDone.forEach(function(j){ if(j.problem){ svcCount[j.problem]=(svcCount[j.problem]||0)+1; } });
+  var topSvc = Object.keys(svcCount).map(function(k){ return {name:k, n:svcCount[k]}; }).sort(function(a,b){ return b.n-a.n; }).slice(0,5);
+
+  // Répartition par jour (pour mini-graphique) — sur le mois courant seulement
+  var byDay = {};
+  interventions.forEach(function(i){ byDay[i.date] = (byDay[i.date]||0)+i.cost; });
+
+  var periodLabel = { month:'ce mois-ci', prev:'le mois dernier', year:'cette année', all:'depuis le début' }[period];
+
+  var h = '<div style="font-family:\'Bricolage Grotesque\',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:1.25rem;text-transform:capitalize">📈 Tes chiffres '+periodLabel+'</div>';
+
+  // 3 gros blocs
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:1.5rem">'
+    + statBlock('🚗', totalChars, 'Véhicules servis', 'var(--blue)')
+    + statBlock('💰', totalRevenue.toFixed(0)+' $', 'Revenus', 'var(--green)')
+    + statBlock('🎫', avgTicket.toFixed(0)+' $', 'Ticket moyen', 'var(--sodium)')
+    + statBlock('👥', _clients.length, 'Clients au total', 'var(--purple)')
+    + '</div>';
+
+  // Info revenus
+  h += '<div class="card" style="margin-bottom:1.25rem">'
+    +'<div style="font-size:11px;color:var(--muted);line-height:1.6">💡 Les revenus sont calculés à partir des coûts que tu entres dans l\'historique des interventions. Plus tu remplis, plus tes stats sont précises.</div></div>';
+
+  // Top services
+  h += '<div class="card-t">🔧 Services les plus fréquents</div>';
+  if(topSvc.length){
+    var maxN = topSvc[0].n;
+    h += '<div class="card">' + topSvc.map(function(s){
+      var pct = Math.round(s.n/maxN*100);
+      return '<div style="margin-bottom:12px">'
+        +'<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span>'+s.name+'</span><span class="mono" style="color:var(--sodium)">'+s.n+'</span></div>'
+        +'<div style="height:7px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:var(--orange);border-radius:4px"></div></div>'
+        +'</div>';
+    }).join('') + '</div>';
+  } else {
+    h += '<div class="empty" style="padding:1.5rem"><div class="empty-ic" style="font-size:2rem">📊</div>Aucune intervention '+periodLabel+'.<br>Ajoute des interventions dans les fiches clients pour voir tes stats.</div>';
+  }
+
+  // Dernières interventions
+  if(interventions.length){
+    h += '<div class="card-t" style="margin-top:1.25rem">🧾 Détail des revenus</div><div class="card">';
+    interventions.sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+    h += interventions.slice(0,10).map(function(i){
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)">'
+        +'<div><div style="font-size:13.5px;font-weight:600">'+i.service+'</div>'
+        +'<div style="font-size:11.5px;color:var(--muted)">'+(i.client||'')+' · '+fmtDate(i.date)+'</div></div>'
+        +'<div class="mono" style="color:var(--green);font-weight:700">'+(i.cost?i.cost.toFixed(0)+' $':'—')+'</div>'
+        +'</div>';
+    }).join('');
+    if(interventions.length>10) h += '<div style="font-size:11.5px;color:var(--muted);text-align:center;padding-top:10px">+ '+(interventions.length-10)+' autres</div>';
+    h += '</div>';
+  }
+
+  el.innerHTML = h;
+}
+function statBlock(icon, val, label, color){
+  return '<div class="card" style="text-align:center;padding:1.2rem .75rem;margin:0">'
+    +'<div style="font-size:1.5rem">'+icon+'</div>'
+    +'<div class="mono" style="font-size:1.7rem;font-weight:700;color:'+color+';line-height:1.2;margin-top:4px">'+val+'</div>'
+    +'<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:2px">'+label+'</div></div>';
+}
+
+/* ══════════ ENVOI DE COURRIEL AU CLIENT (au nom du garage) ══════════ */
+function sendClientEmail(opts){
+  // opts: { to, sujet, corps, vehicule, code, clientName }
+  if(!opts.to){ return Promise.reject(new Error('Pas de courriel client')); }
+  var replyTo = garage.reply_email || garage.email || '';
+  var contactPhone = garage.contact_phone || garage.phone || '';
+
+  return emailjs.send(EJS_SERVICE, EJS_TEMPLATE, {
+    to_email: opts.to,
+    reply_to: replyTo,                       // ← réponses vers le garage
+    from_name: garage.name || 'Greaz',       // ← affiché comme expéditeur
+    garage_name: garage.name || 'Greaz',
+    type_demande: opts.sujet,
+    nom_client: opts.clientName || '',
+    telephone: contactPhone,
+    courriel: opts.to,
+    adresse: garage.address || garage.city || '',
+    vehicule: opts.vehicule || '',
+    probleme: opts.corps,
+    urgence: garage.name || 'Greaz',
+    code_reservation: opts.code || '',
+  });
+}
+
+/* ══════════ HELPERS ══════════ */
+function fmtDate(d){
+  if(!d) return '';
+  try {
+    return new Date(d+'T00:00:00').toLocaleDateString('fr-CA',{weekday:'long',day:'numeric',month:'long'});
+  } catch(e){ return d; }
+}
+function fmtDateTime(iso){
+  if(!iso) return '';
+  try {
+    return new Date(iso).toLocaleDateString('fr-CA',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  } catch(e){ return ''; }
 }
 </script>
 </body>
