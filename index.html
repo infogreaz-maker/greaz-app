@@ -388,6 +388,122 @@ input[type=time]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer}
   .fac-svc-price{width:80px}
   #gz-toasts{bottom:calc(16px + env(safe-area-inset-bottom))}
 }
+/* ══════════ STATISTIQUES ══════════ */
+.stats-period{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
+.sp-btn{padding:9px 18px;border-radius:9px;border:1.5px solid transparent;background:var(--graphite3);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s var(--ease)}
+.sp-btn:hover{background:#E6E3DD;color:var(--txt)}
+.sp-btn.act{background:var(--bluelt);border-color:var(--blue);color:var(--blue)}
+.sp-btn:active{transform:scale(.96)}
+
+/* Grosses cartes de chiffres clés */
+.stats-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.sh-card{background:var(--graphite2);border:1px solid var(--line);border-radius:16px;padding:1.3rem 1.1rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden;animation:floatUp .5s var(--ease) both}
+.sh-card::before{content:'';position:absolute;top:-30%;right:-15%;width:90px;height:90px;border-radius:50%;background:var(--halo,rgba(69,104,214,.08));pointer-events:none}
+.sh-ic{font-size:1.4rem;margin-bottom:.6rem;display:block}
+.sh-n{font-family:'Inter',sans-serif;font-size:2.1rem;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--txt);position:relative}
+.sh-l{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.4;position:relative}
+.sh-trend{font-size:11px;font-weight:700;margin-top:6px;display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:12px}
+.sh-trend.up{background:var(--greenlt);color:#00794A}
+.sh-trend.down{background:var(--redlt);color:var(--red)}
+.sh-trend.flat{background:var(--graphite3);color:var(--muted)}
+
+/* Carte valeur générée (le nerf de la guerre pour les 10k) */
+.stats-value-card{background:linear-gradient(135deg,#0E9F6E,#0B7D57);border-radius:18px;padding:1.6rem 1.5rem;margin-bottom:14px;color:#fff;position:relative;overflow:hidden;box-shadow:0 8px 28px rgba(14,159,110,.22);animation:floatUp .5s .1s var(--ease) both}
+.stats-value-card::before{content:'';position:absolute;top:-40%;right:-10%;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
+.svc-label{font-size:12.5px;font-weight:600;opacity:.85;text-transform:uppercase;letter-spacing:.06em}
+.svc-amount{font-family:'Inter',sans-serif;font-size:2.8rem;font-weight:800;letter-spacing:-.04em;line-height:1;margin:8px 0;position:relative}
+.svc-sub{font-size:13px;opacity:.85;line-height:1.5;position:relative}
+.svc-roi{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.2);font-size:13px;line-height:1.6;position:relative}
+.svc-roi b{font-weight:800}
+
+/* Blocs génériques */
+.stats-block{background:var(--graphite2);border:1px solid var(--line);border-radius:16px;padding:1.35rem;margin-bottom:14px;box-shadow:var(--sh-sm);animation:floatUp .5s .15s var(--ease) both}
+.stats-block-t{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:1.1rem}
+.stats-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* Graphique en barres (tendance mensuelle) */
+.stats-chart{display:flex;align-items:flex-end;gap:8px;height:160px;padding-top:20px}
+.sc-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+.sc-bar{width:100%;max-width:44px;background:linear-gradient(180deg,var(--blue),#5A7CE0);border-radius:7px 7px 0 0;min-height:4px;position:relative;transition:height .6s var(--spring);cursor:default}
+.sc-bar:hover{filter:brightness(1.08)}
+.sc-bar-val{position:absolute;top:-19px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;color:var(--txt);white-space:nowrap}
+.sc-bar-lbl{font-size:10px;color:var(--muted);text-align:center;white-space:nowrap}
+
+/* Entonnoir de conversion */
+.stats-funnel{display:flex;flex-direction:column;gap:9px}
+.sf-row{display:flex;align-items:center;gap:12px}
+.sf-bar{height:44px;border-radius:10px;display:flex;align-items:center;padding:0 16px;color:#fff;font-weight:700;font-size:15px;transition:width .7s var(--spring);min-width:80px;white-space:nowrap;box-shadow:0 2px 8px rgba(60,50,40,.1)}
+.sf-info{flex-shrink:0;font-size:12.5px;color:var(--muted);min-width:90px}
+.sf-info b{color:var(--txt);font-size:14px;display:block}
+
+/* Barres de répartition */
+.sd-row{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.sd-label{flex-shrink:0;width:110px;font-size:13px;color:var(--txt);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sd-track{flex:1;height:9px;background:var(--graphite3);border-radius:5px;overflow:hidden}
+.sd-fill{height:100%;border-radius:5px;transition:width .7s var(--spring)}
+.sd-val{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--muted);min-width:30px;text-align:right}
+
+/* Clients récents */
+.scl-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.scl-row:last-child{border:none}
+.scl-av{width:38px;height:38px;border-radius:50%;background:var(--bluelt);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.scl-info{flex:1;min-width:0}
+.scl-name{font-size:14px;font-weight:600;color:var(--txt)}
+.scl-meta{font-size:12px;color:var(--muted);margin-top:1px}
+.scl-date{font-size:11.5px;color:var(--faint);flex-shrink:0;font-family:'JetBrains Mono',monospace}
+
+.stats-empty{text-align:center;padding:3rem 1rem;color:var(--faint)}
+.stats-empty-ic{font-size:3rem;margin-bottom:1rem;opacity:.4}
+
+@media(max-width:820px){
+  .stats-hero{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .stats-2col{grid-template-columns:1fr}
+  .svc-amount{font-size:2.3rem}
+  .sh-n{font-size:1.8rem}
+  .sd-label{width:82px;font-size:12px}
+  .sf-info{min-width:74px}
+  .stats-chart{gap:5px}
+}
+
+/* ══════════ BLOCAGE LICENCE / ESSAI ══════════ */
+#licenseBlock{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:1.5rem;
+  background:linear-gradient(180deg,#FBFCFD,#EDEEF0);animation:lbFade .4s ease both}
+@keyframes lbFade{from{opacity:0}to{opacity:1}}
+.lb-card{background:var(--graphite2);border:1px solid var(--line);border-radius:24px;padding:2.5rem 2rem;max-width:440px;width:100%;text-align:center;box-shadow:var(--sh-lg);animation:lbPop .5s var(--spring) both}
+@keyframes lbPop{from{opacity:0;transform:scale(.9) translateY(12px)}to{opacity:1;transform:none}}
+.lb-icon{font-size:3.4rem;margin-bottom:1rem;line-height:1;animation:lbLock .6s var(--spring) both}
+@keyframes lbLock{0%{transform:scale(0) rotate(-12deg)}60%{transform:scale(1.12) rotate(4deg)}100%{transform:scale(1) rotate(0)}}
+.lb-title{font-family:'Inter',sans-serif;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--txt);margin-bottom:.85rem;line-height:1.2}
+.lb-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.75rem}
+.lb-contact{display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem}
+.lb-btn{display:flex;align-items:center;justify-content:center;gap:9px;padding:15px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.lb-btn:active{transform:scale(.98)}
+.lb-call{background:var(--green);color:#fff;box-shadow:0 4px 16px rgba(14,159,110,.28)}
+.lb-call:hover{background:#0C875E;box-shadow:0 6px 22px rgba(14,159,110,.35)}
+.lb-mail{background:var(--bluelt);color:var(--blue);border:1.5px solid rgba(69,104,214,.25)}
+.lb-mail:hover{background:#E1E9FB}
+.lb-foot{font-size:12.5px;color:var(--faint);line-height:1.6;margin-bottom:1.25rem}
+.lb-logout{background:none;border:none;color:var(--faint);font-size:12.5px;cursor:pointer;font-family:inherit;text-decoration:underline;padding:6px}
+.lb-logout:hover{color:var(--muted)}
+
+/* Bandeau d'avertissement (essai qui se termine) */
+#trialBanner{position:fixed;top:0;left:0;right:0;z-index:9998;display:flex;align-items:center;gap:10px;
+  padding:10px 16px;padding-left:max(16px,env(safe-area-inset-left));
+  background:linear-gradient(135deg,#B8860B,#96690A);color:#fff;font-size:13px;
+  box-shadow:0 2px 12px rgba(60,50,40,.18);animation:tbSlide .5s var(--ease) both}
+@keyframes tbSlide{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+#trialBanner + *{margin-top:0}
+.tb-ic{font-size:1.1rem;flex-shrink:0}
+.tb-txt{flex:1;line-height:1.4}
+.tb-txt b{font-weight:800}
+.tb-txt a{color:#fff;font-weight:700;text-decoration:underline}
+.tb-close{background:rgba(255,255,255,.2);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;flex-shrink:0;font-size:13px;line-height:1;transition:background .2s}
+.tb-close:hover{background:rgba(255,255,255,.32)}
+/* Quand le bandeau est là, on décale le header pour ne pas le masquer */
+body:has(#trialBanner) header{top:44px}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
@@ -448,6 +564,7 @@ input[type=time]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer}
     <div class="tab" id="tab-agenda" onclick="mSwitch('agenda')">📅 Mon calendrier</div>
     <div class="tab" id="tab-facture" onclick="mSwitch('facture')">🧾 Fiche &amp; facture</div>
     <div class="tab" id="tab-garage" onclick="mSwitch('garage')">🏪 Mon garage</div>
+    <div class="tab" id="tab-stats" onclick="mSwitch('stats')">📊 Statistiques</div>
   </div>
 
   <div class="wrap">
@@ -646,6 +763,54 @@ input[type=time]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer}
       <div class="hint" style="text-align:center;margin-top:8px">Tes changements apparaissent immédiatement sur greaz.ca</div>
     </div>
 
+    <!-- ══════════ STATISTIQUES (justifie l'abonnement) ══════════ -->
+    <div class="panel" id="panel-stats">
+      <div class="stats-period">
+        <button class="sp-btn act" id="sp-30" onclick="setStatsPeriod('30')">30 jours</button>
+        <button class="sp-btn" id="sp-90" onclick="setStatsPeriod('90')">90 jours</button>
+        <button class="sp-btn" id="sp-365" onclick="setStatsPeriod('365')">12 mois</button>
+        <button class="sp-btn" id="sp-all" onclick="setStatsPeriod('all')">Tout</button>
+      </div>
+
+      <!-- Grosses cartes chiffres -->
+      <div class="stats-hero" id="stats-hero"></div>
+
+      <!-- Valeur générée -->
+      <div class="stats-value-card" id="stats-value"></div>
+
+      <!-- Graphique tendance mensuelle -->
+      <div class="stats-block">
+        <div class="stats-block-t">📈 Demandes reçues par mois</div>
+        <div class="stats-chart" id="stats-chart"></div>
+      </div>
+
+      <!-- Entonnoir de conversion -->
+      <div class="stats-block">
+        <div class="stats-block-t">🎯 Entonnoir de conversion</div>
+        <div class="stats-funnel" id="stats-funnel"></div>
+      </div>
+
+      <!-- Répartitions -->
+      <div class="stats-2col">
+        <div class="stats-block">
+          <div class="stats-block-t">🚗 Top véhicules</div>
+          <div id="stats-vehicles"></div>
+        </div>
+        <div class="stats-block">
+          <div class="stats-block-t">🔧 Top problèmes</div>
+          <div id="stats-problems"></div>
+        </div>
+      </div>
+
+      <!-- Clients du mois -->
+      <div class="stats-block">
+        <div class="stats-block-t">👥 Clients récents</div>
+        <div id="stats-clients"></div>
+      </div>
+
+      <div class="hint" style="text-align:center;margin-top:1.5rem">📊 Statistiques mises à jour en temps réel à partir de tes demandes Greaz.</div>
+    </div>
+
   </div>
 </div>
 
@@ -761,9 +926,21 @@ async function loadGarage(user){
       garage = gDoc.data();
     }
 
+    // ══════════ VÉRIFICATION DE LICENCE / ESSAI ══════════
+    // Bloque l'accès si l'essai est expiré (sauf licence complète active).
+    // La date vient de Firebase — le mécano ne peut pas la modifier.
+    var lic = await checkLicense();
+    if(lic.blocked){
+      showLicenseBlock(lic);
+      return;   // on n'affiche jamais l'app
+    }
+
     document.getElementById('loginScreen').classList.remove('show');
     document.getElementById('app').classList.add('show');
     document.getElementById('garageName').textContent = '🏪 ' + (garage.name||'') + (staffRole==='employe' ? ' · '+staffName : '');
+
+    // Bandeau d'avertissement si l'essai approche de la fin
+    if(lic.warnDays !== null) showTrialBanner(lic);
 
     applyStaffPermissions();
     if(staffRole==='patron') fillGarageForm();
@@ -781,6 +958,110 @@ firebase.auth().onAuthStateChanged(function(user){
   if(user && !mecano) loadGarage(user);
 });
 
+/* ══════════════════════════════════════════
+   LICENCE & ESSAI GRATUIT
+   - garage.license_active === true  → accès complet, jamais bloqué
+   - garage.trial_expires (date)     → au-delà, blocage total
+   - 7 jours avant la fin            → bandeau d'avertissement
+   La date vient de Firebase (le mécano n'y a pas accès en écriture)
+   et on la compare à l'heure du SERVEUR pour empêcher la triche
+   consistant à reculer l'horloge de l'ordinateur.
+   ══════════════════════════════════════════ */
+async function getServerNow(){
+  // On écrit un serverTimestamp temporaire pour lire l'heure réelle du serveur.
+  // Si ça échoue (hors-ligne), on retombe sur l'heure locale.
+  try {
+    var ref = db.collection('_serverclock').doc(garageId || 'anon');
+    await ref.set({ t: firebase.firestore.FieldValue.serverTimestamp() }, { merge:true });
+    var snap = await ref.get();
+    var t = snap.data() && snap.data().t;
+    if(t && t.toDate) return t.toDate();
+  } catch(e){ /* fallback ci-dessous */ }
+  return new Date();
+}
+
+function parseTrialDate(val){
+  if(!val) return null;
+  if(val.toDate) return val.toDate();          // Firestore Timestamp
+  var d = new Date(val);                         // string "2026-09-30" ou ISO
+  return isNaN(d) ? null : d;
+}
+
+async function checkLicense(){
+  // Licence complète payée → jamais de blocage
+  if(garage && garage.license_active === true){
+    return { blocked:false, warnDays:null, licensed:true };
+  }
+
+  var expires = parseTrialDate(garage && garage.trial_expires);
+
+  // Pas de date d'essai définie : on laisse passer (garage normal, non-concessionnaire)
+  if(!expires){
+    return { blocked:false, warnDays:null, licensed:true };
+  }
+
+  var now = await getServerNow();
+  var msLeft = expires.getTime() - now.getTime();
+  var daysLeft = Math.ceil(msLeft / (1000*60*60*24));
+
+  if(msLeft <= 0){
+    return { blocked:true, expires:expires, daysLeft:daysLeft };
+  }
+  // Bandeau si 7 jours ou moins restants
+  return { blocked:false, warnDays: (daysLeft <= 7 ? daysLeft : null), daysLeft:daysLeft, expires:expires };
+}
+
+/* Coordonnées Greaz affichées sur l'écran de blocage / bandeau */
+var GREAZ_CONTACT = {
+  phone: '514-000-0000',              // ← mets ton vrai numéro
+  phoneClean: '5140000000',
+  email: 'partenariats@greaz.ca',     // ← ton courriel
+};
+
+function showLicenseBlock(lic){
+  // On s'assure que l'app et le login sont cachés
+  document.getElementById('loginScreen').classList.remove('show');
+  var app = document.getElementById('app'); if(app) app.classList.remove('show');
+
+  var existing = document.getElementById('licenseBlock');
+  if(existing) existing.remove();
+
+  var wrap = document.createElement('div');
+  wrap.id = 'licenseBlock';
+  wrap.innerHTML =
+    '<div class="lb-card">'
+    + '<div class="lb-icon">🔒</div>'
+    + '<div class="lb-title">Ton essai Greaz est terminé</div>'
+    + '<div class="lb-text">Ton accès gratuit au tableau de bord Greaz Pro a pris fin. '
+    + 'Pour continuer à recevoir tes demandes, gérer tes rendez-vous et suivre tes statistiques, '
+    + 'active ta licence en nous contactant.</div>'
+    + '<div class="lb-contact">'
+    +   '<a class="lb-btn lb-call" href="tel:'+GREAZ_CONTACT.phoneClean+'">📞 '+GREAZ_CONTACT.phone+'</a>'
+    +   '<a class="lb-btn lb-mail" href="mailto:'+GREAZ_CONTACT.email+'?subject=Activation%20licence%20Greaz%20Pro">✉️ '+GREAZ_CONTACT.email+'</a>'
+    + '</div>'
+    + '<div class="lb-foot">Une fois ta licence activée, ton accès est rétabli immédiatement.</div>'
+    + '<button class="lb-logout" onclick="mecanoLogout()">Se déconnecter</button>'
+    + '</div>';
+  document.body.appendChild(wrap);
+}
+
+function showTrialBanner(lic){
+  var existing = document.getElementById('trialBanner');
+  if(existing) existing.remove();
+
+  var d = lic.daysLeft;
+  var jourTxt = d <= 0 ? "aujourd'hui" : (d === 1 ? 'demain' : 'dans ' + d + ' jours');
+  var banner = document.createElement('div');
+  banner.id = 'trialBanner';
+  banner.innerHTML =
+    '<span class="tb-ic">⏳</span>'
+    + '<span class="tb-txt">Ton essai gratuit se termine <b>'+jourTxt+'</b>. '
+    + 'Contacte-nous pour garder ton accès : '
+    + '<a href="tel:'+GREAZ_CONTACT.phoneClean+'">'+GREAZ_CONTACT.phone+'</a></span>'
+    + '<button class="tb-close" onclick="document.getElementById(\'trialBanner\').remove()">✕</button>';
+  document.body.appendChild(banner);
+}
+
 function mecanoLogout(){
   firebase.auth().signOut().then(function(){ location.reload(); });
 }
@@ -795,7 +1076,7 @@ function applyStaffPermissions(){
 }
 
 function mSwitch(t){
-  ['jobs','agenda','facture','garage'].forEach(function(x){
+  ['jobs','agenda','facture','garage','stats'].forEach(function(x){
     var tab = document.getElementById('tab-'+x);
     var pan = document.getElementById('panel-'+x);
     if(tab) tab.classList.toggle('act', x===t);
@@ -803,6 +1084,7 @@ function mSwitch(t){
   });
   if(t==='agenda') renderAgenda();
   if(t==='facture') facInit();
+  if(t==='stats') renderStats();
 }
 
 /* ══════════ MES DEMANDES ══════════ */
@@ -2301,6 +2583,238 @@ function gzModalCancel(){ _gzClose(false); }
 function _gzClose(val){
   document.getElementById('gz-modal-overlay').classList.remove('show');
   if(_gzModalResolve){ _gzModalResolve(val); _gzModalResolve = null; }
+}
+
+/* ══════════════════════════════════════════
+   DASHBOARD STATISTIQUES — justifie l'abonnement
+   Tout est calculé à partir des demandes Greaz (_jobs)
+   et des rendez-vous (_rdvs). Aucune donnée inventée.
+   ══════════════════════════════════════════ */
+var _statsPeriod = '30';   // 30 | 90 | 365 | all
+
+/* Valeur moyenne estimée d'un RDV par type de problème (en $).
+   Sert à estimer les revenus générés. Ajustable selon ton marché. */
+var VALEUR_MOYENNE = {
+  freins:280, vidange:75, pneus:160, batterie:220, demarrage:180,
+  climatisation:250, suspension:420, moteur:650, transmission:900,
+  electrique:320, diagnostic:120, inspection:110, autre:200,
+};
+var VALEUR_DEFAUT = 200;   // si problème inconnu
+
+function jobDate(j){
+  if(j.created_at && j.created_at.toDate) return j.created_at.toDate();
+  if(j.date) { var d=new Date(j.date+'T00:00:00'); if(!isNaN(d)) return d; }
+  return null;
+}
+
+function estimateValue(j){
+  var prob = (j.problem||'').toLowerCase();
+  for(var k in VALEUR_MOYENNE){ if(prob.indexOf(k)!==-1) return VALEUR_MOYENNE[k]; }
+  return VALEUR_DEFAUT;
+}
+
+function setStatsPeriod(p){
+  _statsPeriod = p;
+  ['30','90','365','all'].forEach(function(x){
+    var b=document.getElementById('sp-'+x);
+    if(b) b.classList.toggle('act', x===p);
+  });
+  renderStats();
+}
+
+function statsInPeriod(jobs, days){
+  if(days === 'all') return jobs.slice();
+  var cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - parseInt(days));
+  return jobs.filter(function(j){
+    var d = jobDate(j);
+    return d && d >= cutoff;
+  });
+}
+
+function renderStats(){
+  var all = (_jobs||[]).slice();
+  var period = statsInPeriod(all, _statsPeriod);
+
+  // Si aucune donnée
+  if(all.length === 0){
+    document.getElementById('stats-hero').innerHTML =
+      '<div class="stats-empty" style="grid-column:1/-1"><div class="stats-empty-ic">📊</div>Pas encore de données.<br><span style="font-size:13px">Tes statistiques apparaîtront dès tes premières demandes Greaz.</span></div>';
+    ['stats-value','stats-chart','stats-funnel','stats-vehicles','stats-problems','stats-clients'].forEach(function(id){
+      var el=document.getElementById(id); if(el) el.innerHTML='';
+    });
+    return;
+  }
+
+  // ── Chiffres clés ──
+  var recu = period.length;
+  var accepte = period.filter(function(j){ return j.status==='accepte'; }).length;
+  var refuse = period.filter(function(j){ return j.status==='refuse'; }).length;
+  var attente = period.filter(function(j){ return j.status==='envoye'; }).length;
+  var reprog = period.filter(function(j){ return j.status==='a_reprogrammer'; }).length;
+  var tauxConv = recu>0 ? Math.round(accepte/recu*100) : 0;
+
+  // Clients uniques (par téléphone ou nom)
+  var clientsSet = {};
+  period.forEach(function(j){
+    var key = (j.client_phone||j.client_name||'').trim().toLowerCase();
+    if(key) clientsSet[key]=true;
+  });
+  var clientsUniques = Object.keys(clientsSet).length;
+
+  // Comparaison période précédente (pour les tendances)
+  var trend = '';
+  if(_statsPeriod !== 'all'){
+    var days = parseInt(_statsPeriod);
+    var now = new Date();
+    var startCur = new Date(now); startCur.setDate(now.getDate()-days);
+    var startPrev = new Date(now); startPrev.setDate(now.getDate()-days*2);
+    var prevCount = all.filter(function(j){
+      var d=jobDate(j); return d && d>=startPrev && d<startCur;
+    }).length;
+    if(prevCount>0){
+      var delta = Math.round((recu-prevCount)/prevCount*100);
+      trend = delta;
+    }
+  }
+
+  function trendBadge(val){
+    if(val==='' || val===0) return '<span class="sh-trend flat">—</span>';
+    if(val>0) return '<span class="sh-trend up">↑ '+val+'%</span>';
+    return '<span class="sh-trend down">↓ '+Math.abs(val)+'%</span>';
+  }
+
+  document.getElementById('stats-hero').innerHTML =
+    '<div class="sh-card" style="--halo:rgba(69,104,214,.1)"><span class="sh-ic">📨</span><div class="sh-n">'+recu+'</div><div class="sh-l">Demandes reçues</div>'+trendBadge(trend)+'</div>'
+    +'<div class="sh-card" style="--halo:rgba(14,159,110,.12)"><span class="sh-ic">✅</span><div class="sh-n">'+accepte+'</div><div class="sh-l">Clients acceptés</div></div>'
+    +'<div class="sh-card" style="--halo:rgba(184,134,11,.12)"><span class="sh-ic">🎯</span><div class="sh-n">'+tauxConv+'%</div><div class="sh-l">Taux de conversion</div></div>'
+    +'<div class="sh-card" style="--halo:rgba(124,92,224,.1)"><span class="sh-ic">👥</span><div class="sh-n">'+clientsUniques+'</div><div class="sh-l">Clients uniques</div></div>';
+
+  // ── Valeur générée ──
+  var valeurAcceptee = period.filter(function(j){ return j.status==='accepte'; })
+    .reduce(function(sum,j){ return sum + estimateValue(j); }, 0);
+  var valeurTotale = period.reduce(function(sum,j){ return sum + estimateValue(j); }, 0);
+  var fmt = function(n){ return n.toLocaleString('fr-CA'); };
+
+  // ROI vs abonnement (annualisé si période courte)
+  var annualise = valeurAcceptee;
+  if(_statsPeriod==='30') annualise = valeurAcceptee*12;
+  else if(_statsPeriod==='90') annualise = valeurAcceptee*4;
+  var roiTxt = '';
+  if(annualise > 0){
+    var mult = (annualise/10000);
+    roiTxt = '<div class="svc-roi">💡 Projeté sur 12 mois : <b>'+fmt(Math.round(annualise))+' $</b> de revenus potentiels.<br>'
+      + (mult>=1
+        ? 'Soit <b>'+mult.toFixed(1)+'×</b> ton abonnement Greaz. 🚀'
+        : 'Continue à convertir pour rentabiliser ton abonnement.')
+      + '</div>';
+  }
+
+  document.getElementById('stats-value').innerHTML =
+    '<div class="svc-label">Revenus estimés — clients acceptés</div>'
+    +'<div class="svc-amount">'+fmt(Math.round(valeurAcceptee))+' $</div>'
+    +'<div class="svc-sub">Sur '+accepte+' client'+(accepte!==1?'s':'')+' accepté'+(accepte!==1?'s':'')+' via Greaz'
+    +(valeurTotale>valeurAcceptee ? ' · '+fmt(Math.round(valeurTotale))+' $ de potentiel total reçu' : '')+'</div>'
+    +roiTxt;
+
+  // ── Graphique mensuel (12 derniers mois ou selon période) ──
+  renderStatsChart(all);
+
+  // ── Entonnoir ──
+  var maxF = Math.max(recu,1);
+  var funnel = [
+    { label:'Reçues', n:recu, color:'#3E6AE1' },
+    { label:'Acceptées', n:accepte, color:'#0E9F6E' },
+    { label:'À reprogrammer', n:reprog, color:'#B8860B' },
+    { label:'Refusées', n:refuse, color:'#D64545' },
+  ];
+  document.getElementById('stats-funnel').innerHTML = funnel.map(function(f){
+    var pct = Math.round(f.n/maxF*100);
+    return '<div class="sf-row">'
+      +'<div class="sf-bar" style="width:'+Math.max(pct,8)+'%;background:'+f.color+'">'+f.n+'</div>'
+      +'<div class="sf-info"><b>'+(recu>0?Math.round(f.n/recu*100):0)+'%</b>'+f.label+'</div>'
+      +'</div>';
+  }).join('');
+
+  // ── Top véhicules ──
+  renderStatsDistribution('stats-vehicles', period, function(j){
+    return [j.vehicle_make, j.vehicle_model].filter(Boolean).join(' ') || j.vehicle_type || 'Non précisé';
+  }, '#3E6AE1');
+
+  // ── Top problèmes ──
+  renderStatsDistribution('stats-problems', period, function(j){
+    return j.problem || 'Non précisé';
+  }, '#0E9F6E');
+
+  // ── Clients récents ──
+  var recent = period.slice().sort(function(a,b){
+    var da=jobDate(a)||new Date(0), db2=jobDate(b)||new Date(0);
+    return db2-da;
+  }).slice(0,8);
+  document.getElementById('stats-clients').innerHTML = recent.length
+    ? recent.map(function(j){
+        var name = j.client_name||'Client';
+        var ini = name.trim().charAt(0).toUpperCase();
+        var veh = [j.vehicle_make,j.vehicle_model].filter(Boolean).join(' ');
+        var d = jobDate(j);
+        var dateStr = d ? d.toLocaleDateString('fr-CA',{day:'numeric',month:'short'}) : '';
+        var st = JOB_STATUS[j.status]||JOB_STATUS.envoye;
+        return '<div class="scl-row">'
+          +'<div class="scl-av">'+ini+'</div>'
+          +'<div class="scl-info"><div class="scl-name">'+name+'</div>'
+          +'<div class="scl-meta">'+(veh?veh+' · ':'')+st.icon+' '+st.label+'</div></div>'
+          +'<div class="scl-date">'+dateStr+'</div>'
+          +'</div>';
+      }).join('')
+    : '<div style="text-align:center;color:var(--faint);font-size:13px;padding:1rem 0">Aucun client sur cette période.</div>';
+}
+
+function renderStatsChart(allJobs){
+  // 6 derniers mois
+  var months = [];
+  var now = new Date();
+  for(var i=5;i>=0;i--){
+    var d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    months.push({ y:d.getFullYear(), m:d.getMonth(),
+      label:d.toLocaleDateString('fr-CA',{month:'short'}), count:0 });
+  }
+  allJobs.forEach(function(j){
+    var d = jobDate(j); if(!d) return;
+    months.forEach(function(mo){
+      if(d.getFullYear()===mo.y && d.getMonth()===mo.m) mo.count++;
+    });
+  });
+  var maxC = Math.max.apply(null, months.map(function(m){return m.count;}).concat([1]));
+  document.getElementById('stats-chart').innerHTML = months.map(function(mo){
+    var h = Math.round(mo.count/maxC*100);
+    return '<div class="sc-bar-wrap">'
+      +'<div class="sc-bar" style="height:'+Math.max(h,3)+'%">'
+      +(mo.count>0?'<span class="sc-bar-val">'+mo.count+'</span>':'')+'</div>'
+      +'<div class="sc-bar-lbl">'+mo.label+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderStatsDistribution(elId, jobs, keyFn, color){
+  var counts = {};
+  jobs.forEach(function(j){
+    var k = keyFn(j); if(!k) return;
+    counts[k] = (counts[k]||0)+1;
+  });
+  var arr = Object.keys(counts).map(function(k){ return {k:k, n:counts[k]}; })
+    .sort(function(a,b){ return b.n-a.n; }).slice(0,5);
+  var max = Math.max.apply(null, arr.map(function(a){return a.n;}).concat([1]));
+  var el = document.getElementById(elId);
+  if(!el) return;
+  el.innerHTML = arr.length
+    ? arr.map(function(a){
+        return '<div class="sd-row">'
+          +'<div class="sd-label" title="'+a.k+'">'+a.k+'</div>'
+          +'<div class="sd-track"><div class="sd-fill" style="width:'+Math.round(a.n/max*100)+'%;background:'+color+'"></div></div>'
+          +'<div class="sd-val">'+a.n+'</div>'
+          +'</div>';
+      }).join('')
+    : '<div style="text-align:center;color:var(--faint);font-size:13px;padding:.5rem 0">—</div>';
 }
 
 /* Ombre douce du header quand on descend — donne de la profondeur sans dureté */
