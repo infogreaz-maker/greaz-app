@@ -112,41 +112,90 @@ button{-webkit-tap-highlight-color:transparent}
 .login-help{font-size:11.5px;color:var(--muted);margin-top:1.25rem;line-height:1.6}
 
 /* APP */
+/* ═══════════════════════════════════════════
+   SHELL SAAS PRO — sidebar + zone principale
+   Layout façon Linear / Stripe / Notion :
+   navigation latérale fixe, contenu à droite.
+   ═══════════════════════════════════════════ */
 .app{display:none}
-.app.show{display:block}
-header{background:rgba(252,251,249,.82);backdrop-filter:blur(18px) saturate(1.6);border-bottom:1px solid var(--line);padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;transition:box-shadow .3s var(--ease)}
-header.scrolled{box-shadow:var(--sh-sm)}
-.logo{font-family:'Inter',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-.04em;color:var(--txt)}
-.logo span{color:var(--blue)}
-.hbadge{font-size:9.5px;font-weight:700;color:var(--blue);background:var(--bluelt);padding:2px 7px;border-radius:5px;margin-left:5px;vertical-align:middle;letter-spacing:.04em}
-.hright{display:flex;align-items:center;gap:12px}
-.garage-name{font-size:12.5px;color:var(--muted);font-weight:600}
-.logout{background:var(--graphite3);border:1px solid transparent;color:var(--muted);padding:7px 14px;border-radius:7px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s}
-.logout:hover{border-color:var(--red);color:var(--red);background:var(--redlt)}
+.app.show{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
 
-/* STATS BAR */
-.statsbar{display:flex;gap:0;background:var(--graphite2);border-bottom:1px solid var(--line);overflow-x:auto}
-.stat{flex:1;min-width:90px;padding:.95rem 1rem;text-align:center;border-right:1px solid var(--line);transition:background .25s var(--ease)}
-.stat:last-child{border:none}
-.stat:hover{background:var(--graphite3)}
-.stat-n{font-family:'Inter',sans-serif;font-size:1.6rem;font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--txt);display:inline-block;animation:softPop .55s var(--spring) both}
-.stat-l{font-size:10px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:0;height:100vh;background:var(--graphite2);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;padding:0;z-index:60}
+.sb-brand{display:flex;align-items:center;gap:9px;padding:1.15rem 1.25rem 1.05rem;border-bottom:1px solid var(--line)}
+.sb-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--blue),#5A7CE0);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;letter-spacing:-.02em;flex-shrink:0;box-shadow:0 2px 8px rgba(69,104,214,.28)}
+.sb-logo{font-family:'Inter',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:-.04em;color:var(--txt)}
+.sb-logo span{color:var(--blue)}
+.sb-badge{font-size:9px;font-weight:800;color:var(--blue);background:var(--bluelt);padding:2px 7px;border-radius:5px;letter-spacing:.06em;align-self:center;margin-left:auto}
 
-/* TABS */
-.tabs{display:flex;background:var(--graphite2);border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:57px;z-index:40}
-.tab{padding:.95rem 1.4rem;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px;transition:color .25s var(--ease),background .25s var(--ease);position:relative}
-.tab:hover{color:var(--txt);background:rgba(69,104,214,.03)}
-.tab.act{color:var(--blue)}
-/* Soulignement qui grandit depuis le centre */
-.tab::after{content:'';position:absolute;left:50%;right:50%;bottom:-1px;height:2.5px;background:var(--blue);border-radius:2px;transition:left .3s var(--ease),right .3s var(--ease)}
-.tab.act::after{left:0;right:0}
-.tcount{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;background:var(--blue);color:white;padding:1px 7px;border-radius:20px;min-width:20px;text-align:center;transition:transform .2s var(--spring)}
-.tcount:not(.zero){animation:glowPulse 2.6s ease-in-out infinite}
-.tcount.zero{background:var(--graphite3);color:var(--faint)}
+.sb-nav{flex:1;padding:1.1rem .75rem;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+.sb-nav-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:0 .6rem;margin:1rem 0 .5rem}
+.sb-nav-label:first-child{margin-top:0}
+.sb-item{display:flex;align-items:center;gap:11px;width:100%;padding:9px 11px;border:none;background:none;border-radius:9px;
+  font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;text-align:left;
+  transition:background .18s var(--ease),color .18s var(--ease);position:relative}
+.sb-item:hover{background:var(--graphite3);color:var(--txt)}
+.sb-item.act{background:var(--bluelt);color:var(--blue)}
+.sb-item.act::before{content:'';position:absolute;left:-.75rem;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--blue);border-radius:0 3px 3px 0}
+.sb-ic{width:19px;height:19px;flex-shrink:0;stroke-width:1.8;opacity:.9;transition:opacity .18s var(--ease)}
+.sb-item:hover .sb-ic,.sb-item.act .sb-ic{opacity:1}
+.sb-txt{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-count{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;background:var(--blue);color:#fff;
+  padding:1px 7px;border-radius:20px;min-width:20px;text-align:center;flex-shrink:0;transition:transform .2s var(--spring)}
+.sb-count.zero{background:var(--graphite3);color:var(--faint)}
+.sb-count:not(.zero){animation:glowPulse 2.6s ease-in-out infinite}
 
-.wrap{padding:1.25rem;max-width:1000px;margin:0 auto}
+.sb-foot{padding:.85rem;border-top:1px solid var(--line)}
+.sb-user{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:10px;margin-bottom:6px;transition:background .2s}
+.sb-user:hover{background:var(--graphite3)}
+.sb-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#5A7CE0);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+.sb-user-info{flex:1;min-width:0}
+.sb-user-name{font-size:13px;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-user-role{font-size:11px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-logout{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:9px;border:1px solid var(--line);
+  background:none;border-radius:9px;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s}
+.sb-logout:hover{border-color:var(--red);color:var(--red);background:var(--redlt)}
+.sb-logout span{font-size:14px}
+
+.sb-scrim{display:none}
+
+/* ── ZONE PRINCIPALE ── */
+.main{min-width:0;display:flex;flex-direction:column;background:var(--graphite)}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:16px;
+  padding:.9rem 1.5rem;background:rgba(246,245,242,.85);backdrop-filter:blur(18px) saturate(1.5);
+  border-bottom:1px solid var(--line);transition:box-shadow .3s var(--ease)}
+.topbar.scrolled{box-shadow:var(--sh-sm)}
+.tb-burger{display:none;background:none;border:none;color:var(--txt);cursor:pointer;padding:6px;border-radius:8px;transition:background .18s}
+.tb-burger svg{width:22px;height:22px;display:block}
+.tb-burger:hover{background:var(--graphite3)}
+.tb-heading{flex:1;min-width:0}
+.tb-title{font-family:'Inter',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:-.025em;color:var(--txt);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-subtitle{font-size:12.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-pills{display:flex;gap:8px;flex-shrink:0}
+.tb-pill{display:flex;align-items:baseline;gap:5px;padding:6px 13px;border-radius:10px;background:var(--graphite2);border:1px solid var(--line);white-space:nowrap;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.tb-pill:hover{border-color:var(--line2);box-shadow:var(--sh-sm)}
+.tb-pill-n{font-family:'Inter',sans-serif;font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--blue)}
+.tb-pill.green .tb-pill-n{color:var(--green)}
+.tb-pill.gold .tb-pill-n{color:var(--sodium)}
+.tb-pill-l{font-size:11px;color:var(--muted);font-weight:500}
+
+.wrap{padding:1.5rem;max-width:1080px;margin:0 auto;width:100%}
 .panel{display:none}
 .panel.act{display:block;animation:panelIn .4s var(--ease) both}
+
+/* ── RESPONSIVE : sidebar coulissante sur mobile ── */
+@media(max-width:860px){
+  .app.show{grid-template-columns:1fr}
+  .sidebar{position:fixed;top:0;left:0;width:270px;transform:translateX(-100%);
+    transition:transform .32s var(--ease);box-shadow:var(--sh-lg)}
+  .sidebar.open{transform:translateX(0)}
+  .sb-scrim{position:fixed;inset:0;background:rgba(23,26,32,.4);backdrop-filter:blur(2px);z-index:55;opacity:0;pointer-events:none;transition:opacity .3s}
+  .sb-scrim.show{display:block;opacity:1;pointer-events:auto}
+  .tb-burger{display:block}
+  .tb-pills{display:none}
+}
 @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* FILTER CHIPS */
@@ -504,6 +553,109 @@ input[type=time]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer}
 /* Quand le bandeau est là, on décale le header pour ne pas le masquer */
 body:has(#trialBanner) header{top:44px}
 
+/* ══════════ PHOTOS AVANT/APRÈS + DEVIS ══════════ */
+.fac-photos{margin-top:1.25rem;padding:1.1rem;background:var(--graphite2);border:1px solid var(--line);border-radius:14px}
+.fac-photos-t{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:1rem}
+.fac-photos-t span{font-weight:400;color:var(--faint);font-size:12px}
+.fp-group{margin-bottom:1rem}
+.fp-group:last-of-type{margin-bottom:0}
+.fp-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.fp-before{color:#B3261E}
+.fp-after{color:#0B7D57}
+.fp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.fp-thumb{position:relative;aspect-ratio:1;border-radius:11px;overflow:hidden;background:var(--graphite3);border:1px solid var(--line)}
+.fp-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.fp-thumb-del{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(23,26,32,.7);color:#fff;border:none;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.fp-thumb-del:hover{background:var(--red)}
+.fp-add{aspect-ratio:1;border-radius:11px;background:var(--graphite3);border:1.5px dashed var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:border-color .2s,color .2s;color:var(--muted);font-family:inherit}
+.fp-add:hover{border-color:var(--blue);color:var(--blue)}
+.fp-add-ic{font-size:24px;line-height:1}
+.fp-add-tx{font-size:10.5px}
+.fp-uploading{opacity:.5;pointer-events:none}
+
+.fac-final-btns{display:flex;flex-direction:column;gap:10px;margin-top:1.25rem}
+.fac-devis-btn{width:100%;padding:16px;background:var(--sodiumlt);color:#8A6508;border:1.5px solid rgba(184,134,11,.35);border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s,transform .2s var(--ease)}
+.fac-devis-btn:hover{background:#F6ECD0;transform:translateY(-1px)}
+.fac-devis-btn:active{transform:scale(.985)}
+
+/* Badge statut devis dans la liste */
+.devis-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:8px}
+.devis-badge.attente{background:var(--sodiumlt);color:#8A6508}
+.devis-badge.approuve{background:var(--greenlt);color:#00794A}
+.devis-badge.refuse{background:var(--redlt);color:var(--red)}
+
+/* ══════════════════════════════════════════
+   MOBILE GARAGISTE — expérience cellulaire optimisée
+   Le mécano utilise son téléphone dans le garage :
+   cibles tactiles larges, facture fluide, tout au pouce.
+   ══════════════════════════════════════════ */
+@media(max-width:600px){
+  /* Zone de travail plus respirante */
+  .wrap{padding:1rem 0.9rem calc(2rem + env(safe-area-inset-bottom))}
+
+  /* Cibles tactiles : minimum 44px partout (recommandation Apple/Google) */
+  .act-btn{padding:12px 16px;font-size:14px;min-height:44px;flex:1 1 auto;justify-content:center;display:flex;align-items:center}
+  .acts{gap:8px}
+  .chip{padding:10px 16px;font-size:13.5px;min-height:40px;display:flex;align-items:center}
+
+  /* Facture : wizard d'étapes plus lisible */
+  .fac-h2{font-size:1.15rem}
+  .fac-steps{gap:5px}
+  .fac-dot{width:26px;height:26px;font-size:12px}
+  .fac-dot-line{width:22px}
+  .fac-back{min-height:40px;display:inline-flex;align-items:center}
+
+  /* Champs facture : gros et confortables au doigt */
+  .fac-field input,.fac-field textarea{padding:14px;font-size:16px;border-radius:12px}
+  .fac-field label{font-size:11.5px;margin-bottom:8px}
+
+  /* Sélection de client : cartes plus hautes, faciles à taper */
+  .fac-cli{padding:16px;border-radius:14px}
+  .fac-cli-name{font-size:16px}
+  .fac-cli:active{transform:scale(.98);border-color:var(--blue)}
+
+  /* Lignes de service : empilées, cases à cocher larges */
+  .fac-svc{padding:14px 12px;gap:11px;align-items:center;min-height:56px;margin-bottom:8px}
+  .fac-svc input[type=checkbox]{width:24px;height:24px;flex-shrink:0}
+  .fac-svc-name{font-size:14.5px;line-height:1.35}
+  .fac-svc-price input{padding:12px 10px;font-size:16px;text-align:right}
+  .fac-svc-price{width:92px}
+  .fac-cat-title{font-size:12.5px;padding:12px 0 8px}
+
+  /* Bouton "ajouter service" plus visible */
+  .fac-add-custom{padding:14px;font-size:14.5px;min-height:48px;border-radius:12px}
+
+  /* Récap total : bien visible, chiffres gros */
+  .fac-total-box{padding:1.2rem 1.1rem;border-radius:16px;position:sticky;bottom:calc(8px + env(safe-area-inset-bottom));box-shadow:var(--sh-lg);z-index:10}
+  .fac-total-row{font-size:14.5px;padding:6px 0}
+  .fac-grand{font-size:1.15rem!important;font-weight:800;padding-top:10px!important;margin-top:6px;border-top:1.5px solid var(--line)}
+  .fac-tax-toggle{margin-top:10px;font-size:13px;min-height:40px;display:flex;align-items:center;gap:8px}
+
+  /* Boutons d'action principaux : pleine largeur, gros */
+  .fac-next,.fac-generate,.save-btn{padding:16px;font-size:15.5px;min-height:52px;border-radius:13px;width:100%}
+
+  /* Check-in véhicule : sections aérées */
+  .ci-section{margin-bottom:1.25rem}
+
+  /* Stats : cartes en 2 colonnes lisibles */
+  .stats-hero{gap:9px}
+  .sh-card{padding:1.1rem .9rem;border-radius:14px}
+  .sh-n{font-size:1.75rem}
+
+  /* Modale custom : feuille qui monte du bas (façon app mobile) */
+  #gz-modal{border-radius:20px 20px 0 0;max-width:100%;width:100%;position:fixed;bottom:0;left:0;right:0;margin:0;animation:sheetUp .35s var(--spring) both}
+  #gz-modal-overlay.show{align-items:flex-end}
+}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+/* Très petits écrans (iPhone SE, etc.) */
+@media(max-width:380px){
+  .tab{padding:.75rem .85rem;font-size:12.5px}
+  .fac-svc-price{width:80px}
+  .acts{flex-direction:column}
+  .act-btn{width:100%}
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
@@ -542,34 +694,80 @@ body:has(#trialBanner) header{top:44px}
 
 <!-- APP -->
 <div class="app" id="app">
-  <header>
-    <div>
-      <span class="logo">Gre<span>az</span></span>
-      <span class="hbadge">PRO</span>
+
+  <!-- SIDEBAR — navigation latérale façon SaaS pro -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-mark">G</div>
+      <span class="sb-logo">Gre<span>az</span></span>
+      <span class="sb-badge">PRO</span>
     </div>
-    <div class="hright">
-      <span class="garage-name" id="garageName"></span>
-      <button class="logout" onclick="mecanoLogout()">Sortir</button>
+
+    <nav class="sb-nav">
+      <div class="sb-nav-label">Espace de travail</div>
+      <button class="sb-item act" id="nav-jobs" onclick="mSwitch('jobs')">
+        <svg class="sb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H5.2L4 17.5V4z"/><path d="M8 9h8M8 12h5"/></svg>
+        <span class="sb-txt">Demandes</span>
+        <span class="sb-count" id="tc-jobs">0</span>
+      </button>
+      <button class="sb-item" id="nav-agenda" onclick="mSwitch('agenda')">
+        <svg class="sb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="2"/><path d="M3.5 9h17M8 3v3M16 3v3"/></svg>
+        <span class="sb-txt">Calendrier</span>
+      </button>
+      <button class="sb-item" id="nav-facture" onclick="mSwitch('facture')">
+        <svg class="sb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+        <span class="sb-txt">Fiche &amp; facture</span>
+      </button>
+
+      <div class="sb-nav-label">Pilotage</div>
+      <button class="sb-item" id="nav-stats" onclick="mSwitch('stats')">
+        <svg class="sb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M20 20H3.5"/></svg>
+        <span class="sb-txt">Statistiques</span>
+      </button>
+      <button class="sb-item" id="nav-garage" onclick="mSwitch('garage')">
+        <svg class="sb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20H4z"/><path d="M9 20v-6h6v6"/></svg>
+        <span class="sb-txt">Mon garage</span>
+      </button>
+    </nav>
+
+    <div class="sb-foot">
+      <div class="sb-user" id="sb-user">
+        <div class="sb-avatar" id="sb-avatar">G</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name" id="garageName">Garage</div>
+          <div class="sb-user-role" id="sb-role">Compte Pro</div>
+        </div>
+      </div>
+      <button class="sb-logout" onclick="mecanoLogout()" title="Se déconnecter">
+        <span>⏻</span> Déconnexion
+      </button>
     </div>
-  </header>
+  </aside>
 
-  <div class="statsbar">
-    <div class="stat"><div class="stat-n" style="color:var(--orange)" id="s-new">0</div><div class="stat-l">À répondre</div></div>
-    <div class="stat"><div class="stat-n" style="color:var(--green)" id="s-conf">0</div><div class="stat-l">Acceptés</div></div>
-    <div class="stat"><div class="stat-n" style="color:var(--sodium)" id="s-work">0</div><div class="stat-l">En attente Greaz</div></div>
-  </div>
+  <!-- Overlay mobile pour fermer la sidebar -->
+  <div class="sb-scrim" id="sb-scrim" onclick="toggleSidebar()"></div>
 
-  <div class="tabs">
-    <div class="tab act" id="tab-jobs" onclick="mSwitch('jobs')">📨 Demandes <span class="tcount zero" id="tc-jobs">0</span></div>
-    <div class="tab" id="tab-agenda" onclick="mSwitch('agenda')">📅 Mon calendrier</div>
-    <div class="tab" id="tab-facture" onclick="mSwitch('facture')">🧾 Fiche &amp; facture</div>
-    <div class="tab" id="tab-garage" onclick="mSwitch('garage')">🏪 Mon garage</div>
-    <div class="tab" id="tab-stats" onclick="mSwitch('stats')">📊 Statistiques</div>
-  </div>
+  <!-- ZONE PRINCIPALE -->
+  <div class="main">
+    <!-- Topbar : titre de la page courante + résumé chiffré -->
+    <div class="topbar">
+      <button class="tb-burger" onclick="toggleSidebar()" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="tb-heading">
+        <div class="tb-title" id="tb-title">Demandes</div>
+        <div class="tb-subtitle" id="tb-subtitle">Gère les demandes de rendez-vous entrantes</div>
+      </div>
+      <div class="tb-pills">
+        <div class="tb-pill"><span class="tb-pill-n" id="s-new">0</span><span class="tb-pill-l">à répondre</span></div>
+        <div class="tb-pill green"><span class="tb-pill-n" id="s-conf">0</span><span class="tb-pill-l">acceptés</span></div>
+        <div class="tb-pill gold"><span class="tb-pill-n" id="s-work">0</span><span class="tb-pill-l">chez Greaz</span></div>
+      </div>
+    </div>
 
-  <div class="wrap">
+    <div class="wrap">
 
-    <!-- AUJOURD'HUI -->
+      <!-- AUJOURD'HUI -->
     <div class="panel" id="panel-today" style="display:none">
       <div id="today-content"><div class="loading"><span class="spin"></span> Chargement...</div></div>
     </div>
@@ -704,8 +902,33 @@ body:has(#trialBanner) header{top:44px}
           <input id="fac-email" type="email" placeholder="client@courriel.com">
         </div>
 
-        <button class="fac-generate" onclick="facGenerate()">📄 Générer la facture PDF</button>
-        <p class="fac-hint">Le PDF se télécharge. Tu pourras l'envoyer au client depuis ton appareil.</p>
+        <!-- PHOTOS AVANT / APRÈS -->
+        <div class="fac-photos">
+          <div class="fac-photos-t">📸 Photos du véhicule <span>(optionnel)</span></div>
+          <div class="fp-group">
+            <div class="fp-label fp-before">🔴 Avant les travaux</div>
+            <div class="fp-grid" id="fp-before-grid">
+              <button class="fp-add" onclick="fpPick('before')">
+                <span class="fp-add-ic">＋</span><span class="fp-add-tx">Ajouter</span>
+              </button>
+            </div>
+          </div>
+          <div class="fp-group">
+            <div class="fp-label fp-after">🟢 Après les travaux</div>
+            <div class="fp-grid" id="fp-after-grid">
+              <button class="fp-add" onclick="fpPick('after')">
+                <span class="fp-add-ic">＋</span><span class="fp-add-tx">Ajouter</span>
+              </button>
+            </div>
+          </div>
+          <input type="file" id="fp-input" accept="image/*" capture="environment" style="display:none" onchange="fpHandle(event)">
+        </div>
+
+        <div class="fac-final-btns">
+          <button class="fac-devis-btn" onclick="devisCreate()">📝 Créer un devis (à approuver)</button>
+          <button class="fac-generate" onclick="facGenerate()">📄 Générer la facture PDF</button>
+        </div>
+        <p class="fac-hint">Le <b>devis</b> s'envoie au client pour approbation avant les travaux. La <b>facture</b> se génère en PDF une fois le travail fait.</p>
       </div>
 
     </div>
@@ -811,14 +1034,16 @@ body:has(#trialBanner) header{top:44px}
       <div class="hint" style="text-align:center;margin-top:1.5rem">📊 Statistiques mises à jour en temps réel à partir de tes demandes Greaz.</div>
     </div>
 
-  </div>
-</div>
+    </div><!-- /.wrap -->
+  </div><!-- /.main -->
+</div><!-- /.app -->
 
 <div class="toast" id="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 /* ══════════ CONFIG ══════════ */
@@ -937,7 +1162,7 @@ async function loadGarage(user){
 
     document.getElementById('loginScreen').classList.remove('show');
     document.getElementById('app').classList.add('show');
-    document.getElementById('garageName').textContent = '🏪 ' + (garage.name||'') + (staffRole==='employe' ? ' · '+staffName : '');
+    fillSidebarUser();
 
     // Bandeau d'avertissement si l'essai approche de la fin
     if(lic.warnDays !== null) showTrialBanner(lic);
@@ -1069,22 +1294,65 @@ function mecanoLogout(){
 function applyStaffPermissions(){
   // L'employé ne voit PAS les statistiques ni la config du garage (argent + réglages)
   var isEmploye = staffRole === 'employe';
-  var statsTab = document.getElementById('tab-stats');
-  var garageTab = document.getElementById('tab-garage');
+  var statsTab = document.getElementById('nav-stats');
+  var garageTab = document.getElementById('nav-garage');
   if(statsTab) statsTab.style.display = isEmploye ? 'none' : '';
   if(garageTab) garageTab.style.display = isEmploye ? 'none' : '';
 }
 
+var PANEL_TITLES = {
+  jobs:'Demandes', agenda:'Calendrier', facture:'Fiche & facture',
+  garage:'Mon garage', stats:'Statistiques',
+};
+var PANEL_SUBTITLES = {
+  jobs:'Gère les demandes de rendez-vous entrantes',
+  agenda:'Vue d\'ensemble de tes rendez-vous',
+  facture:'Documente une visite et génère une facture',
+  garage:'Coordonnées, tarifs et disponibilités',
+  stats:'Ta performance et tes revenus en temps réel',
+};
+
 function mSwitch(t){
   ['jobs','agenda','facture','garage','stats'].forEach(function(x){
-    var tab = document.getElementById('tab-'+x);
+    var nav = document.getElementById('nav-'+x);
     var pan = document.getElementById('panel-'+x);
-    if(tab) tab.classList.toggle('act', x===t);
+    if(nav) nav.classList.toggle('act', x===t);
     if(pan) pan.classList.toggle('act', x===t);
   });
+  var title = document.getElementById('tb-title');
+  if(title) title.textContent = PANEL_TITLES[t] || '';
+  var sub = document.getElementById('tb-subtitle');
+  if(sub) sub.textContent = PANEL_SUBTITLES[t] || '';
+  // Fermer la sidebar sur mobile après un choix
+  closeSidebar();
   if(t==='agenda') renderAgenda();
   if(t==='facture') facInit();
   if(t==='stats') renderStats();
+}
+
+/* Remplit le bloc utilisateur de la sidebar (nom, avatar, rôle) */
+function fillSidebarUser(){
+  var name = garage.name || 'Mon garage';
+  var nameEl = document.getElementById('garageName');
+  var avatarEl = document.getElementById('sb-avatar');
+  var roleEl = document.getElementById('sb-role');
+  if(nameEl) nameEl.textContent = name;
+  if(avatarEl) avatarEl.textContent = (name.trim().charAt(0) || 'G').toUpperCase();
+  if(roleEl) roleEl.textContent = staffRole === 'employe' ? (staffName || 'Employé') : 'Patron · Compte Pro';
+}
+
+/* Sidebar coulissante (mobile) */
+function toggleSidebar(){
+  var sb = document.getElementById('sidebar');
+  var scrim = document.getElementById('sb-scrim');
+  var open = sb.classList.toggle('open');
+  if(scrim) scrim.classList.toggle('show', open);
+}
+function closeSidebar(){
+  var sb = document.getElementById('sidebar');
+  var scrim = document.getElementById('sb-scrim');
+  if(sb) sb.classList.remove('open');
+  if(scrim) scrim.classList.remove('show');
 }
 
 /* ══════════ MES DEMANDES ══════════ */
@@ -1112,7 +1380,7 @@ function renderCounters(){
   var actifs = c('envoye');   // le badge de l'onglet = ce qui attend une réponse
   var tc = document.getElementById('tc-jobs');
   tc.textContent = actifs;
-  tc.className = 'tcount' + (actifs===0?' zero':'');
+  tc.className = 'sb-count' + (actifs===0?' zero':'');
 }
 
 function jFilter(f, btn){
@@ -2220,12 +2488,15 @@ var FAC_CONDITIONS = ['Carrosserie OK','Pneus usés','Vitres OK','Éclairage OK'
 
 var _facClient = null;   // { name, email, vehicle... }
 var _facCustom = [];     // services ajoutés à la main
+var _facPhotos = { before:[], after:[] };  // photos avant/après {url, path}
+var _fpTarget = 'before';  // cible courante pour l'upload
 
 function facInit(){
   // Étape 1 par défaut
   document.getElementById('fac-step-pick').style.display = '';
   document.getElementById('fac-step-checkin').style.display = 'none';
   document.getElementById('fac-step-invoice').style.display = 'none';
+  if(typeof fpReset === 'function') fpReset();  // vider les photos de la session précédente
 
   // Clients acceptés qu'on peut facturer
   var accepts = _jobs.filter(function(j){ return j.status === 'accepte'; });
@@ -2521,6 +2792,168 @@ function facGenerate(){
   } else {
     gzToast('Facture téléchargée !', 'Tu peux l\'envoyer au client depuis ton appareil.', 'ok');
   }
+}
+
+/* ══════════════════════════════════════════
+   PHOTOS AVANT / APRÈS
+   Upload vers Firebase Storage, miniatures dans la grille.
+   ══════════════════════════════════════════ */
+function fpPick(target){
+  _fpTarget = target;
+  document.getElementById('fp-input').click();
+}
+
+async function fpHandle(ev){
+  var file = ev.target.files && ev.target.files[0];
+  ev.target.value = '';  // reset pour permettre la même photo 2×
+  if(!file) return;
+  if(!file.type.match(/^image\//)){ gzToast('Fichier invalide', 'Choisis une image.', 'warn'); return; }
+
+  var target = _fpTarget;
+  var gridId = target === 'before' ? 'fp-before-grid' : 'fp-after-grid';
+  var grid = document.getElementById(gridId);
+
+  // Miniature "en chargement"
+  var tempId = 'fp-temp-' + Date.now();
+  var addBtn = grid.querySelector('.fp-add');
+  var loadingThumb = document.createElement('div');
+  loadingThumb.className = 'fp-thumb fp-uploading';
+  loadingThumb.id = tempId;
+  loadingThumb.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)">⏳</div>';
+  grid.insertBefore(loadingThumb, addBtn);
+
+  try {
+    // Compression légère avant upload (réduit les coûts de stockage)
+    var blob = await compressImage(file, 1200, 0.72);
+    var storage = firebase.storage();
+    var path = 'vehicle_photos/' + garageId + '/' + Date.now() + '_' + target + '.jpg';
+    var ref = storage.ref(path);
+    await ref.put(blob);
+    var url = await ref.getDownloadURL();
+
+    _facPhotos[target].push({ url: url, path: path });
+
+    // Remplacer la miniature de chargement par la vraie
+    loadingThumb.classList.remove('fp-uploading');
+    loadingThumb.innerHTML = '<img src="'+url+'" alt="photo">'
+      + '<button class="fp-thumb-del" onclick="fpRemove(\''+target+'\',\''+path.replace(/'/g,"")+'\',this)">✕</button>';
+  } catch(e){
+    loadingThumb.remove();
+    gzToast('Échec de l\'envoi', e.message || 'Réessaie.', 'warn');
+  }
+}
+
+/* Compresse/redimensionne une image côté navigateur (canvas) */
+function compressImage(file, maxDim, quality){
+  return new Promise(function(resolve, reject){
+    var img = new Image();
+    var url = URL.createObjectURL(file);
+    img.onload = function(){
+      URL.revokeObjectURL(url);
+      var w = img.width, h = img.height;
+      if(w > h && w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; }
+      else if(h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; }
+      var canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.toBlob(function(blob){ blob ? resolve(blob) : reject(new Error('Compression échouée')); }, 'image/jpeg', quality);
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error('Image illisible')); };
+    img.src = url;
+  });
+}
+
+function fpRemove(target, path, btn){
+  // Retirer de la liste + de Firebase Storage
+  _facPhotos[target] = _facPhotos[target].filter(function(p){ return p.path !== path; });
+  try { firebase.storage().ref(path).delete().catch(function(){}); } catch(e){}
+  var thumb = btn.closest('.fp-thumb');
+  if(thumb) thumb.remove();
+}
+
+function fpReset(){
+  _facPhotos = { before:[], after:[] };
+  ['fp-before-grid','fp-after-grid'].forEach(function(gid){
+    var grid = document.getElementById(gid);
+    if(!grid) return;
+    grid.querySelectorAll('.fp-thumb').forEach(function(t){ t.remove(); });
+  });
+}
+
+/* ══════════════════════════════════════════
+   DEVIS (estimation à approuver avant travaux)
+   Sauvegardé dans Firebase avec statut : attente/approuve/refuse.
+   Le client approuve par lien, ou le mécano marque sur place.
+   ══════════════════════════════════════════ */
+function genDevisCode(){
+  return 'DV-' + Math.random().toString(36).slice(2,7).toUpperCase();
+}
+
+async function devisCreate(){
+  var lines = facCollectLines();
+  if(!lines.length){ gzToast('Devis vide', 'Coche au moins un service.', 'warn'); return; }
+
+  var sub = lines.reduce(function(s,l){ return s + l.prix; }, 0);
+  var taxOn = document.getElementById('fac-tax-on').checked;
+  var tps = taxOn ? sub*0.05 : 0;
+  var tvq = taxOn ? sub*0.09975 : 0;
+  var total = sub + tps + tvq;
+  var email = document.getElementById('fac-email').value.trim();
+  var note = document.getElementById('fac-note').value.trim();
+  var code = genDevisCode();
+
+  var devis = {
+    code: code,
+    garage_id: garageId,
+    garage_name: (garage && garage.name) || '',
+    client_name: _facClient.name || '',
+    client_email: email || _facClient.email || '',
+    client_phone: _facClient.phone || '',
+    vehicle: [_facClient.year, _facClient.make, _facClient.model].filter(Boolean).join(' '),
+    plate: _facClient.plate || '',
+    km: _facClient.km || '',
+    lines: lines,
+    subtotal: sub, tps: tps, tvq: tvq, total: total, tax_on: taxOn,
+    note: note,
+    photos_before: _facPhotos.before.map(function(p){ return p.url; }),
+    photos_after: _facPhotos.after.map(function(p){ return p.url; }),
+    status: 'attente',   // attente | approuve | refuse
+    created_at: firebase.firestore.FieldValue.serverTimestamp(),
+  };
+
+  try {
+    var docRef = await db.collection('devis').add(devis);
+    var link = (window.location.origin || 'https://greaz.ca') + '/devis.html?id=' + docRef.id;
+    showDevisSuccess(code, total, email, link, docRef.id);
+  } catch(e){
+    gzToast('Erreur', e.message || 'Impossible de créer le devis.', 'warn');
+  }
+}
+
+function showDevisSuccess(code, total, email, link, id){
+  // Copie le lien tout de suite (le geste principal)
+  if(navigator.clipboard){ navigator.clipboard.writeText(link).catch(function(){}); }
+  gzConfirm({
+    icon: '📝',
+    title: 'Devis ' + code + ' créé',
+    text: 'Montant : ' + facMoney(total) + '. Le lien d\'approbation est copié dans ton presse-papier — envoie-le à ton client. Ou marque-le approuvé si le client a dit oui sur place.',
+    confirmLabel: '✓ Approuvé sur place',
+    cancelLabel: 'Plus tard',
+    tone: 'green',
+  }).then(function(approved){
+    if(approved) devisMarkApproved(id);
+    else gzToast('Devis en attente', 'Le lien est copié. Le client peut approuver quand il veut.', 'ok');
+  });
+}
+
+function devisMarkApproved(id){
+  db.collection('devis').doc(id).update({
+    status:'approuve',
+    approved_at: firebase.firestore.FieldValue.serverTimestamp(),
+    approved_by:'mecano',
+  }).then(function(){
+    gzToast('Devis approuvé !', 'Tu peux lancer les travaux et générer la facture.', 'ok');
+  }).catch(function(e){ gzToast('Erreur', e.message, 'warn'); });
 }
 
 
